@@ -1,23 +1,20 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model
 
+import java.time.LocalTime
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType.IDENTITY
 import javax.persistence.Id
-import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
-@Table(name = "TB_PROFESSOR")
-data class Professor(
+@Table(name = "TB_HORARIO")
+class Horario(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    var matricula: Long? = null,
+    var id: Long? = null,
 
     @Column(nullable = false)
-    val nome: String,
-
-    @OneToMany(mappedBy="professor")
-    val turmasMinistradas : List<Turma>
+    val horario: LocalTime
 )

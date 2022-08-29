@@ -16,7 +16,7 @@ data class Aluno(
     @Column(nullable = false)
     val nome: String,
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     val nomeUsuario: String,
 
     @Column(nullable = false)

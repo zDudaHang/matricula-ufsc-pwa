@@ -5,6 +5,7 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType.IDENTITY
 import javax.persistence.Id
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
@@ -17,5 +18,8 @@ data class Disciplina(
     val nome: String,
 
     @Column(nullable = false)
-    var cargaHoraria: Int
+    var cargaHoraria: Int,
+
+    @OneToMany(mappedBy="disciplina")
+    val turmas : List<Turma>
 )
