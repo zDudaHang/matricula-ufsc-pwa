@@ -16,8 +16,5 @@ data class Professor(
     var matricula: Long? = null,
 
     @Column(nullable = false)
-    val nome: String,
-
-    @OneToMany(mappedBy="professor")
-    val turmasMinistradas : List<Turma>
+    val nome: String
 )

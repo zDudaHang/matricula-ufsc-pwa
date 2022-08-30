@@ -18,8 +18,5 @@ data class Disciplina(
     val nome: String,
 
     @Column(nullable = false)
-    var cargaHoraria: Int,
-
-    @OneToMany(mappedBy="disciplina")
-    val turmas : List<Turma>
+    var cargaHoraria: Int
 )
