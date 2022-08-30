@@ -1,5 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model
 
+import java.io.Serializable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -31,4 +32,4 @@ data class Turma(
     @JoinColumn(name="id_disciplina", nullable=false, referencedColumnName = "id")
     var disciplina: Disciplina
 
-)
+) : Serializable

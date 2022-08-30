@@ -1,5 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model
 
+import java.io.Serializable
 import java.time.LocalTime
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -17,4 +18,4 @@ class Horario(
 
     @Column(nullable = false)
     val horario: LocalTime
-)
+) : Serializable

@@ -1,11 +1,11 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model
 
+import java.io.Serializable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType.IDENTITY
 import javax.persistence.Id
-import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
@@ -19,4 +19,4 @@ data class Disciplina(
 
     @Column(nullable = false)
     var cargaHoraria: Int
-)
+) : Serializable
