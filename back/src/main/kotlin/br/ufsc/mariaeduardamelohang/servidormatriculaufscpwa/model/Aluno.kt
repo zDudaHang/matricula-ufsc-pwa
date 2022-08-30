@@ -6,6 +6,10 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType.IDENTITY
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
+import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
@@ -24,5 +28,14 @@ data class Aluno(
     val senha: String,
 
     @Column(nullable = false)
-    val iaa: Float
+    val iaa: Float,
+
+    @ManyToMany
+    @JoinTable(
+        name = "TB_PEDIDO_MATRICULA",
+        joinColumns = [JoinColumn(name = "matricula_aluno")],
+        inverseJoinColumns = [JoinColumn(name = "codigo_turma")]
+    )
+    var pedidosMatricula: List<Turma> = emptyList()
+
 ) : Serializable

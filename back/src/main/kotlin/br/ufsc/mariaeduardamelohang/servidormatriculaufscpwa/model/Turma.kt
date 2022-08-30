@@ -5,6 +5,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.JoinColumn
+import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 import javax.persistence.Table
@@ -30,6 +31,9 @@ data class Turma(
 
     @ManyToOne
     @JoinColumn(name="id_disciplina", nullable=false, referencedColumnName = "id")
-    var disciplina: Disciplina
+    var disciplina: Disciplina,
+
+    @ManyToMany(mappedBy = "pedidosMatricula")
+    var alunosMatriculados: List<Aluno> = emptyList()
 
 ) : Serializable
