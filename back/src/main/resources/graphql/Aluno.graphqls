@@ -1,0 +1,11 @@
+input PedidoMatriculaInput {
+    codigosTurmas: [Int!]!
+}
+
+type Query {
+    turma(id: Int!): Int
+}
+
+type Mutation {
+    registrarPedidoMatricula(input: PedidoMatriculaInput!): Int
+}

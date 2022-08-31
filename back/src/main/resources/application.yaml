@@ -1,6 +1,9 @@
 spring:
   application:
     name: matricula-ufsc-app
+  # ===============================
+  # = BANCO DE DADOS
+  # ===============================
   datasource:
     username: postgres
     password: postgres
@@ -21,3 +24,19 @@ spring:
 
 server:
   port: 8080
+
+# ===============================
+# = GraphQL
+# - Ref: https://github.com/graphql-java-kickstart/graphql-spring-boot#enable-graphql-servlet
+# ===============================
+graphiql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    corsEnabled: true
+    endpoint:
+      graphql: /graphql
+    pageTitle: GraphiQL
+    props:
+      variables:
+        editorTheme: "solarized light"
