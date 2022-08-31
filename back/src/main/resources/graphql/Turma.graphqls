@@ -1,0 +1,8 @@
+type Turma {
+    codigo: String!
+    sala: String!
+    vagasOfertadas: Int!
+    vagasOcupadas: Int!
+    nomeProfessor: String!
+    disciplina: Disciplina!
+}

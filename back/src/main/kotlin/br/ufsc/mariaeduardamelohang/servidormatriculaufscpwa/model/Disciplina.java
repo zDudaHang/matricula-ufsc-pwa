@@ -1,12 +1,9 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,8 +13,8 @@ public class Disciplina implements Serializable {
 
 	private static final long serialVersionUID = 7229281137744422191L;
 
-	@Id @GeneratedValue(strategy = IDENTITY)
-	Long id;
+	@Id
+	String codigo;
 
 	@Column(nullable = false)
 	String nome;

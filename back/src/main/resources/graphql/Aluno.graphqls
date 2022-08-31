@@ -1,5 +1,20 @@
+type Aluno {
+    matricula: String!
+    nome: String!
+    nomeUsuario: String!
+    iaa: Float!
+#    pedidoMatricula: [Turma!]!
+}
+
 input PedidoMatriculaInput {
-    codigosTurmas: [Int!]!
+    codigosTurmas: [String!]!
+}
+
+input RegistrarAlunoInput {
+    nome: String!
+    nomeUsuario: String!
+    senha: String!
+    iaa: Float!
 }
 
 type Query {
@@ -7,5 +22,6 @@ type Query {
 }
 
 type Mutation {
+    registrarAluno(input: RegistrarAlunoInput!): Aluno
     registrarPedidoMatricula(input: PedidoMatriculaInput!): Int
 }

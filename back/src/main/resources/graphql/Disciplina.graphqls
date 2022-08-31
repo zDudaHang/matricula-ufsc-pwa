@@ -1,0 +1,4 @@
+type Disciplina {
+    nome: String!
+    cargaHoraria: Int!
+}

@@ -34,7 +34,7 @@ public class Turma implements Serializable {
 	Professor professor;
 
 	@ManyToOne
-	@JoinColumn(name = "id_disciplina", nullable = false, referencedColumnName = "id")
+	@JoinColumn(name = "id_disciplina", nullable = false, referencedColumnName = "codigo")
 	Disciplina disciplina;
 
 	@ManyToMany(mappedBy = "pedidosMatricula")
