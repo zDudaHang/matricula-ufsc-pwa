@@ -21,20 +21,17 @@ public class Turma implements Serializable {
 	String codigo;
 
 	@Column(nullable = false)
-	String sala;
-
-	@Column(nullable = false)
 	int vagasOfertadas;
 
 	@Column(nullable = false)
 	int vagasOcupadas = 0;
 
 	@ManyToOne
-	@JoinColumn(name = "matricula_professor", nullable = false, referencedColumnName = "matricula")
+	@JoinColumn(name = "id_professor", nullable = false, referencedColumnName = "id")
 	Professor professor;
 
 	@ManyToOne
-	@JoinColumn(name = "id_disciplina", nullable = false, referencedColumnName = "codigo")
+	@JoinColumn(name = "codigo_disciplina", nullable = false, referencedColumnName = "codigo")
 	Disciplina disciplina;
 
 	@ManyToMany(mappedBy = "pedidosMatricula")
