@@ -2,7 +2,6 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,7 +14,4 @@ public class TurmaHorarios implements Serializable {
 
 	@EmbeddedId
 	TurmaHorariosPrimaryKey id;
-
-	@Column(nullable = false)
-	String sala;
 }

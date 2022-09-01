@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service
 class AlunoService(
     private val registrarAlunoCommand: RegistrarAlunoCommand
 ) {
+    /**
+     * TODO:
+     * - Tratar o cenário de ter um aluno com o mesmo username
+     */
     fun registrarAluno(input: RegistrarAlunoInput): Aluno? {
         return registrarAlunoCommand.execute(input)
     }

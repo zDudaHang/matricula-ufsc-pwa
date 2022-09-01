@@ -52,3 +52,36 @@ INSERT INTO TB_TURMA (codigo, vagas_ocupadas, vagas_ofertadas, codigo_disciplina
 
 INSERT INTO TB_TURMA (codigo, vagas_ocupadas, vagas_ofertadas, codigo_disciplina, id_professor) VALUES ('08213', 0, 10, 'MTM3100', 4);
 INSERT INTO TB_TURMA (codigo, vagas_ocupadas, vagas_ofertadas, codigo_disciplina, id_professor) VALUES ('03235', 0, 10, 'MTM3101', 5);
+
+-- TODO: Arrumar os horários depois para ter conflitos !
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01208A', 'EFI204', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01208A', 'EFI204', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01208A', 'LABSDG', 4, 1, 3);
+
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01208B', 'CTC304', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01208B', 'CTC304', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01208B', 'LABSDG', 4, 1, 3);
+
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03202A', 'CTC304', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03202A', 'CTC304', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03202A', 'LABSDG', 4, 1, 3);
+
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03202B', 'CTC304', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03202B', 'CTC304', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03202B', 'LABSDG', 4, 1, 3);
+
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01205D', 'CTC304', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01205D', 'CTC304', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01205D', 'LABSDG', 4, 1, 3);
+
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01205C', 'CTC304', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01205C', 'CTC304', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('01205C', 'LABSDG', 4, 1, 3);
+
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('08213', 'CTC304', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('08213', 'CTC304', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('08213', 'LABSDG', 4, 1, 3);
+
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03235', 'CTC304', 1, 2, 4);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03235', 'CTC304', 2, 4, 6);
+INSERT INTO TB_TURMA_HORARIOS(turma_codigo, sala, dia_semana_id, horario_inicio_id, horario_final_id) VALUES ('03235', 'LABSDG', 4, 1, 3);
