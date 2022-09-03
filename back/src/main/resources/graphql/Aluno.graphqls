@@ -9,6 +9,7 @@ type Aluno {
 type LoginPayload {
     matriculaAluno: String
     sucesso: Boolean!
+    accessToken: String
 }
 
 input PedidoMatriculaInput {

@@ -1,5 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.config
 
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.security.jwt.JWTFilter
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AlunoService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -9,11 +10,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfiguration(
-    private val alunoService: AlunoService
+    private val alunoService: AlunoService,
+    private val jwtFilter: JWTFilter
 )  {
 
     @Bean
@@ -27,18 +30,16 @@ class WebSecurityConfiguration(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .userDetailsService(alunoService)
-            .csrf()
-            .disable()
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers( "/graphql").permitAll()
             .antMatchers( "/graphiql").permitAll()
-            // .anyRequest()
-            // .authenticated()
-            .and()
-            .httpBasic()
+            .anyRequest().authenticated()
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
     }
 }
