@@ -3,6 +3,8 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,9 +17,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "TB_ALUNO")
-public class Aluno implements Serializable {
+public class Aluno implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 871628892533743316L;
 
@@ -74,5 +79,37 @@ public class Aluno implements Serializable {
 
 	public void setIaa(Float iaa) {
 		this.iaa = iaa;
+	}
+
+	public UUID getMatricula() {
+		return matricula;
+	}
+
+	@Override public Collection<? extends GrantedAuthority> getAuthorities() {
+		return new ArrayList();
+	}
+
+	@Override public String getPassword() {
+		return this.senha;
+	}
+
+	@Override public String getUsername() {
+		return this.nomeUsuario;
+	}
+
+	@Override public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override public boolean isEnabled() {
+		return true;
 	}
 }

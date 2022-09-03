@@ -6,6 +6,11 @@ type Aluno {
 #    pedidoMatricula: [Turma!]!
 }
 
+type LoginPayload {
+    matriculaAluno: String
+    sucesso: Boolean!
+}
+
 input PedidoMatriculaInput {
     codigosTurmas: [String!]!
 }
@@ -17,6 +22,11 @@ input RegistrarAlunoInput {
     iaa: Float!
 }
 
+input LoginInput {
+    nomeUsuario: String!
+    senha: String!
+}
+
 type Query {
     turma(id: Int!): Int
 }
@@ -24,4 +34,6 @@ type Query {
 type Mutation {
     registrarAluno(input: RegistrarAlunoInput!): Aluno
     registrarPedidoMatricula(input: PedidoMatriculaInput!): Int
+    login(input: LoginInput): LoginPayload!
 }
+
