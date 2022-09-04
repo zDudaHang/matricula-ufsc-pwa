@@ -9,8 +9,9 @@ import java.util.UUID
 
 @Service
 class JWTService(
-    @Value("jwt.secret") private val secret: String
+    @Value("\${jwt.secret}") val secret: String
 ) {
+
     fun generateToken(matricula: UUID): String {
         return Jwts.builder()
             .setSubject(matricula.toString())

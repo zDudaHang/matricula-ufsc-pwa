@@ -20,13 +20,14 @@ class JWTFilter(
     private val alunoService: AlunoService
 ) : OncePerRequestFilter() {
 
-    private val BEARER = "Bearer "
+    private val TOKEN_PREFIX = "Bearer "
 
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val accessToken: String? = getTokenFromHeader(request)
         if (accessToken != null) {
             if (jwtService.isAccessTokenValid(accessToken)) authenticate(accessToken)
+        } else {
             filterChain.doFilter(request, response)
         }
     }
@@ -42,8 +43,8 @@ class JWTFilter(
 
     private fun getTokenFromHeader(request: HttpServletRequest): String? {
         val accessToken = request.getAuthorizationHeader()
-        return if (accessToken == null || accessToken.isEmpty() || !accessToken.startsWith(BEARER)) {
+        return if (accessToken == null || accessToken.isEmpty() || !accessToken.startsWith(TOKEN_PREFIX)) {
             null
-        } else accessToken.substring(BEARER.length, accessToken.length)
+        } else accessToken.substring(TOKEN_PREFIX.length, accessToken.length)
     }
 }

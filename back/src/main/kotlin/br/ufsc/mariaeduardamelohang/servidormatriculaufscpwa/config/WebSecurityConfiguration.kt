@@ -33,7 +33,7 @@ class WebSecurityConfiguration(
             .csrf().disable()
             .authorizeRequests()
             .antMatchers( "/graphql").permitAll()
-            .antMatchers( "/graphiql").permitAll()
+            .antMatchers("/graphiql", "/vendor/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement()
