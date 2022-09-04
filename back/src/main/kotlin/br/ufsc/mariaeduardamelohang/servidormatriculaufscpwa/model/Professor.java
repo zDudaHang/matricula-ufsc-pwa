@@ -22,4 +22,16 @@ public class Professor implements Serializable {
 
 	@Column(nullable = false)
 	String nome;
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 }

@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input
 
 data class RegistrarAlunoInput(
     val nome: String,

@@ -3,7 +3,6 @@ type Aluno {
     nome: String!
     nomeUsuario: String!
     iaa: Float!
-#    pedidoMatricula: [Turma!]!
 }
 
 type LoginPayload {
@@ -29,7 +28,7 @@ input LoginInput {
 }
 
 type Query {
-    turma(id: Int!): Int
+    buscarPedidoMatricula: [TurmaSolicitada!]!
 }
 
 type Mutation {

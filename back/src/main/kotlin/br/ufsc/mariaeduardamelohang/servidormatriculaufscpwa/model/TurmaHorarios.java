@@ -14,4 +14,8 @@ public class TurmaHorarios implements Serializable {
 
 	@EmbeddedId
 	TurmaHorariosPrimaryKey id;
+
+	public TurmaHorariosPrimaryKey getId() {
+		return id;
+	}
 }

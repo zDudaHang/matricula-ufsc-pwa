@@ -1,13 +1,11 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -34,6 +32,35 @@ public class Turma implements Serializable {
 	@JoinColumn(name = "codigo_disciplina", nullable = false, referencedColumnName = "codigo")
 	Disciplina disciplina;
 
-	@ManyToMany(mappedBy = "pedidosMatricula")
-	List<Aluno> alunosMatriculados;
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public int getVagasOfertadas() {
+		return vagasOfertadas;
+	}
+
+	public int getVagasOcupadas() {
+		return vagasOcupadas;
+	}
+
+	public void setVagasOcupadas(int vagasOcupadas) {
+		this.vagasOcupadas = vagasOcupadas;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
+	}
 }

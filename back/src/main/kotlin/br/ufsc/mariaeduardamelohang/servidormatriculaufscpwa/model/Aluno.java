@@ -5,16 +5,12 @@ import static javax.persistence.GenerationType.AUTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -40,14 +36,6 @@ public class Aluno implements Serializable, UserDetails {
 
 	@Column(nullable = false)
 	private Float iaa;
-
-	@ManyToMany
-	@JoinTable(
-			name = "TB_PEDIDO_MATRICULA",
-			joinColumns = @JoinColumn(name = "matricula_aluno"),
-			inverseJoinColumns = @JoinColumn(name = "codigo_turma")
-	)
-	private List<Turma> pedidosMatricula;
 
 	public String getNome() {
 		return nome;

@@ -30,4 +30,24 @@ public class TurmaHorariosPrimaryKey implements Serializable {
 
 	@Column
 	String sala;
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public DiaSemana getDiaSemana() {
+		return diaSemana;
+	}
+
+	public Horario getHorarioInicio() {
+		return horarioInicio;
+	}
+
+	public Horario getHorarioFinal() {
+		return horarioFinal;
+	}
+
+	public String getSala() {
+		return sala;
+	}
 }

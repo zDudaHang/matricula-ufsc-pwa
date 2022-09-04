@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.RegistrarAlunoInput
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
