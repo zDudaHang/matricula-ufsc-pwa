@@ -1,0 +1,9 @@
+query PedidoMatricula {
+  buscarPedidoMatricula {
+    turma {
+      codigo
+    }
+    status
+    posicaoNaFilaEspera
+  }
+}
