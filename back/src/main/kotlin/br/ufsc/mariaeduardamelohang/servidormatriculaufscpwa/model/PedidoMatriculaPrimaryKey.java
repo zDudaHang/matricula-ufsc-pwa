@@ -19,6 +19,11 @@ public class PedidoMatriculaPrimaryKey implements Serializable {
 	@MapsId
 	Aluno aluno;
 
+	public PedidoMatriculaPrimaryKey(Turma turma, Aluno aluno) {
+		this.turma = turma;
+		this.aluno = aluno;
+	}
+
 	public Turma getTurma() {
 		return turma;
 	}
@@ -32,11 +37,6 @@ public class PedidoMatriculaPrimaryKey implements Serializable {
 	}
 
 	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	public PedidoMatriculaPrimaryKey(Turma turma, Aluno aluno) {
-		this.turma = turma;
 		this.aluno = aluno;
 	}
 }

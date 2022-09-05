@@ -2,6 +2,7 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,15 +16,19 @@ public class PedidoMatricula implements Serializable {
 	@EmbeddedId
 	PedidoMatriculaPrimaryKey id;
 
-	public PedidoMatriculaPrimaryKey getId() {
-		return id;
-	}
+	@Column(nullable = false)
+	private Float iaaAluno;
 
-	public void setId(PedidoMatriculaPrimaryKey id) {
-		this.id = id;
-	}
+	@Column
+	private int posicao;
 
 	public PedidoMatricula(PedidoMatriculaPrimaryKey id) {
 		this.id = id;
+		this.iaaAluno = id.aluno.getIaa();
 	}
+
+	public int getPosicao() {
+		return posicao;
+	}
+
 }

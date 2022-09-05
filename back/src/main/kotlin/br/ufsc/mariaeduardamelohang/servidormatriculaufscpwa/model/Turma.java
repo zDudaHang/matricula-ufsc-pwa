@@ -21,9 +21,6 @@ public class Turma implements Serializable {
 	@Column(nullable = false)
 	int vagasOfertadas;
 
-	@Column(nullable = false)
-	int vagasOcupadas = 0;
-
 	@ManyToOne
 	@JoinColumn(name = "id_professor", nullable = false, referencedColumnName = "id")
 	Professor professor;
@@ -32,35 +29,8 @@ public class Turma implements Serializable {
 	@JoinColumn(name = "codigo_disciplina", nullable = false, referencedColumnName = "codigo")
 	Disciplina disciplina;
 
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public int getVagasOfertadas() {
-		return vagasOfertadas;
-	}
-
-	public int getVagasOcupadas() {
-		return vagasOcupadas;
-	}
-
-	public void setVagasOcupadas(int vagasOcupadas) {
-		this.vagasOcupadas = vagasOcupadas;
-	}
-
 	public Professor getProfessor() {
 		return professor;
 	}
 
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-
-	public Disciplina getDisciplina() {
-		return disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
 }
