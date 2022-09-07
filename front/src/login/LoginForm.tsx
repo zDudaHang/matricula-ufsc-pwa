@@ -4,6 +4,7 @@ import { ButtonLink } from '../components/ButtonLink'
 import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
 import { LoginInput, useLoginMutation } from '../generated/graphql'
+import { REGISTAR_ALUNO_ROUTE } from '../routes/routes'
 
 type LoginFormModel = LoginInput
 
@@ -29,7 +30,7 @@ export function LoginForm() {
         </Cell>
         <Cell size={6}>
           <HFlow>
-            <ButtonLink size='large' path='registrarAluno'>
+            <ButtonLink size='large' path={REGISTAR_ALUNO_ROUTE}>
               Registrar-se
             </ButtonLink>
             <Button type='submit' kind='primary' onClick={formProps.handleSubmit} size='large'>
