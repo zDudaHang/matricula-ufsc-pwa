@@ -8,7 +8,6 @@ const authLink = new ApolloLink((operation, forward) => {
       Authorization: accessToken ? `Bearer ${accessToken}` : '',
     },
   })
-  console.log(operation.getContext())
   return forward(operation)
 })
 
