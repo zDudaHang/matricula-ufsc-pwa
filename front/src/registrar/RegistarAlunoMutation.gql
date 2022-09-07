@@ -1,0 +1,5 @@
+mutation RegistrarAluno($input: RegistrarAlunoInput!) {
+  registrarAluno(input: $input) {
+    matricula
+  }
+}

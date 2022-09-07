@@ -1,7 +1,8 @@
-import { Button, Cell, Grid, Heading } from 'bold-ui'
+import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
 import { Form, FormRenderProps } from 'react-final-form'
-import { PasswordField } from '../fields/PasswordField'
-import { TextField } from '../fields/TextField'
+import { ButtonLink } from '../components/ButtonLink'
+import { PasswordField } from '../components/fields/PasswordField'
+import { TextField } from '../components/fields/TextField'
 import { LoginInput, useLoginMutation } from '../generated/graphql'
 
 type LoginFormModel = LoginInput
@@ -27,9 +28,14 @@ export function LoginForm() {
           <PasswordField label='Senha' name='senha' placeholder='Digite sua senha' required />
         </Cell>
         <Cell size={6}>
-          <Button type='submit' kind='primary' onClick={formProps.handleSubmit}>
-            Entrar
-          </Button>
+          <HFlow>
+            <ButtonLink size='large' path='registrarAluno'>
+              Registrar-se
+            </ButtonLink>
+            <Button type='submit' kind='primary' onClick={formProps.handleSubmit} size='large'>
+              Entrar
+            </Button>
+          </HFlow>
         </Cell>
       </Grid>
     )
