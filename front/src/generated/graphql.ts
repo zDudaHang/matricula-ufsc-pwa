@@ -99,47 +99,44 @@ export type TurmaSolicitada = {
   turma: Turma;
 };
 
-export type PedidoMatriculaQueryVariables = Exact<{ [key: string]: never; }>;
+export type LoginMutationVariables = Exact<{
+  input: LoginInput;
+}>;
 
 
-export type PedidoMatriculaQuery = { __typename?: 'Query', buscarPedidoMatricula: Array<{ __typename?: 'TurmaSolicitada', status?: StatusSolicitacao | null, posicaoNaFilaEspera?: number | null, turma: { __typename?: 'Turma', codigo: string } }> };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', accessToken?: string | null } };
 
 
-export const PedidoMatriculaDocument = gql`
-    query PedidoMatricula {
-  buscarPedidoMatricula {
-    turma {
-      codigo
-    }
-    status
-    posicaoNaFilaEspera
+export const LoginDocument = gql`
+    mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    accessToken
   }
 }
     `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
- * __usePedidoMatriculaQuery__
+ * __useLoginMutation__
  *
- * To run a query within a React component, call `usePedidoMatriculaQuery` and pass it any options that fit your needs.
- * When your component renders, `usePedidoMatriculaQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = usePedidoMatriculaQuery({
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
  *   variables: {
+ *      input: // value for 'input'
  *   },
  * });
  */
-export function usePedidoMatriculaQuery(baseOptions?: Apollo.QueryHookOptions<PedidoMatriculaQuery, PedidoMatriculaQueryVariables>) {
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<PedidoMatriculaQuery, PedidoMatriculaQueryVariables>(PedidoMatriculaDocument, options);
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
       }
-export function usePedidoMatriculaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PedidoMatriculaQuery, PedidoMatriculaQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<PedidoMatriculaQuery, PedidoMatriculaQueryVariables>(PedidoMatriculaDocument, options);
-        }
-export type PedidoMatriculaQueryHookResult = ReturnType<typeof usePedidoMatriculaQuery>;
-export type PedidoMatriculaLazyQueryHookResult = ReturnType<typeof usePedidoMatriculaLazyQuery>;
-export type PedidoMatriculaQueryResult = Apollo.QueryResult<PedidoMatriculaQuery, PedidoMatriculaQueryVariables>;
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;

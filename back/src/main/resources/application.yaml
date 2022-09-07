@@ -29,6 +29,15 @@ server:
 # = GraphQL
 # - Ref: https://github.com/graphql-java-kickstart/graphql-spring-boot#enable-graphql-servlet
 # ===============================
+graphql:
+  servlet:
+    enabled: true
+    mapping: /graphql
+    cors-enabled: true
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
 graphiql:
   servlet:
     mapping: /graphql
