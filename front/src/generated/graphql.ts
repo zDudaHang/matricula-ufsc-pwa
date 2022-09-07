@@ -111,7 +111,7 @@ export type RegistrarAlunoMutationVariables = Exact<{
 }>;
 
 
-export type RegistrarAlunoMutation = { __typename?: 'Mutation', registrarAluno?: { __typename?: 'Aluno', matricula: string } | null };
+export type RegistrarAlunoMutation = { __typename?: 'Mutation', registrarAluno?: { __typename?: 'Aluno', nomeUsuario: string } | null };
 
 
 export const LoginDocument = gql`
@@ -150,7 +150,7 @@ export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, Log
 export const RegistrarAlunoDocument = gql`
     mutation RegistrarAluno($input: RegistrarAlunoInput!) {
   registrarAluno(input: $input) {
-    matricula
+    nomeUsuario
   }
 }
     `;

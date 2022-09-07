@@ -1,5 +1,6 @@
 import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
 import { Form, FormRenderProps } from 'react-final-form'
+import { useParams } from 'react-router-dom'
 import { ButtonLink } from '../components/ButtonLink'
 import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
@@ -8,11 +9,17 @@ import { REGISTAR_ALUNO_ROUTE } from '../routes/routes'
 
 type LoginFormModel = LoginInput
 
+interface LoginURLParams {
+  nomeUsuario: string
+}
+
 export function LoginForm() {
   const [efetuarLogin] = useLoginMutation({
     onCompleted: (data) => console.log(data),
     onError: (error) => console.log(error),
   })
+
+  const { nomeUsuario } = useParams<keyof LoginURLParams>()
 
   const handleSubmit = (values: LoginFormModel) => efetuarLogin({ variables: { input: values } })
 
@@ -42,5 +49,5 @@ export function LoginForm() {
     )
   }
 
-  return <Form<LoginFormModel> render={renderForm} onSubmit={handleSubmit} />
+  return <Form<LoginFormModel> initialValues={{ nomeUsuario }} render={renderForm} onSubmit={handleSubmit} />
 }

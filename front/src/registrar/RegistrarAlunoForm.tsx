@@ -1,14 +1,22 @@
 import { Grid, Cell, Heading, Button } from 'bold-ui'
 import { Form, FormRenderProps } from 'react-final-form'
+import { useNavigate } from 'react-router-dom'
 import { NumberField } from '../components/fields/NumberField'
 import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
 import { RegistrarAlunoInput, useRegistrarAlunoMutation } from '../generated/graphql'
+import { LOGIN_ROUTE } from '../routes/routes'
 
 type RegistrarAlunoFormModel = RegistrarAlunoInput
 
 export function RegistrarAlunoForm() {
-  const [registrarAluno] = useRegistrarAlunoMutation()
+  const navigate = useNavigate()
+
+  const [registrarAluno] = useRegistrarAlunoMutation({
+    onCompleted: (data) => {
+      if (data.registrarAluno?.nomeUsuario) navigate(`${LOGIN_ROUTE}${data.registrarAluno.nomeUsuario}`)
+    },
+  })
 
   const handleSubmit = (values: RegistrarAlunoFormModel) => registrarAluno({ variables: { input: values } })
 
