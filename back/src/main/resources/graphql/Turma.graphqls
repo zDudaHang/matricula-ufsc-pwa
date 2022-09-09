@@ -16,3 +16,7 @@ type TurmaSolicitada {
     status: StatusSolicitacao
     posicaoNaFilaEspera: Int
 }
+
+type Query {
+    turmas: [Turma!]!
+}

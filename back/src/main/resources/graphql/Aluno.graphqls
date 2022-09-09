@@ -27,10 +27,6 @@ input LoginInput {
     senha: String!
 }
 
-type Query {
-    buscarPedidoMatricula: [TurmaSolicitada!]!
-}
-
 type Mutation {
     registrarAluno(input: RegistrarAlunoInput!): Aluno
     registrarPedidoMatricula(input: PedidoMatriculaInput!): Int

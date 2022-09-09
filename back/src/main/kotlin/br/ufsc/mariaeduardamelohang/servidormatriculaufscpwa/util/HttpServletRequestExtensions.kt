@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util
 
 import javax.servlet.http.HttpServletRequest
 

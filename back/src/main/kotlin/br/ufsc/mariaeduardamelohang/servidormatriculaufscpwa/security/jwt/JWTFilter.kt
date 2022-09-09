@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.security.jwt
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.getAuthorizationHeader
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.getAuthorizationHeader
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AlunoService
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.JWTService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

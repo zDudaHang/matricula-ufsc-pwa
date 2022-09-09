@@ -26,6 +26,7 @@ export type Aluno = {
 export type Disciplina = {
   __typename?: 'Disciplina';
   cargaHoraria: Scalars['Int'];
+  codigo: Scalars['String'];
   nome: Scalars['String'];
 };
 
@@ -69,7 +70,7 @@ export type PedidoMatriculaInput = {
 
 export type Query = {
   __typename?: 'Query';
-  buscarPedidoMatricula: Array<TurmaSolicitada>;
+  turmas: Array<Turma>;
 };
 
 export type RegistrarAlunoInput = {
@@ -112,6 +113,11 @@ export type RegistrarAlunoMutationVariables = Exact<{
 
 
 export type RegistrarAlunoMutation = { __typename?: 'Mutation', registrarAluno?: { __typename?: 'Aluno', nomeUsuario: string } | null };
+
+export type BuscarTurmasQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BuscarTurmasQuery = { __typename?: 'Query', turmas: Array<{ __typename?: 'Turma', codigo: string, vagasOfertadas: number, nomeProfessor: string, disciplina: { __typename?: 'Disciplina', codigo: string, nome: string, cargaHoraria: number } }> };
 
 
 export const LoginDocument = gql`
@@ -180,3 +186,44 @@ export function useRegistrarAlunoMutation(baseOptions?: Apollo.MutationHookOptio
 export type RegistrarAlunoMutationHookResult = ReturnType<typeof useRegistrarAlunoMutation>;
 export type RegistrarAlunoMutationResult = Apollo.MutationResult<RegistrarAlunoMutation>;
 export type RegistrarAlunoMutationOptions = Apollo.BaseMutationOptions<RegistrarAlunoMutation, RegistrarAlunoMutationVariables>;
+export const BuscarTurmasDocument = gql`
+    query BuscarTurmas {
+  turmas {
+    codigo
+    vagasOfertadas
+    nomeProfessor
+    disciplina {
+      codigo
+      nome
+      cargaHoraria
+    }
+  }
+}
+    `;
+
+/**
+ * __useBuscarTurmasQuery__
+ *
+ * To run a query within a React component, call `useBuscarTurmasQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBuscarTurmasQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBuscarTurmasQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBuscarTurmasQuery(baseOptions?: Apollo.QueryHookOptions<BuscarTurmasQuery, BuscarTurmasQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BuscarTurmasQuery, BuscarTurmasQueryVariables>(BuscarTurmasDocument, options);
+      }
+export function useBuscarTurmasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BuscarTurmasQuery, BuscarTurmasQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BuscarTurmasQuery, BuscarTurmasQueryVariables>(BuscarTurmasDocument, options);
+        }
+export type BuscarTurmasQueryHookResult = ReturnType<typeof useBuscarTurmasQuery>;
+export type BuscarTurmasLazyQueryHookResult = ReturnType<typeof useBuscarTurmasLazyQuery>;
+export type BuscarTurmasQueryResult = Apollo.QueryResult<BuscarTurmasQuery, BuscarTurmasQueryVariables>;

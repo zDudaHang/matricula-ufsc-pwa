@@ -1,0 +1,12 @@
+query BuscarTurmas {
+  turmas {
+    codigo
+    vagasOfertadas
+    nomeProfessor
+    disciplina {
+      codigo
+      nome
+      cargaHoraria
+    }
+  }
+}
