@@ -3,6 +3,14 @@ type Turma {
     vagasOfertadas: Int!
     nomeProfessor: String!
     disciplina: Disciplina!
+    horarios: [HorarioTurma!]!
+}
+
+type HorarioTurma {
+    diaSemana: DiaSemana!
+    horarioInicio: HorarioAula!
+    horarioFinal: HorarioAula!
+    sala: String!
 }
 
 type Query {

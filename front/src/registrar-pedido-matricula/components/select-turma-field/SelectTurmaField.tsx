@@ -1,9 +1,10 @@
 import { HFlow, isEqual, Select, Text, VFlow } from 'bold-ui'
+import { useField } from 'react-final-form'
 import { BuscarTurmasQuery, useBuscarTurmasQuery } from '../../../generated/graphql'
 
-type Turma = BuscarTurmasQuery['turmas'][0]
+export type SelectTurmaFieldModel = BuscarTurmasQuery['turmas'][0]
 
-const renderItem = (turma: Turma) => {
+const renderItem = (turma: SelectTurmaFieldModel) => {
   const { disciplina, nomeProfessor, codigo, vagasOfertadas } = turma
   return (
     <VFlow vSpacing={0} style={{ marginLeft: '1rem' }}>
@@ -12,28 +13,39 @@ const renderItem = (turma: Turma) => {
       </Text>
       <HFlow>Professor: {nomeProfessor}</HFlow>
       <HFlow>Vagas ofertadas: {vagasOfertadas}</HFlow>
+      <HFlow>Carga horária (H/A): {disciplina.cargaHoraria}</HFlow>
     </VFlow>
   )
 }
 
-const itemToString = (turma: Turma) => turma.codigo
+const itemToString = (turma: SelectTurmaFieldModel) => turma?.codigo
 
-const itemIsEqual = (turmaA: Turma, turmaB: Turma) => isEqual(turmaA.codigo, turmaB.codigo)
+const itemIsEqual = (turmaA: SelectTurmaFieldModel, turmaB: SelectTurmaFieldModel) =>
+  isEqual(turmaA?.codigo, turmaB?.codigo)
 
-export function SelectTurmaField() {
+interface SelectTurmaFieldProps {
+  name: string
+}
+
+export function SelectTurmaField(props: SelectTurmaFieldProps) {
   const { loading, data } = useBuscarTurmasQuery()
 
+  const { input, meta } = useField(props.name)
+
   return (
-    <Select<Turma>
+    <Select<SelectTurmaFieldModel>
+      value={input.value}
+      error={meta.error}
+      onChange={input.onChange}
       label='Turmas'
       items={data?.turmas ?? []}
       loading={loading}
-      multiple
       renderItem={renderItem}
       itemToString={itemToString}
       itemIsEqual={itemIsEqual}
-      required
       placeholder='Selecione as turmas que queira se matricular'
+      multiple
+      required
     />
   )
 }

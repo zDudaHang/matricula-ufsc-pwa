@@ -33,4 +33,7 @@ public class Turma implements Serializable {
 		return professor;
 	}
 
+	public String getCodigo() {
+		return codigo;
+	}
 }

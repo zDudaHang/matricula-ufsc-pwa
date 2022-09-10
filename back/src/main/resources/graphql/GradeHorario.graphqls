@@ -8,7 +8,18 @@ type DiaSemana {
     nome: String!
 }
 
+type HorarioTurmaMap {
+    horarioId: Int!
+    horariosPorDiaSemana: [HorarioPorDiaSemana!]!
+}
+
+type HorarioPorDiaSemana {
+    diaSemanaId: Int!
+    horariosTurma: [HorarioTurma!]!
+}
+
 extend type Query {
     horarios: [HorarioAula!]!
     diasSemana: [DiaSemana!]!
+    turmasGradeHorario: [HorarioTurmaMap!]!
 }

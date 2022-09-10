@@ -20,4 +20,12 @@ public class Horario implements Serializable {
 
 	@Column(nullable = false)
 	LocalTime horario;
+
+	public Long getId() {
+		return id;
+	}
+
+	public LocalTime getHorario() {
+		return horario;
+	}
 }

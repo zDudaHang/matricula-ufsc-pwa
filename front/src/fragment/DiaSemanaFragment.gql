@@ -1,0 +1,4 @@
+fragment DiaSemana on DiaSemana {
+  id
+  nome
+}

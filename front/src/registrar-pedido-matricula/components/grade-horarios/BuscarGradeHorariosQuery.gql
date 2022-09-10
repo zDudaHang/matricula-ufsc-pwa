@@ -1,11 +1,9 @@
 query BuscarGradeHorarios {
   horarios {
-    id
-    horario
+    ...Horario
   }
 
   diasSemana {
-    id
-    nome
+    ...DiaSemana
   }
 }

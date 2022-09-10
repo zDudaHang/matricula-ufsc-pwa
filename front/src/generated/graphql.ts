@@ -42,6 +42,14 @@ export type HorarioAula = {
   id: Scalars['Int'];
 };
 
+export type HorarioTurma = {
+  __typename?: 'HorarioTurma';
+  diaSemana: DiaSemana;
+  horarioFinal: HorarioAula;
+  horarioInicio: HorarioAula;
+  sala: Scalars['String'];
+};
+
 export type LoginInput = {
   nomeUsuario: Scalars['String'];
   senha: Scalars['String'];
@@ -98,9 +106,14 @@ export type Turma = {
   __typename?: 'Turma';
   codigo: Scalars['String'];
   disciplina: Disciplina;
+  horarios: Array<HorarioTurma>;
   nomeProfessor: Scalars['String'];
   vagasOfertadas: Scalars['Int'];
 };
+
+export type DiaSemanaFragment = { __typename?: 'DiaSemana', id: number, nome: string };
+
+export type HorarioFragment = { __typename?: 'HorarioAula', id: number, horario: string };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
@@ -124,9 +137,20 @@ export type BuscarGradeHorariosQuery = { __typename?: 'Query', horarios: Array<{
 export type BuscarTurmasQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BuscarTurmasQuery = { __typename?: 'Query', turmas: Array<{ __typename?: 'Turma', codigo: string, vagasOfertadas: number, nomeProfessor: string, disciplina: { __typename?: 'Disciplina', codigo: string, nome: string, cargaHoraria: number } }> };
+export type BuscarTurmasQuery = { __typename?: 'Query', turmas: Array<{ __typename?: 'Turma', codigo: string, vagasOfertadas: number, nomeProfessor: string, disciplina: { __typename?: 'Disciplina', codigo: string, nome: string, cargaHoraria: number }, horarios: Array<{ __typename?: 'HorarioTurma', sala: string, diaSemana: { __typename?: 'DiaSemana', id: number, nome: string }, horarioInicio: { __typename?: 'HorarioAula', id: number, horario: string }, horarioFinal: { __typename?: 'HorarioAula', id: number, horario: string } }> }> };
 
-
+export const DiaSemanaFragmentDoc = gql`
+    fragment DiaSemana on DiaSemana {
+  id
+  nome
+}
+    `;
+export const HorarioFragmentDoc = gql`
+    fragment Horario on HorarioAula {
+  id
+  horario
+}
+    `;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -196,15 +220,14 @@ export type RegistrarAlunoMutationOptions = Apollo.BaseMutationOptions<Registrar
 export const BuscarGradeHorariosDocument = gql`
     query BuscarGradeHorarios {
   horarios {
-    id
-    horario
+    ...Horario
   }
   diasSemana {
-    id
-    nome
+    ...DiaSemana
   }
 }
-    `;
+    ${HorarioFragmentDoc}
+${DiaSemanaFragmentDoc}`;
 
 /**
  * __useBuscarGradeHorariosQuery__
@@ -243,9 +266,22 @@ export const BuscarTurmasDocument = gql`
       nome
       cargaHoraria
     }
+    horarios {
+      diaSemana {
+        ...DiaSemana
+      }
+      horarioInicio {
+        ...Horario
+      }
+      horarioFinal {
+        ...Horario
+      }
+      sala
+    }
   }
 }
-    `;
+    ${DiaSemanaFragmentDoc}
+${HorarioFragmentDoc}`;
 
 /**
  * __useBuscarTurmasQuery__

@@ -8,5 +8,17 @@ query BuscarTurmas {
       nome
       cargaHoraria
     }
+    horarios {
+      diaSemana {
+        ...DiaSemana
+      }
+      horarioInicio {
+        ...Horario
+      }
+      horarioFinal {
+        ...Horario
+      }
+      sala
+    }
   }
 }

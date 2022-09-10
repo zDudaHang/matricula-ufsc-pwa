@@ -1,16 +1,31 @@
 import { Cell, Grid } from 'bold-ui'
+import { Form, FormRenderProps } from 'react-final-form'
 import { GradeHorarios } from './components/grade-horarios/GradeHorarios'
-import { SelectTurmaField } from './components/select-turma-field/SelectTurmaField'
+import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
+
+interface RegistrarPedidoMatriculaFormModel {
+  turmas: SelectTurmaFieldModel[]
+}
 
 export function RegistrarPedidoMatriculaForm() {
+  const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {
+    return (
+      <Grid justifyContent='center' alignItems='center' style={{ margin: '1rem' }}>
+        <Cell size={12}>
+          <SelectTurmaField name='turmas' />
+        </Cell>
+        <Cell size={12}>
+          <GradeHorarios nameTurmaField='turmas' />
+        </Cell>
+      </Grid>
+    )
+  }
+
   return (
-    <Grid justifyContent='center' alignItems='center' style={{ margin: '1rem' }}>
-      <Cell size={12}>
-        <SelectTurmaField />
-      </Cell>
-      <Cell size={12}>
-        <GradeHorarios />
-      </Cell>
-    </Grid>
+    <Form<RegistrarPedidoMatriculaFormModel>
+      render={renderForm}
+      onSubmit={console.log}
+      initialValues={{ turmas: [] }}
+    />
   )
 }
