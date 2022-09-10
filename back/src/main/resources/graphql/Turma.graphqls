@@ -1,20 +1,8 @@
 type Turma {
     codigo: String!
-#    sala: String!
     vagasOfertadas: Int!
     nomeProfessor: String!
     disciplina: Disciplina!
-}
-
-enum StatusSolicitacao {
-    VAGA_GARANTIDA,
-    FILA_ESPERA
-}
-
-type TurmaSolicitada {
-    turma: Turma!
-    status: StatusSolicitacao
-    posicaoNaFilaEspera: Int
 }
 
 type Query {

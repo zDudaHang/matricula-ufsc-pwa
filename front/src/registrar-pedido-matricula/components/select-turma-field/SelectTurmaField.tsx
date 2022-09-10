@@ -1,5 +1,5 @@
 import { HFlow, isEqual, Select, Text, VFlow } from 'bold-ui'
-import { BuscarTurmasQuery, useBuscarTurmasQuery } from '../../generated/graphql'
+import { BuscarTurmasQuery, useBuscarTurmasQuery } from '../../../generated/graphql'
 
 type Turma = BuscarTurmasQuery['turmas'][0]
 

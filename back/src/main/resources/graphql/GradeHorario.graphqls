@@ -1,0 +1,14 @@
+type HorarioAula {
+    id: Int!
+    horario: String!
+}
+
+type DiaSemana {
+    id: Int!
+    nome: String!
+}
+
+extend type Query {
+    horarios: [HorarioAula!]!
+    diasSemana: [DiaSemana!]!
+}

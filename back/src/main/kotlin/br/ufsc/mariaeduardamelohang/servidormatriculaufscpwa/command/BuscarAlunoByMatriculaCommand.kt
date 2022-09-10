@@ -16,7 +16,8 @@ class BuscarAlunoByMatriculaCommand(
 ) {
     @Transactional
     fun execute(matricula: UUID): Aluno? {
-        return JPAQueryFactory(em).selectFrom(aluno)
+        return JPAQueryFactory(em)
+            .selectFrom(aluno)
             .where(aluno.matricula.eq(matricula))
             .fetchOne()
     }

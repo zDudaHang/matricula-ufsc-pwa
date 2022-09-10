@@ -23,11 +23,23 @@ export type Aluno = {
   nomeUsuario: Scalars['String'];
 };
 
+export type DiaSemana = {
+  __typename?: 'DiaSemana';
+  id: Scalars['Int'];
+  nome: Scalars['String'];
+};
+
 export type Disciplina = {
   __typename?: 'Disciplina';
   cargaHoraria: Scalars['Int'];
   codigo: Scalars['String'];
   nome: Scalars['String'];
+};
+
+export type HorarioAula = {
+  __typename?: 'HorarioAula';
+  horario: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 export type LoginInput = {
@@ -70,6 +82,8 @@ export type PedidoMatriculaInput = {
 
 export type Query = {
   __typename?: 'Query';
+  diasSemana: Array<DiaSemana>;
+  horarios: Array<HorarioAula>;
   turmas: Array<Turma>;
 };
 
@@ -80,24 +94,12 @@ export type RegistrarAlunoInput = {
   senha: Scalars['String'];
 };
 
-export enum StatusSolicitacao {
-  FilaEspera = 'FILA_ESPERA',
-  VagaGarantida = 'VAGA_GARANTIDA'
-}
-
 export type Turma = {
   __typename?: 'Turma';
   codigo: Scalars['String'];
   disciplina: Disciplina;
   nomeProfessor: Scalars['String'];
   vagasOfertadas: Scalars['Int'];
-};
-
-export type TurmaSolicitada = {
-  __typename?: 'TurmaSolicitada';
-  posicaoNaFilaEspera?: Maybe<Scalars['Int']>;
-  status?: Maybe<StatusSolicitacao>;
-  turma: Turma;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -113,6 +115,11 @@ export type RegistrarAlunoMutationVariables = Exact<{
 
 
 export type RegistrarAlunoMutation = { __typename?: 'Mutation', registrarAluno?: { __typename?: 'Aluno', nomeUsuario: string } | null };
+
+export type BuscarGradeHorariosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BuscarGradeHorariosQuery = { __typename?: 'Query', horarios: Array<{ __typename?: 'HorarioAula', id: number, horario: string }>, diasSemana: Array<{ __typename?: 'DiaSemana', id: number, nome: string }> };
 
 export type BuscarTurmasQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -186,6 +193,45 @@ export function useRegistrarAlunoMutation(baseOptions?: Apollo.MutationHookOptio
 export type RegistrarAlunoMutationHookResult = ReturnType<typeof useRegistrarAlunoMutation>;
 export type RegistrarAlunoMutationResult = Apollo.MutationResult<RegistrarAlunoMutation>;
 export type RegistrarAlunoMutationOptions = Apollo.BaseMutationOptions<RegistrarAlunoMutation, RegistrarAlunoMutationVariables>;
+export const BuscarGradeHorariosDocument = gql`
+    query BuscarGradeHorarios {
+  horarios {
+    id
+    horario
+  }
+  diasSemana {
+    id
+    nome
+  }
+}
+    `;
+
+/**
+ * __useBuscarGradeHorariosQuery__
+ *
+ * To run a query within a React component, call `useBuscarGradeHorariosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBuscarGradeHorariosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBuscarGradeHorariosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBuscarGradeHorariosQuery(baseOptions?: Apollo.QueryHookOptions<BuscarGradeHorariosQuery, BuscarGradeHorariosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BuscarGradeHorariosQuery, BuscarGradeHorariosQueryVariables>(BuscarGradeHorariosDocument, options);
+      }
+export function useBuscarGradeHorariosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BuscarGradeHorariosQuery, BuscarGradeHorariosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BuscarGradeHorariosQuery, BuscarGradeHorariosQueryVariables>(BuscarGradeHorariosDocument, options);
+        }
+export type BuscarGradeHorariosQueryHookResult = ReturnType<typeof useBuscarGradeHorariosQuery>;
+export type BuscarGradeHorariosLazyQueryHookResult = ReturnType<typeof useBuscarGradeHorariosLazyQuery>;
+export type BuscarGradeHorariosQueryResult = Apollo.QueryResult<BuscarGradeHorariosQuery, BuscarGradeHorariosQueryVariables>;
 export const BuscarTurmasDocument = gql`
     query BuscarTurmas {
   turmas {

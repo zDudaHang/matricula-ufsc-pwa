@@ -1,0 +1,11 @@
+query BuscarGradeHorarios {
+  horarios {
+    id
+    horario
+  }
+
+  diasSemana {
+    id
+    nome
+  }
+}
