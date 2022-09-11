@@ -19,7 +19,7 @@ export function RegistrarPedidoMatriculaForm() {
           <SelectTurmaField name='turmas' />
         </Cell>
         <Cell size={12}>
-          <GradeHorarios nameTurmaField='turmas' />
+          <GradeHorarios />
         </Cell>
       </Grid>
     )

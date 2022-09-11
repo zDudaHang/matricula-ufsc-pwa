@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useTheme } from 'bold-ui'
+import { HFlow, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text, useTheme, VFlow } from 'bold-ui'
 import { useField } from 'react-final-form'
 import { useBuscarGradeHorariosQuery } from '../../../generated/graphql'
 
@@ -10,15 +10,13 @@ export interface TurmaGradeHorarioModel {
   sala: string
 }
 
-interface GradeHorariosProps {
-  nameTurmaField: string
-}
+const FIELD_NAME = 'horarios'
 
-export function GradeHorarios(props: GradeHorariosProps) {
+export function GradeHorarios() {
   const { data } = useBuscarGradeHorariosQuery()
   const theme = useTheme()
 
-  const { input: horariosSelecionados } = useField<HorariosSelecionados>('horarios', {
+  const { input: horariosSelecionados } = useField<HorariosSelecionados>(FIELD_NAME, {
     subscription: { value: true },
   })
 
@@ -40,14 +38,20 @@ export function GradeHorarios(props: GradeHorariosProps) {
             >
               {horario}
             </TableCell>
-            {data?.diasSemana.map(({ id }) => {
-              const turmas = horariosSelecionados.value.get(horarioId)?.get(id)
+            {data?.diasSemana.map(({ id: diaSemanaId }) => {
+              const turmas = horariosSelecionados.value.get(horarioId)?.get(diaSemanaId)
               if (turmas) {
-                return turmas?.map((turma) => (
+                return (
                   <TableCell>
-                    {turma.codigoTurma} - {turma.sala}
+                    <VFlow vSpacing={0}>
+                      {turmas.map((turma) => (
+                        <Text>
+                          {turma.codigoTurma} - {turma.sala}
+                        </Text>
+                      ))}
+                    </VFlow>
                   </TableCell>
-                ))
+                )
               } else {
                 return <TableCell />
               }
