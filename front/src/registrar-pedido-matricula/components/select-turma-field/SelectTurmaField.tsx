@@ -34,16 +34,16 @@ export function SelectTurmaField(props: SelectTurmaFieldProps) {
 
   return (
     <Select<SelectTurmaFieldModel>
+      label='Turmas'
+      placeholder='Selecione as turmas que queira se matricular'
       value={input.value}
       error={meta.error}
       onChange={input.onChange}
-      label='Turmas'
       items={data?.turmas ?? []}
       loading={loading}
       renderItem={renderItem}
       itemToString={itemToString}
       itemIsEqual={itemIsEqual}
-      placeholder='Selecione as turmas que queira se matricular'
       multiple
       required
     />

@@ -1,0 +1,3 @@
+mutation RegistrarPedidoMatricula($input: PedidoMatriculaInput!) {
+  registrarPedidoMatricula(input: $input)
+}

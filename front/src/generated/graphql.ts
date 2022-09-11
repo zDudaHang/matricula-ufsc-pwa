@@ -128,6 +128,13 @@ export type RegistrarAlunoMutationVariables = Exact<{
 
 export type RegistrarAlunoMutation = { __typename?: 'Mutation', registrarAluno?: { __typename?: 'Aluno', nomeUsuario: string } | null };
 
+export type RegistrarPedidoMatriculaMutationVariables = Exact<{
+  input: PedidoMatriculaInput;
+}>;
+
+
+export type RegistrarPedidoMatriculaMutation = { __typename?: 'Mutation', registrarPedidoMatricula?: number | null };
+
 export type BuscarGradeHorariosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -216,6 +223,37 @@ export function useRegistrarAlunoMutation(baseOptions?: Apollo.MutationHookOptio
 export type RegistrarAlunoMutationHookResult = ReturnType<typeof useRegistrarAlunoMutation>;
 export type RegistrarAlunoMutationResult = Apollo.MutationResult<RegistrarAlunoMutation>;
 export type RegistrarAlunoMutationOptions = Apollo.BaseMutationOptions<RegistrarAlunoMutation, RegistrarAlunoMutationVariables>;
+export const RegistrarPedidoMatriculaDocument = gql`
+    mutation RegistrarPedidoMatricula($input: PedidoMatriculaInput!) {
+  registrarPedidoMatricula(input: $input)
+}
+    `;
+export type RegistrarPedidoMatriculaMutationFn = Apollo.MutationFunction<RegistrarPedidoMatriculaMutation, RegistrarPedidoMatriculaMutationVariables>;
+
+/**
+ * __useRegistrarPedidoMatriculaMutation__
+ *
+ * To run a mutation, you first call `useRegistrarPedidoMatriculaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegistrarPedidoMatriculaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registrarPedidoMatriculaMutation, { data, loading, error }] = useRegistrarPedidoMatriculaMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRegistrarPedidoMatriculaMutation(baseOptions?: Apollo.MutationHookOptions<RegistrarPedidoMatriculaMutation, RegistrarPedidoMatriculaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegistrarPedidoMatriculaMutation, RegistrarPedidoMatriculaMutationVariables>(RegistrarPedidoMatriculaDocument, options);
+      }
+export type RegistrarPedidoMatriculaMutationHookResult = ReturnType<typeof useRegistrarPedidoMatriculaMutation>;
+export type RegistrarPedidoMatriculaMutationResult = Apollo.MutationResult<RegistrarPedidoMatriculaMutation>;
+export type RegistrarPedidoMatriculaMutationOptions = Apollo.BaseMutationOptions<RegistrarPedidoMatriculaMutation, RegistrarPedidoMatriculaMutationVariables>;
 export const BuscarGradeHorariosDocument = gql`
     query BuscarGradeHorarios {
   horarios {

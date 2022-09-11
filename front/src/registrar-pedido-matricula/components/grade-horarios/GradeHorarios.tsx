@@ -1,4 +1,4 @@
-import { HFlow, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text, useTheme, VFlow } from 'bold-ui'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text, useTheme, VFlow } from 'bold-ui'
 import { useField } from 'react-final-form'
 import { useBuscarGradeHorariosQuery } from '../../../generated/graphql'
 
@@ -25,12 +25,12 @@ export function GradeHorarios() {
       <TableHead>
         <TableHeader key='vazia' />
         {data?.diasSemana.map((diasSemana) => (
-          <TableHeader key={diasSemana.id}>{diasSemana.nome}</TableHeader>
+          <TableHeader key={`th-${diasSemana.id}`}>{diasSemana.nome}</TableHeader>
         ))}
       </TableHead>
       <TableBody>
         {data?.horarios.map(({ horario, id: horarioId }) => (
-          <TableRow key={`horarios-${horarioId}`}>
+          <TableRow key={`tr-horario-${horarioId}`}>
             <TableCell
               key={horarioId}
               colSpan={1}
@@ -42,10 +42,10 @@ export function GradeHorarios() {
               const turmas = horariosSelecionados.value.get(horarioId)?.get(diaSemanaId)
               if (turmas) {
                 return (
-                  <TableCell>
+                  <TableCell key={`td-${horarioId}-${diaSemanaId}`}>
                     <VFlow vSpacing={0}>
                       {turmas.map((turma) => (
-                        <Text>
+                        <Text key={`turma-${turma.codigoTurma}-${horarioId}-${diaSemanaId}`}>
                           {turma.codigoTurma} - {turma.sala}
                         </Text>
                       ))}
@@ -53,7 +53,7 @@ export function GradeHorarios() {
                   </TableCell>
                 )
               } else {
-                return <TableCell />
+                return <TableCell key={`td-${horarioId}-${diaSemanaId}`} />
               }
             })}
           </TableRow>
