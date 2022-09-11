@@ -1,41 +1,25 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useTheme } from 'bold-ui'
 import { useField } from 'react-final-form'
-import { HorarioAula, useBuscarGradeHorariosQuery } from '../../../generated/graphql'
-import { SelectTurmaFieldModel } from '../select-turma-field/SelectTurmaField'
-import { partition } from 'lodash'
+import { useBuscarGradeHorariosQuery } from '../../../generated/graphql'
+
+export type HorariosSelecionados = Map<number, Map<number, TurmaGradeHorarioModel[]>>
+
+export interface TurmaGradeHorarioModel {
+  codigoTurma: string
+  codigoDisciplina: string
+  sala: string
+}
 
 interface GradeHorariosProps {
   nameTurmaField: string
 }
 
-const isDentroDoHorario = (horario: HorarioAula, turma: SelectTurmaFieldModel): boolean =>
-  turma.horarios.some(
-    (horarioTurma) => horario.id === horarioTurma.horarioInicio.id || horario.id === horarioTurma.horarioFinal.id
-  )
-
 export function GradeHorarios(props: GradeHorariosProps) {
   const { data } = useBuscarGradeHorariosQuery()
   const theme = useTheme()
 
-  const { input } = useField(props.nameTurmaField, { subscription: { value: true } })
-
-  const turmasSelecionadas = input.value as SelectTurmaFieldModel[]
-
-  let turmas: SelectTurmaFieldModel[] = []
-
-  let horarios = []
-
-  data?.horarios.forEach((horario) => {
-    // turmas = turmasSelecionadas.filter((turma) => {
-    //   isDentroDoHorario(horario, turma)
-    // })
-    turmasSelecionadas.forEach((turma) => {
-      const teste = turma.horarios.find(
-        (horarioTurma) => horario.id === horarioTurma.horarioInicio.id || horario.id === horarioTurma.horarioFinal.id
-      )
-      if (teste !== undefined) horarios.push({ horario: teste, codigoDisciplina: turma.disciplina.codigo })
-    })
-    console.log(horario.id, horarios)
+  const { input: horariosSelecionados } = useField<HorariosSelecionados>('horarios', {
+    subscription: { value: true },
   })
 
   return (
@@ -47,25 +31,27 @@ export function GradeHorarios(props: GradeHorariosProps) {
         ))}
       </TableHead>
       <TableBody>
-        {data?.horarios.map((horario) => (
-          <TableRow key={`horarios-${horario.id}`}>
+        {data?.horarios.map(({ horario, id: horarioId }) => (
+          <TableRow key={`horarios-${horarioId}`}>
             <TableCell
-              key={horario.id}
+              key={horarioId}
               colSpan={1}
               style={{ borderRight: `1px solid ${theme.pallete.gray.c80}`, textAlign: 'center' }}
             >
-              {horario.horario}
+              {horario}
             </TableCell>
-            {/* {data?.diasSemana.map((diasSemana) => {
-              const turmas = turmasSelecionadas?.filter((turma) =>
-                turma.horarios?.filter(
-                  (turmaHorario) =>
-                    horario.id === turmaHorario.horarioInicio.id && turmaHorario.diaSemana.id === diasSemana.id
-                )
-              )
-              console.log(turmas)
-              return <TableCell>Horário encontrado</TableCell>
-            })} */}
+            {data?.diasSemana.map(({ id }) => {
+              const turmas = horariosSelecionados.value.get(horarioId)?.get(id)
+              if (turmas) {
+                return turmas?.map((turma) => (
+                  <TableCell>
+                    {turma.codigoTurma} - {turma.sala}
+                  </TableCell>
+                ))
+              } else {
+                return <TableCell />
+              }
+            })}
           </TableRow>
         ))}
       </TableBody>

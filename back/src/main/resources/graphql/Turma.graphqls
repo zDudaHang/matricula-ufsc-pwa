@@ -8,8 +8,7 @@ type Turma {
 
 type HorarioTurma {
     diaSemana: DiaSemana!
-    horarioInicio: HorarioAula!
-    horarioFinal: HorarioAula!
+    horario: HorarioAula!
     sala: String!
 }
 

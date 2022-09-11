@@ -1,10 +1,14 @@
 import { Cell, Grid } from 'bold-ui'
+import { Decorator } from 'final-form'
+import createDecorator from 'final-form-calculate'
 import { Form, FormRenderProps } from 'react-final-form'
-import { GradeHorarios } from './components/grade-horarios/GradeHorarios'
+import { calculator } from './calculator'
+import { GradeHorarios, HorariosSelecionados } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
 
-interface RegistrarPedidoMatriculaFormModel {
+export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
+  horarios: HorariosSelecionados
 }
 
 export function RegistrarPedidoMatriculaForm() {
@@ -21,11 +25,19 @@ export function RegistrarPedidoMatriculaForm() {
     )
   }
 
+  const decorators = [
+    createDecorator(calculator()) as Decorator<
+      RegistrarPedidoMatriculaFormModel,
+      Partial<RegistrarPedidoMatriculaFormModel>
+    >,
+  ]
+
   return (
     <Form<RegistrarPedidoMatriculaFormModel>
       render={renderForm}
       onSubmit={console.log}
-      initialValues={{ turmas: [] }}
+      initialValues={{ turmas: [], horarios: new Map() }}
+      decorators={decorators}
     />
   )
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class TurmaQueryResolver(
     private val buscarTurmasQuery: BuscarTurmasQuery
 ) : GraphQLQueryResolver {
-    fun turmas() : List<Turma> {
+    fun turmas(): List<Turma> {
         val turmas = buscarTurmasQuery.execute()
         return turmas
     }

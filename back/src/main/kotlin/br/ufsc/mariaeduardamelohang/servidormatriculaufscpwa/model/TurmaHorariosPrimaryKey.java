@@ -22,11 +22,7 @@ public class TurmaHorariosPrimaryKey implements Serializable {
 
 	@ManyToOne
 	@MapsId
-	Horario horarioInicio;
-
-	@ManyToOne
-	@MapsId
-	Horario horarioFinal;
+	Horario horario;
 
 	@Column
 	String sala;
@@ -39,12 +35,8 @@ public class TurmaHorariosPrimaryKey implements Serializable {
 		return diaSemana;
 	}
 
-	public Horario getHorarioInicio() {
-		return horarioInicio;
-	}
-
-	public Horario getHorarioFinal() {
-		return horarioFinal;
+	public Horario getHorario() {
+		return horario;
 	}
 
 	public String getSala() {

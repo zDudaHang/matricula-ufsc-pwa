@@ -1,6 +1,5 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.resolver
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorariosQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorariosTurmaByCodigo
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.NomeProfessorByIdQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
@@ -14,12 +13,11 @@ class TurmaResolver(
     private val buscarHorariosTurmaByCodigo: BuscarHorariosTurmaByCodigo
 ) : GraphQLResolver<Turma> {
 
-    fun nomeProfessor(turma: Turma) : String {
+    fun nomeProfessor(turma: Turma): String {
         return nomeProfessorByIdQuery.execute(turma.professor.id)
     }
 
     fun horarios(turma: Turma): List<TurmaHorarios> {
-        val horarios = buscarHorariosTurmaByCodigo.execute(turma.codigo)
-        return horarios
+        return buscarHorariosTurmaByCodigo.execute(turma.codigo)
     }
 }

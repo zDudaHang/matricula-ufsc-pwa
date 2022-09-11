@@ -18,12 +18,8 @@ class TurmaHorariosResolver(
         return buscarDiaSemanaById.execute(turmaHorarios.id.diaSemana.id)
     }
 
-    fun horarioInicio(turmaHorarios: TurmaHorarios): Horario {
-        return buscarHorarioById.execute(turmaHorarios.id.horarioInicio.id)
-    }
-
-    fun horarioFinal(turmaHorarios: TurmaHorarios): Horario {
-        return buscarHorarioById.execute(turmaHorarios.id.horarioFinal.id)
+    fun horario(turmaHorarios: TurmaHorarios): Horario {
+        return buscarHorarioById.execute(turmaHorarios.id.horario.id)
     }
 
     fun sala(turmaHorarios: TurmaHorarios): String {

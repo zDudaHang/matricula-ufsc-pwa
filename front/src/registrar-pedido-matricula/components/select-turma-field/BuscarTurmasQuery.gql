@@ -12,10 +12,7 @@ query BuscarTurmas {
       diaSemana {
         ...DiaSemana
       }
-      horarioInicio {
-        ...Horario
-      }
-      horarioFinal {
+      horario {
         ...Horario
       }
       sala

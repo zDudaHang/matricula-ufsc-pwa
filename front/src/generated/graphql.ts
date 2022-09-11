@@ -45,8 +45,7 @@ export type HorarioAula = {
 export type HorarioTurma = {
   __typename?: 'HorarioTurma';
   diaSemana: DiaSemana;
-  horarioFinal: HorarioAula;
-  horarioInicio: HorarioAula;
+  horario: HorarioAula;
   sala: Scalars['String'];
 };
 
@@ -137,7 +136,7 @@ export type BuscarGradeHorariosQuery = { __typename?: 'Query', horarios: Array<{
 export type BuscarTurmasQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BuscarTurmasQuery = { __typename?: 'Query', turmas: Array<{ __typename?: 'Turma', codigo: string, vagasOfertadas: number, nomeProfessor: string, disciplina: { __typename?: 'Disciplina', codigo: string, nome: string, cargaHoraria: number }, horarios: Array<{ __typename?: 'HorarioTurma', sala: string, diaSemana: { __typename?: 'DiaSemana', id: number, nome: string }, horarioInicio: { __typename?: 'HorarioAula', id: number, horario: string }, horarioFinal: { __typename?: 'HorarioAula', id: number, horario: string } }> }> };
+export type BuscarTurmasQuery = { __typename?: 'Query', turmas: Array<{ __typename?: 'Turma', codigo: string, vagasOfertadas: number, nomeProfessor: string, disciplina: { __typename?: 'Disciplina', codigo: string, nome: string, cargaHoraria: number }, horarios: Array<{ __typename?: 'HorarioTurma', sala: string, diaSemana: { __typename?: 'DiaSemana', id: number, nome: string }, horario: { __typename?: 'HorarioAula', id: number, horario: string } }> }> };
 
 export const DiaSemanaFragmentDoc = gql`
     fragment DiaSemana on DiaSemana {
@@ -270,10 +269,7 @@ export const BuscarTurmasDocument = gql`
       diaSemana {
         ...DiaSemana
       }
-      horarioInicio {
-        ...Horario
-      }
-      horarioFinal {
+      horario {
         ...Horario
       }
       sala

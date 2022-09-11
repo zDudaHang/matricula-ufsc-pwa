@@ -270,23 +270,7 @@
             "deprecationReason": null
           },
           {
-            "name": "horarioFinal",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "HorarioAula",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "horarioInicio",
+            "name": "horario",
             "description": null,
             "args": [],
             "type": {
