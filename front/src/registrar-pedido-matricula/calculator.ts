@@ -3,6 +3,7 @@ import { TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorario
 import { SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
 import { RegistrarPedidoMatriculaFormModel } from './RegistrarPedidoMatriculaForm'
 
+// TODO: Quando uma turma for removida, tem que tirar do valor do field
 export const calculator = (): Calculation => ({
   field: 'turmas',
   updates: {

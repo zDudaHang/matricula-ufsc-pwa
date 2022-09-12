@@ -1,21 +1,5 @@
 query BuscarTurmas {
   turmas {
-    codigo
-    vagasOfertadas
-    nomeProfessor
-    disciplina {
-      codigo
-      nome
-      cargaHoraria
-    }
-    horarios {
-      diaSemana {
-        ...DiaSemana
-      }
-      horario {
-        ...Horario
-      }
-      sala
-    }
+    ...Turma
   }
 }

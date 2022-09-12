@@ -24,7 +24,10 @@ public class PedidoMatricula implements Serializable {
 
 	public PedidoMatricula(PedidoMatriculaPrimaryKey id) {
 		this.id = id;
-		this.iaaAluno = id.aluno.getIaa();
+		iaaAluno = id.aluno.getIaa();
+	}
+
+	public PedidoMatricula() {
 	}
 
 	public int getPosicao() {

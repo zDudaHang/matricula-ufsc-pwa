@@ -14,16 +14,26 @@ class RegistrarPedidoMatriculaCommand(
     private val em: EntityManager,
 ) {
     @Transactional
-    fun execute(input: PedidoMatriculaInput, aluno: Aluno): MutableList<Turma> {
+    fun execute(input: PedidoMatriculaInput, aluno: Aluno, codigosTurmasJahMatriculadas: Set<String>): MutableList<Turma> {
         val turmasMartriculadas = mutableListOf<Turma>()
 
-        input.codigosTurmas.forEach{
+        val turmasSolicitadas = input.codigosTurmas.toSet()
+        val turmasNovas = turmasSolicitadas subtract codigosTurmasJahMatriculadas
+        val turmasRemovidas = codigosTurmasJahMatriculadas subtract turmasSolicitadas
+
+        turmasNovas.forEach {
             val turma = em.find(Turma::class.java, it)
             if (turma != null) {
                 val pedidoMatricula = PedidoMatricula(PedidoMatriculaPrimaryKey(turma, aluno))
                 em.persist(pedidoMatricula)
                 turmasMartriculadas.add(turma)
             }
+        }
+
+        turmasRemovidas.forEach {
+            val turma = em.find(Turma::class.java, it)
+            val pedidoVaiSerRemovido = em.getReference(PedidoMatricula::class.java, PedidoMatriculaPrimaryKey(turma, aluno))
+            em.remove(pedidoVaiSerRemovido)
         }
 
         return turmasMartriculadas

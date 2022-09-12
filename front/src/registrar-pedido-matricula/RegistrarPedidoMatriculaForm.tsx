@@ -2,7 +2,7 @@ import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
 import { Form, FormRenderProps } from 'react-final-form'
-import { useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
+import { useBuscarPedidoMatriculaQuery, useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
 import { calculator } from './calculator'
 import { GradeHorarios, HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
@@ -13,6 +13,7 @@ export interface RegistrarPedidoMatriculaFormModel {
 }
 
 export function RegistrarPedidoMatriculaForm() {
+  const { data, loading } = useBuscarPedidoMatriculaQuery()
   const [registrarPedidoMatricula] = useRegistrarPedidoMatriculaMutation()
 
   const handleSubmit = (values: RegistrarPedidoMatriculaFormModel) => {
@@ -36,7 +37,7 @@ export function RegistrarPedidoMatriculaForm() {
         </Cell>
         <Cell size={12}>
           <HFlow justifyContent='flex-end'>
-            <Button type='submit' kind='primary' onClick={formProps.handleSubmit}>
+            <Button type='submit' kind='primary' onClick={formProps.handleSubmit} loading={loading}>
               Registrar pedido
             </Button>
           </HFlow>
@@ -59,7 +60,10 @@ export function RegistrarPedidoMatriculaForm() {
     <Form<RegistrarPedidoMatriculaFormModel>
       render={renderForm}
       onSubmit={handleSubmit}
-      initialValues={{ turmas: [], horarios: new Map<number, Map<number, TurmaGradeHorarioModel[]>>() }}
+      initialValues={{
+        turmas: data?.buscarPedidoMatricula ?? [],
+        horarios: new Map<number, Map<number, TurmaGradeHorarioModel[]>>(),
+      }}
       decorators={decorators}
     />
   )

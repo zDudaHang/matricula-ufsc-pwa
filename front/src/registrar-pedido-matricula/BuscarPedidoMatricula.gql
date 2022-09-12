@@ -1,0 +1,5 @@
+query BuscarPedidoMatricula {
+  buscarPedidoMatricula {
+    ...Turma
+  }
+}

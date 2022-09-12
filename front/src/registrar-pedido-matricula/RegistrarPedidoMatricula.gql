@@ -1,3 +1,5 @@
 mutation RegistrarPedidoMatricula($input: PedidoMatriculaInput!) {
-  registrarPedidoMatricula(input: $input)
+  registrarPedidoMatricula(input: $input) {
+    ...Turma
+  }
 }
