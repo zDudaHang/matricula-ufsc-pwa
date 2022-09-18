@@ -46,6 +46,7 @@ export function SelectTurmaField(props: SelectTurmaFieldProps) {
       itemIsEqual={itemIsEqual}
       multiple
       required
+      onClear={console.log}
     />
   )
 }
