@@ -31,8 +31,8 @@ export const calculator = (): Calculation => ({
           }
         })
 
-        const turmasRemovidas = prevTurmas.filter((prev) => !turmasSelecionadas.includes(prev))
-        turmasRemovidas.forEach((turma) => {
+        const turmasRemovidas = prevTurmas?.filter((prev) => !turmasSelecionadas.includes(prev))
+        turmasRemovidas?.forEach((turma) => {
           turma.horarios.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId } }) => {
             gradeHorarios.get(horarioId).set(
               diaSemanaId,
