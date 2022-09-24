@@ -1,8 +1,10 @@
 import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
+import { useEffect } from 'react'
 import { Form, FormRenderProps } from 'react-final-form'
 import { useBuscarPedidoMatriculaQuery, useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
+import { JWT_LOCAL_STORAGE } from '../local-storage/model'
 import { calculator } from './calculator'
 import { GradeHorarios, HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
@@ -13,17 +15,22 @@ export interface RegistrarPedidoMatriculaFormModel {
 }
 
 export function RegistrarPedidoMatriculaForm() {
-  const { data, loading } = useBuscarPedidoMatriculaQuery()
+  // const { data, loading } = useBuscarPedidoMatriculaQuery()
+
   const [registrarPedidoMatricula] = useRegistrarPedidoMatriculaMutation()
 
   const handleSubmit = (values: RegistrarPedidoMatriculaFormModel) => {
-    registrarPedidoMatricula({
-      variables: {
-        input: {
-          codigosTurmas: values.turmas.map((turma) => turma.codigo),
-        },
-      },
-    })
+    // registrarPedidoMatricula({
+    //   variables: {
+    //     input: {
+    //       codigosTurmas: values.turmas.map((turma) => turma.codigo),
+    //     },
+    //   },
+    // })
+    const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
+    fetch('http://localhost:8080/pedidoMatricula', { headers: { Authorization: `Bearer ${accessToken}` } }).then(
+      console.log
+    )
   }
 
   const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {
@@ -37,7 +44,7 @@ export function RegistrarPedidoMatriculaForm() {
         </Cell>
         <Cell size={12}>
           <HFlow justifyContent='flex-end'>
-            <Button type='submit' kind='primary' onClick={formProps.handleSubmit} loading={loading}>
+            <Button type='submit' kind='primary' onClick={formProps.handleSubmit}>
               Registrar pedido
             </Button>
           </HFlow>
@@ -61,7 +68,8 @@ export function RegistrarPedidoMatriculaForm() {
       render={renderForm}
       onSubmit={handleSubmit}
       initialValues={{
-        turmas: data?.buscarPedidoMatricula ?? [],
+        // turmas: data?.buscarPedidoMatricula ?? [],
+        turmas: [],
         horarios: new Map<number, Map<number, TurmaGradeHorarioModel[]>>(),
       }}
       decorators={decorators}
