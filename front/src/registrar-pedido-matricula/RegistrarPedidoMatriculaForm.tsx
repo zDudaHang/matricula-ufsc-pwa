@@ -1,7 +1,7 @@
 import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Form, FormRenderProps } from 'react-final-form'
 import { Turma, useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
 import { JWT_LOCAL_STORAGE } from '../local-storage/model'
@@ -16,19 +16,25 @@ export interface RegistrarPedidoMatriculaFormModel {
   horarios: HorariosSelecionados
 }
 
-export function RegistrarPedidoMatriculaForm() {
-  const [turmasMatriculadas, setTurmasMatriculadas] = useState<Turma[]>([])
+interface RegistrarPedidoMatriculaFormProps {
+  turmasMatriculadas: Turma[]
+  setTurmasMatriculadas(turmas: Turma[]): void
+}
+
+export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaFormProps) {
+  const { turmasMatriculadas, setTurmasMatriculadas } = props
 
   useEffect(() => {
     const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
     fetch('http://localhost:8080/pedidoMatricula', { headers: { Authorization: `Bearer ${accessToken}` } }).then(
       (response) =>
-        response.json().then((turmas: TurmaControllerModel[]) => {
-          console.log(turmas)
-          setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma))
-        })
+        response
+          .json()
+          .then((turmas: TurmaControllerModel[]) =>
+            setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma))
+          )
     )
-  }, [])
+  }, [setTurmasMatriculadas])
 
   const [registrarPedidoMatricula] = useRegistrarPedidoMatriculaMutation()
 
@@ -73,8 +79,6 @@ export function RegistrarPedidoMatriculaForm() {
       >,
     []
   )
-
-  console.log(turmasMatriculadas)
 
   return (
     <Form<RegistrarPedidoMatriculaFormModel>

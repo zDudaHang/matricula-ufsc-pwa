@@ -54,8 +54,7 @@ class AlunoService(
     fun registrarPedidoMatricula(input: PedidoMatriculaInput): MutableList<Turma> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
-            // val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.codigo }
-            val codigosTurmasJahMatriculadas = emptySet<String>()
+            val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.codigo }
             registrarPedidoMatriculaCommand.execute(input, aluno, codigosTurmasJahMatriculadas.toSet())
         } else mutableListOf()
     }
