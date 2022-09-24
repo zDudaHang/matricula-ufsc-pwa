@@ -1,8 +1,14 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.model.TurmaMatriculadaDTO
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QDiaSemana.diaSemana
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QHorario.horario1
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QPedidoMatricula.pedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QTurma.turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QTurmaHorarios.turmaHorarios
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
+import com.querydsl.core.Tuple
+import com.querydsl.jpa.JPAExpressions.select
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import java.util.UUID

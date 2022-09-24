@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Embeddable
 public class TurmaHorariosPrimaryKey implements Serializable {
@@ -14,6 +17,7 @@ public class TurmaHorariosPrimaryKey implements Serializable {
 
 	@ManyToOne
 	@MapsId
+	@JsonIgnore
 	Turma turma;
 
 	@ManyToOne

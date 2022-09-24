@@ -34,4 +34,11 @@ public class PedidoMatricula implements Serializable {
 		return posicao;
 	}
 
+	public PedidoMatriculaPrimaryKey getId() {
+		return id;
+	}
+
+	public Float getIaaAluno() {
+		return iaaAluno;
+	}
 }

@@ -10,6 +10,7 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
+import com.querydsl.core.Tuple
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -39,11 +40,11 @@ class AlunoService(
         return registrarAlunoCommand.execute(inputWithEncodedPassword)
     }
 
-    fun buscarPedidoMatricula(): List<Turma> {
+    fun buscarPedidoMatricula(): List<Turma>{
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null)
             buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula)
-        else emptyList()
+        else mutableListOf()
     }
 
     fun buscarAlunoPelaMatricula(matricula: UUID): Aluno? {
@@ -53,7 +54,8 @@ class AlunoService(
     fun registrarPedidoMatricula(input: PedidoMatriculaInput): MutableList<Turma> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
-            val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.codigo }
+            // val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.codigo }
+            val codigosTurmasJahMatriculadas = emptySet<String>()
             registrarPedidoMatriculaCommand.execute(input, aluno, codigosTurmasJahMatriculadas.toSet())
         } else mutableListOf()
     }

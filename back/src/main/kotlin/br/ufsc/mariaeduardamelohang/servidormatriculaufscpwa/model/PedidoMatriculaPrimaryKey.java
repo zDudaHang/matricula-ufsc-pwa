@@ -24,6 +24,9 @@ public class PedidoMatriculaPrimaryKey implements Serializable {
 		this.aluno = aluno;
 	}
 
+	public PedidoMatriculaPrimaryKey() {
+	}
+
 	public Turma getTurma() {
 		return turma;
 	}

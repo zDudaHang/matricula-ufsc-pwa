@@ -12,8 +12,8 @@ export const calculator = (): Calculation => ({
       { turmas: prevTurmas }: RegistrarPedidoMatriculaFormModel
     ) => {
       let gradeHorarios = horarios
-      turmasSelecionadas.forEach((turma) => {
-        turma.horarios.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId }, sala }) => {
+      turmasSelecionadas?.forEach((turma) => {
+        turma.horarios?.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId }, sala }) => {
           if (!horarios.has(horarioId)) gradeHorarios.set(horarioId, new Map<number, TurmaGradeHorarioModel[]>())
           if (!horarios.get(horarioId).has(diaSemanaId)) gradeHorarios.get(horarioId).set(diaSemanaId, [])
 
@@ -33,7 +33,7 @@ export const calculator = (): Calculation => ({
 
         const turmasRemovidas = prevTurmas?.filter((prev) => !turmasSelecionadas.includes(prev))
         turmasRemovidas?.forEach((turma) => {
-          turma.horarios.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId } }) => {
+          turma.horarios?.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId } }) => {
             gradeHorarios.get(horarioId).set(
               diaSemanaId,
               gradeHorarios
