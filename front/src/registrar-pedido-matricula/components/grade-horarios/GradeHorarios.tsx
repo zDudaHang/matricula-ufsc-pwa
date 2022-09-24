@@ -23,10 +23,12 @@ export function GradeHorarios() {
   return (
     <Table hovered>
       <TableHead>
-        <TableHeader key='vazia' />
-        {data?.diasSemana.map((diasSemana) => (
-          <TableHeader key={`th-${diasSemana.id}`}>{diasSemana.nome}</TableHeader>
-        ))}
+        <TableRow>
+          <TableHeader key='vazia' />
+          {data?.diasSemana.map((diasSemana) => (
+            <TableHeader key={`th-${diasSemana.id}`}>{diasSemana.nome}</TableHeader>
+          ))}
+        </TableRow>
       </TableHead>
       <TableBody>
         {data?.horarios.map(({ horario, id: horarioId }) => (
