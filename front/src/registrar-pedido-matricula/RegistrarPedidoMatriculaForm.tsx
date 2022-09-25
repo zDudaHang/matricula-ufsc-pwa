@@ -4,6 +4,7 @@ import createDecorator from 'final-form-calculate'
 import { useEffect, useMemo } from 'react'
 import { Form, FormRenderProps } from 'react-final-form'
 import { Turma, useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
+import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { calculator } from './calculator'
 import { GradeHorarios, HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
@@ -48,16 +49,18 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         <Cell size={12}>
           <Heading level={1}>Pedido de matrícula</Heading>
         </Cell>
-        <Cell size={12}>
-          <SelectTurmaField name='turmas' />
-        </Cell>
-        <Cell size={12}>
-          <HFlow justifyContent='flex-end'>
-            <Button type='submit' kind='primary' onClick={formProps.handleSubmit}>
-              Registrar pedido
-            </Button>
-          </HFlow>
-        </Cell>
+        <OnlyOnlineFeature>
+          <Cell size={12}>
+            <SelectTurmaField name='turmas' />
+          </Cell>
+          <Cell size={12}>
+            <HFlow justifyContent='flex-end'>
+              <Button type='submit' kind='primary' onClick={formProps.handleSubmit}>
+                Registrar pedido
+              </Button>
+            </HFlow>
+          </Cell>
+        </OnlyOnlineFeature>
         <Cell size={12}>
           <GradeHorarios />
         </Cell>
