@@ -12,7 +12,6 @@ export const calculator = (): Calculation => ({
       { turmas: prevTurmas }: RegistrarPedidoMatriculaFormModel
     ) => {
       let gradeHorarios = horarios
-      console.log(turmasSelecionadas)
       turmasSelecionadas?.forEach((turma) => {
         turma.horarios?.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId }, sala }) => {
           if (!horarios.has(horarioId)) gradeHorarios.set(horarioId, new Map<number, TurmaGradeHorarioModel[]>())
@@ -31,19 +30,19 @@ export const calculator = (): Calculation => ({
             })
           }
         })
+      })
 
-        const turmasRemovidas = prevTurmas?.filter((prev) => !turmasSelecionadas.includes(prev))
-        console.log(turmasRemovidas)
-        turmasRemovidas?.forEach((turma) => {
-          turma.horarios?.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId } }) => {
-            gradeHorarios.get(horarioId).set(
-              diaSemanaId,
-              gradeHorarios
-                .get(horarioId)
-                .get(diaSemanaId)
-                .filter((t) => t.codigoTurma !== turma.codigo)
-            )
-          })
+      const turmasRemovidas = prevTurmas?.filter((prev) => !turmasSelecionadas.includes(prev))
+      debugger
+      turmasRemovidas?.forEach((turma) => {
+        turma.horarios?.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId } }) => {
+          gradeHorarios.get(horarioId).set(
+            diaSemanaId,
+            gradeHorarios
+              .get(horarioId)
+              .get(diaSemanaId)
+              .filter((t) => t.codigoTurma !== turma.codigo)
+          )
         })
       })
 
