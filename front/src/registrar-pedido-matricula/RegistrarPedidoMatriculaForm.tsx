@@ -3,7 +3,7 @@ import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
 import { useEffect, useMemo } from 'react'
 import { Form, FormRenderProps } from 'react-final-form'
-import { Turma, useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
+import { Turma } from '../generated/graphql'
 import { JWT_LOCAL_STORAGE } from '../local-storage/model'
 import { calculator } from './calculator'
 import { GradeHorarios, HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
@@ -36,16 +36,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     )
   }, [setTurmasMatriculadas])
 
-  // const [registrarPedidoMatricula] = useRegistrarPedidoMatriculaMutation()
-
   const handleSubmit = (values: RegistrarPedidoMatriculaFormModel) => {
-    // registrarPedidoMatricula({
-    //   variables: {
-    //     input: {
-    //       codigosTurmas: values.turmas.map((turma) => turma.codigo),
-    //     },
-    //   },
-    // })
     const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
     const options: RequestInit = {
       method: 'POST',

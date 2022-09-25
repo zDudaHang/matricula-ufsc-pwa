@@ -1,6 +1,5 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.controller
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.PedidoMatriculaInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AlunoService
 import org.springframework.http.MediaType

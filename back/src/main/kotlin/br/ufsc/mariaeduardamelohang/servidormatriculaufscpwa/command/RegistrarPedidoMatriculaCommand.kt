@@ -1,6 +1,5 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.PedidoMatriculaInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.PedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.PedidoMatriculaPrimaryKey
@@ -13,15 +12,16 @@ import javax.transaction.Transactional
 class RegistrarPedidoMatriculaCommand(
     private val em: EntityManager,
 ) {
-    @Transactional
+    @Transactional(Transactional.TxType.SUPPORTS)
     fun execute(codigosTurmas: List<String>, aluno: Aluno, codigosTurmasJahMatriculadas: Set<String>): MutableList<Turma> {
         val turmasMartriculadas = mutableListOf<Turma>()
 
-        val turmasSolicitadas = codigosTurmas.toSet()
-        val turmasNovas = turmasSolicitadas subtract codigosTurmasJahMatriculadas
-        val turmasRemovidas = codigosTurmasJahMatriculadas subtract turmasSolicitadas
+        val codigoTurmasSolicitadas = codigosTurmas.toSet()
+        val codigoTurmasNovas = codigoTurmasSolicitadas subtract codigosTurmasJahMatriculadas
+        val codigoTurmasRemovidas = codigosTurmasJahMatriculadas subtract codigoTurmasSolicitadas
+        val codigoTurmasMantidas = codigoTurmasSolicitadas intersect codigosTurmasJahMatriculadas
 
-        turmasNovas.forEach {
+        codigoTurmasNovas.forEach {
             val turma = em.find(Turma::class.java, it)
             if (turma != null) {
                 val pedidoMatricula = PedidoMatricula(PedidoMatriculaPrimaryKey(turma, aluno))
@@ -30,10 +30,15 @@ class RegistrarPedidoMatriculaCommand(
             }
         }
 
-        turmasRemovidas.forEach {
-            val turma = em.find(Turma::class.java, it)
-            val pedidoVaiSerRemovido = em.getReference(PedidoMatricula::class.java, PedidoMatriculaPrimaryKey(turma, aluno))
+        codigoTurmasRemovidas.forEach {
+            val turma = em.getReference(Turma::class.java, it)
+            val pedidoVaiSerRemovido = em.find(PedidoMatricula::class.java, PedidoMatriculaPrimaryKey(turma, aluno))
             em.remove(pedidoVaiSerRemovido)
+        }
+
+        codigoTurmasMantidas.forEach {
+            val turma = em.getReference(Turma::class.java, it)
+            turmasMartriculadas.add(turma)
         }
 
         return turmasMartriculadas

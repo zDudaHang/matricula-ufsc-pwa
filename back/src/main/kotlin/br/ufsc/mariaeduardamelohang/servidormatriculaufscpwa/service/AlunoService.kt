@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.UUID
+import javax.transaction.Transactional
 
 @Service
 class AlunoService(
@@ -51,6 +52,7 @@ class AlunoService(
         return buscarAlunoByMatriculaCommand.execute(matricula)
     }
 
+    @Transactional
     fun registrarPedidoMatricula(codigosTurmas: List<String>): MutableList<Turma> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
