@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RegistrarAlunoForm } from '../registrar-aluno/RegistrarAlunoForm'
 import { LoginForm } from '../login/LoginForm'
-import { LOGIN_ROUTE, REGISTAR_ALUNO_ROUTE, REGISTRAR_PEDIDO_MATRICULA_ROUTE } from './routes'
+import { LOGIN_ROUTE, PEDIDO_MATRICULA_ROUTE, REGISTAR_ALUNO_ROUTE } from './routes'
 import { PrivateRoute } from './PrivateRoute'
 import { RegistrarPedidoMatriculaForm } from '../registrar-pedido-matricula/RegistrarPedidoMatriculaForm'
 import { useState } from 'react'
@@ -18,7 +18,7 @@ export function ApplicationRoutes() {
         </Route>
         <Route path={REGISTAR_ALUNO_ROUTE} element={<RegistrarAlunoForm />} />
         <Route
-          path={REGISTRAR_PEDIDO_MATRICULA_ROUTE}
+          path={PEDIDO_MATRICULA_ROUTE}
           element={
             <PrivateRoute>
               <RegistrarPedidoMatriculaForm

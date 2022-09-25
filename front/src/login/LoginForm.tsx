@@ -6,7 +6,7 @@ import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
 import { LoginInput, useLoginMutation } from '../generated/graphql'
 import { JWT_LOCAL_STORAGE } from '../local-storage/model'
-import { REGISTAR_ALUNO_ROUTE, REGISTRAR_PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
+import { REGISTAR_ALUNO_ROUTE, PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
 
 type LoginFormModel = LoginInput
 
@@ -21,7 +21,7 @@ export function LoginForm() {
     // TODO: Utilizar os cookies depois para deixar mais robusto
     onCompleted: (data) => {
       if (data.login.accessToken) localStorage.setItem(JWT_LOCAL_STORAGE, data.login.accessToken)
-      navigate(REGISTRAR_PEDIDO_MATRICULA_ROUTE)
+      navigate(PEDIDO_MATRICULA_ROUTE)
     },
     onError: (error) => console.log(error),
   })
