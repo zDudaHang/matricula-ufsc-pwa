@@ -47,10 +47,9 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
       body: JSON.stringify(values.turmas.map((turma) => turma.codigo)),
     }
     fetch('http://localhost:8080/registrarPedidoMatricula', options).then((response) =>
-      response.json().then((turmas: TurmaControllerModel[]) => {
-        console.log(turmas)
-        // setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma))
-      })
+      response
+        .json()
+        .then((turmas: TurmaControllerModel[]) => setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma)))
     )
   }
 
