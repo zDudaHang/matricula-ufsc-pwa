@@ -6,6 +6,7 @@ interface OnlineStatusProviderProps {
   children: React.ReactNode
 }
 
+// Ref: https://levelup.gitconnected.com/useonlinestatus-a-react-hook-to-know-when-your-app-is-offline-2d06e4e536a
 export function OnlineStatusProvider(props: OnlineStatusProviderProps) {
   const [isOnline, setIsOnline] = useState<boolean>(true)
 
