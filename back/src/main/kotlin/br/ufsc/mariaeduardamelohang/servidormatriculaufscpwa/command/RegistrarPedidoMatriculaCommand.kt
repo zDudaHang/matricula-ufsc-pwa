@@ -14,10 +14,10 @@ class RegistrarPedidoMatriculaCommand(
     private val em: EntityManager,
 ) {
     @Transactional
-    fun execute(input: PedidoMatriculaInput, aluno: Aluno, codigosTurmasJahMatriculadas: Set<String>): MutableList<Turma> {
+    fun execute(codigosTurmas: List<String>, aluno: Aluno, codigosTurmasJahMatriculadas: Set<String>): MutableList<Turma> {
         val turmasMartriculadas = mutableListOf<Turma>()
 
-        val turmasSolicitadas = input.codigosTurmas.toSet()
+        val turmasSolicitadas = codigosTurmas.toSet()
         val turmasNovas = turmasSolicitadas subtract codigosTurmasJahMatriculadas
         val turmasRemovidas = codigosTurmasJahMatriculadas subtract turmasSolicitadas
 

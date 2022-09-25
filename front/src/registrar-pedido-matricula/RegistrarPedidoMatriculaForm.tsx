@@ -36,16 +36,31 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     )
   }, [setTurmasMatriculadas])
 
-  const [registrarPedidoMatricula] = useRegistrarPedidoMatriculaMutation()
+  // const [registrarPedidoMatricula] = useRegistrarPedidoMatriculaMutation()
 
   const handleSubmit = (values: RegistrarPedidoMatriculaFormModel) => {
-    registrarPedidoMatricula({
-      variables: {
-        input: {
-          codigosTurmas: values.turmas.map((turma) => turma.codigo),
-        },
+    // registrarPedidoMatricula({
+    //   variables: {
+    //     input: {
+    //       codigosTurmas: values.turmas.map((turma) => turma.codigo),
+    //     },
+    //   },
+    // })
+    const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
-    })
+      body: JSON.stringify(values.turmas.map((turma) => turma.codigo)),
+    }
+    fetch('http://localhost:8080/registrarPedidoMatricula', options).then((response) =>
+      response.json().then((turmas: TurmaControllerModel[]) => {
+        console.log(turmas)
+        // setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma))
+      })
+    )
   }
 
   const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {

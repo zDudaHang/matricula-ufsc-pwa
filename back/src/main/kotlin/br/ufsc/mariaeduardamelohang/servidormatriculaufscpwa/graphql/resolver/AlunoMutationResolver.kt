@@ -22,7 +22,7 @@ class AlunoMutationResolver(
 ) : GraphQLMutationResolver {
 
     fun registrarPedidoMatricula(input: PedidoMatriculaInput): List<Turma> {
-        return alunoService.registrarPedidoMatricula(input)
+        return alunoService.registrarPedidoMatricula(input.codigosTurmas)
     }
 
     @PublicAPI
