@@ -3,13 +3,11 @@ import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
 import { useEffect, useMemo } from 'react'
 import { Form, FormRenderProps } from 'react-final-form'
-import { Turma } from '../generated/graphql'
-import { JWT_LOCAL_STORAGE } from '../local-storage/model'
+import { Turma, useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
 import { calculator } from './calculator'
 import { GradeHorarios, HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
-import { convertTurmaControllerModelToTurma } from './converter'
-import { TurmaControllerModel } from './model'
+import { buscarPedidoMatricula } from './util'
 
 export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
@@ -25,32 +23,23 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
   const { turmasMatriculadas, setTurmasMatriculadas } = props
 
   useEffect(() => {
-    const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
-    fetch('http://localhost:8080/pedidoMatricula', { headers: { Authorization: `Bearer ${accessToken}` } }).then(
-      (response) =>
-        response
-          .json()
-          .then((turmas: TurmaControllerModel[]) =>
-            setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma))
-          )
-    )
+    buscarPedidoMatricula(setTurmasMatriculadas)
   }, [setTurmasMatriculadas])
 
+  const [registrarPedidoMatricula] = useRegistrarPedidoMatriculaMutation({
+    onCompleted: () => {
+      buscarPedidoMatricula(setTurmasMatriculadas)
+    },
+  })
+
   const handleSubmit = (values: RegistrarPedidoMatriculaFormModel) => {
-    const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
-    const options: RequestInit = {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
+    registrarPedidoMatricula({
+      variables: {
+        input: {
+          codigosTurmas: values.turmas.map((turma) => turma.codigo),
+        },
       },
-      body: JSON.stringify(values.turmas.map((turma) => turma.codigo)),
-    }
-    fetch('http://localhost:8080/registrarPedidoMatricula', options).then((response) =>
-      response
-        .json()
-        .then((turmas: TurmaControllerModel[]) => setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma)))
-    )
+    })
   }
 
   const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {
