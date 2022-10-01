@@ -3,7 +3,7 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QDisciplina.disciplina
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QProfessor.professor
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QTurma.turma
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager

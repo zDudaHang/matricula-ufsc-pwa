@@ -1,10 +1,9 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 

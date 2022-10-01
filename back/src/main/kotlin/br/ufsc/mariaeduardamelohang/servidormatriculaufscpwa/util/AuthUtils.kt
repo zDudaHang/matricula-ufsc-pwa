@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 

@@ -1,9 +1,9 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.PedidoMatricula
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.PedidoMatriculaPrimaryKey
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatricula
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatriculaPrimaryKey
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
@@ -24,7 +24,8 @@ class RegistrarPedidoMatriculaCommand(
         codigoTurmasNovas.forEach {
             val turma = em.find(Turma::class.java, it)
             if (turma != null) {
-                val pedidoMatricula = PedidoMatricula(PedidoMatriculaPrimaryKey(turma, aluno))
+                val pedidoMatricula =
+                    PedidoMatricula(PedidoMatriculaPrimaryKey(turma, aluno))
                 em.persist(pedidoMatricula)
                 turmasMartriculadas.add(turma)
             }
@@ -32,7 +33,10 @@ class RegistrarPedidoMatriculaCommand(
 
         codigoTurmasRemovidas.forEach {
             val turma = em.getReference(Turma::class.java, it)
-            val pedidoVaiSerRemovido = em.find(PedidoMatricula::class.java, PedidoMatriculaPrimaryKey(turma, aluno))
+            val pedidoVaiSerRemovido = em.find(
+                PedidoMatricula::class.java,
+                PedidoMatriculaPrimaryKey(turma, aluno)
+            )
             em.remove(pedidoVaiSerRemovido)
         }
 

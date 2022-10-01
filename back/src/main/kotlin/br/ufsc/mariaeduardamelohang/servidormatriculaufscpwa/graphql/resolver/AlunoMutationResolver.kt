@@ -4,8 +4,8 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.LoginPayload
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.PedidoMatriculaInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.security.PublicAPI
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AlunoService
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AuthenticationService

@@ -2,8 +2,8 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.resolver
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarDiasSemanaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorariosQuery
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.DiaSemana
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Horario
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.DiaSemana
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Horario
 import graphql.kickstart.tools.GraphQLQueryResolver
 import org.springframework.stereotype.Component
 

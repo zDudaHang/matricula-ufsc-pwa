@@ -1,7 +1,7 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QTurmaHorarios.turmaHorarios
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.TurmaHorarios
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.TurmaHorarios
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager

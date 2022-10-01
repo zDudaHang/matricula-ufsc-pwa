@@ -1,25 +1,19 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import org.springframework.stereotype.Repository
+import java.util.UUID
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Repository
-class RegistrarAlunoCommand(
+class RegistrarSubscribeCommand(
     private val em: EntityManager,
 ) {
     @Transactional
-    fun execute(input: RegistrarAlunoInput): Aluno? {
-        val aluno = Aluno()
-        aluno.nome = input.nome
-        aluno.nomeUsuario = input.nomeUsuario
-        aluno.senha = input.senha
-        aluno.iaa = input.iaa
-
+    fun execute(matricula: UUID, token: String) {
+        val aluno = em.find(Aluno::class.java, matricula)
+        aluno.token = token
         em.persist(aluno)
-
-        return aluno
     }
 }

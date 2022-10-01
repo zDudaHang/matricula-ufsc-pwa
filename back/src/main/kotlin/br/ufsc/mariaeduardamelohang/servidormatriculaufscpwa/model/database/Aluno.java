@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -36,6 +36,17 @@ public class Aluno implements Serializable, UserDetails {
 
 	@Column(nullable = false)
 	private Float iaa;
+
+	@Column
+	private String token;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public String getNome() {
 		return nome;

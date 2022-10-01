@@ -2,8 +2,8 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.resolver
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorariosTurmaByCodigo
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.NomeProfessorByIdQuery
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.TurmaHorarios
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.TurmaHorarios
 import graphql.kickstart.tools.GraphQLResolver
 import org.springframework.stereotype.Component
 

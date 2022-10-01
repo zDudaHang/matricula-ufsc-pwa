@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import java.util.UUID
 
 

@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model;
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

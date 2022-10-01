@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.DiaSemana
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.DiaSemana
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QDiaSemana.diaSemana
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository

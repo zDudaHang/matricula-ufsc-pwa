@@ -5,12 +5,10 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarAlunoCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.PedidoMatriculaInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Aluno
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
-import com.querydsl.core.Tuple
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
