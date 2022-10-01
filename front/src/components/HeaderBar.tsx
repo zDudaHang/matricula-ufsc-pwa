@@ -18,7 +18,7 @@ export function HeaderBar() {
         <HFlow alignItems='center' hSpacing={0.5}>
           <Icon icon='exclamationTriangleFilled' style={{ color: theme.pallete.gray.c100 }} />
           <Heading level={4} style={{ color: theme.pallete.gray.c100 }}>
-            Você está offline, algumas funcionalidades foram desativadas
+            Você está offline, algumas funcionalidades foram desativadas e informações desatualizadas
           </Heading>
         </HFlow>
       )}

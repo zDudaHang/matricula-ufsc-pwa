@@ -12,6 +12,7 @@ export interface TurmaGradeHorarioModel {
 
 const FIELD_NAME = 'horarios'
 
+// TODO: Deixar esse componente visivel sem internet -> Cenarios: o usuario jah ter logado e nao ter logado
 export function GradeHorarios() {
   const { data } = useBuscarGradeHorariosQuery()
   const theme = useTheme()
