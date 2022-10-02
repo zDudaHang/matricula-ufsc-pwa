@@ -1,7 +1,10 @@
 import { initializeApp } from 'firebase/app'
-import { onMessage } from 'firebase/messaging'
+import { getMessaging, onMessage } from 'firebase/messaging'
 
-// Your web app's Firebase configuration
+export const PUBLIC_VAPID_KEY =
+  'BKeDin_xnLD8OmBUskj2lOxYfTDVTDvVOvQCQg3nwJvlaRKzadOOq0LcvG1hW8hPDxLSqdluei-Fl17AGN-cRGk'
+
+// https://firebase.google.com/docs/web/setup
 const firebaseConfig = {
   apiKey: 'AIzaSyAP_Nr9rkSJ0g7hvQKbjQI9UH_Jy6kK_u0',
   authDomain: 'matricula-ufsc.firebaseapp.com',
@@ -12,22 +15,17 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-export default initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 
-// export const fetchToken = (setTokenFound) => {
-//   return getToken(messaging, {vapidKey: 'BHGPr3pJQSflJAJtTIVXbmcEXlPV_HP29TZQRcqrGCN10gKIa-ojIJmtvM9kQGcsNKsWIA6ezKFG8Bd6LTjaVc0'}).then((currentToken) => {
-//     if (currentToken) {
-//       console.log('current token for client: ', currentToken);
-//       setTokenFound(true);
-//       // Track the token -> client mapping, by sending to backend server
-//       // show on the UI that permission is secured
-//     } else {
-//       console.log('No registration token available. Request permission to generate one.');
-//       setTokenFound(false);
-//       // shows on the UI that permission is required
-//     }
-//   }).catch((err) => {
-//     console.log('An error occurred while retrieving token. ', err);
-//     // catch error while creating client token
-//   });
-// }
+// Initialize Firebase Cloud Messaging and get a reference to the service
+// https://firebase.google.com/docs/cloud-messaging/js/client
+export const messaging = getMessaging(app)
+
+onMessage(messaging, (payload) => {
+  console.log('[firebase.ts] Received foreground message ', payload)
+
+  const notificationTitle = payload.notification.title
+  const body = payload.notification.body
+
+  alert(`titulo: ${notificationTitle}, body: ${body}`)
+})

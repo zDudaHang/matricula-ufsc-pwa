@@ -1,13 +1,13 @@
 import { Button, Heading, HFlow, Icon, useTheme } from 'bold-ui'
 import { useOnlineStatus } from '../online-status/useOnlineStatus'
-import { verifyNotificationPermission } from './subscribe'
+import { requestPermission } from './subscribe'
 
 export function HeaderBar() {
   const theme = useTheme()
   const isOnline = useOnlineStatus()
 
   const handleNotificationsClick = () => {
-    verifyNotificationPermission()
+    requestPermission()
   }
 
   return (

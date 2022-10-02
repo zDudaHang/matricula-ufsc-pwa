@@ -46,34 +46,3 @@ this.addEventListener('fetch', (event) => {
     })
   )
 })
-
-this.addEventListener('push', function (e) {
-  // var body
-
-  console.log(e)
-
-  // if (e.data) {
-  //   body = e.data.text()
-  // } else {
-  //   body = 'Push message no payload'
-  // }
-
-  var options = {
-    body: 'body',
-    icon: 'images/weight128.png',
-    vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: '1',
-    },
-    actions: [
-      {
-        action: 'Save it',
-        title: 'Save it',
-        icon: 'images/checkmark.png',
-      },
-      { action: 'close', title: 'Close', icon: 'images/xmark.png' },
-    ],
-  }
-  e.waitUntil(this.registration.showNotification('New workout arrived!', options))
-})
