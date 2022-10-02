@@ -1,8 +1,8 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QDisciplina.disciplina
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QProfessor.professor
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QTurma.turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QDisciplina.disciplina
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QProfessor.professor
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QTurma.turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
@@ -14,7 +14,7 @@ class BuscarTurmasQuery(
     private val em: EntityManager
 ) {
     @Transactional
-    fun execute() : List<Turma> {
+    fun execute(): List<Turma> {
         return JPAQueryFactory(em)
             .selectFrom(turma)
             .innerJoin(disciplina).on(disciplina.codigo.eq(turma.disciplina.codigo))

@@ -1,12 +1,10 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
-import java.util.UUID
-
-
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QAluno.aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QAluno.aluno
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
+import java.util.UUID
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
 

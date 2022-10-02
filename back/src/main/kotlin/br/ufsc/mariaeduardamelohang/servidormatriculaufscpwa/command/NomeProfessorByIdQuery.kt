@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QProfessor.professor
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QProfessor.professor
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager

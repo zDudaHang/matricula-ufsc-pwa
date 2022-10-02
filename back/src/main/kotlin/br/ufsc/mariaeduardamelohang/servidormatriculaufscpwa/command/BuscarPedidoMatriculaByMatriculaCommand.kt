@@ -1,7 +1,7 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QPedidoMatricula.pedidoMatricula
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QTurma.turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QPedidoMatricula.pedidoMatricula
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QTurma.turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository

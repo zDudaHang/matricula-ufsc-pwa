@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.QAluno.aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QAluno.aluno
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Repository
