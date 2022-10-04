@@ -34,6 +34,10 @@ public class PedidoMatricula implements Serializable {
 		return posicao;
 	}
 
+	public void setPosicao(int posicao) {
+		this.posicao = posicao;
+	}
+
 	public PedidoMatriculaPrimaryKey getId() {
 		return id;
 	}
