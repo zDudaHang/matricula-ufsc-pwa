@@ -1,33 +1,30 @@
 import { Button, Heading, HFlow, Icon, useTheme } from 'bold-ui'
-import { useOnlineStatus } from '../online-status/useOnlineStatus'
 import { requestPermission } from './subscribe'
 
 export function HeaderBar() {
   const theme = useTheme()
-  const isOnline = useOnlineStatus()
 
   const handleNotificationsClick = () => {
     requestPermission()
   }
 
+  const permission = Notification.permission
+
   return (
     <HFlow
-      style={{ background: theme.pallete.primary.c40, height: '3rem', paddingBottom: '0.5rem' }}
+      style={{ background: theme.pallete.primary.c40, height: '3rem', paddingBottom: '1rem' }}
       justifyContent='center'
       alignItems='center'
     >
       <Heading level={1} style={{ color: theme.pallete.gray.c100 }}>
-        Matrícula UFSC - PWA
+        Matrícula UFSC
       </Heading>{' '}
-      {!isOnline && (
-        <HFlow alignItems='center' hSpacing={0.5}>
-          <Icon icon='exclamationTriangleFilled' style={{ color: theme.pallete.gray.c100 }} />
-          <Heading level={4} style={{ color: theme.pallete.gray.c100 }}>
-            Você está offline, algumas funcionalidades foram desativadas e informações desatualizadas
-          </Heading>
-        </HFlow>
-      )}
-      <Button onClick={handleNotificationsClick}>Receber notificações</Button>
+      <Button onClick={handleNotificationsClick} skin='ghost'>
+        <Icon
+          icon={permission === 'granted' ? 'bellFilled' : 'bellOutline'}
+          style={{ color: theme.pallete.gray.c100 }}
+        />
+      </Button>
     </HFlow>
   )
 }

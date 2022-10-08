@@ -27,7 +27,7 @@ this.addEventListener('install', (event) => {
 // Estrategia "Network first, falling back to cache"
 // Ref: https://developer.chrome.com/docs/workbox/caching-strategies-overview/
 this.addEventListener('fetch', (event) => {
-  console.log(`[MATRICULA-UFSC-PWA:SW] fetchUrl=${event.request.url}`)
+  // console.log(`[MATRICULA-UFSC-PWA:SW] fetchUrl=${event.request.url}`)
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) => {
       var fetchRequest = event.request.clone()

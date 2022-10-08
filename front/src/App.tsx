@@ -4,12 +4,16 @@ import { client } from './config/client'
 import { OnlineStatusProvider } from './online-status/OnlineStatusProvider'
 import { VFlow } from 'bold-ui'
 import { HeaderBar } from './components/HeaderBar'
+import { OnlineStatusAlert } from './components/OnlineStatusAlert'
+import { PushNotificationsAlert } from './components/PushNotificationsAlert'
 
 function App() {
   return (
     <OnlineStatusProvider>
       <ApolloProvider client={client}>
-        <VFlow>
+        <VFlow vSpacing={0}>
+          <OnlineStatusAlert />
+          <PushNotificationsAlert />
           <HeaderBar />
           <ApplicationRoutes />
         </VFlow>

@@ -1,7 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.PerdaVagaDto
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QAluno.aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QPedidoMatricula.pedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QTurma.turma
@@ -22,7 +21,7 @@ class BuscarAlunoPerderamVaga(
             .innerJoin(aluno).on(pedidoMatricula.id.aluno.matricula.eq(aluno.matricula))
             .innerJoin(turma).on(turma.codigo.eq(pedidoMatricula.id.turma.codigo))
             .where(
-                pedidoMatricula.posicao.gt(turma.vagasOfertadas)
+                pedidoMatricula.posicao.gt(turma.vagasOfertadas).and(aluno.token.isNotNull)
             )
             .fetch()
     }

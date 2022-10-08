@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getMessaging, onMessage } from 'firebase/messaging'
+import { getMessaging } from 'firebase/messaging'
 
 export const PUBLIC_VAPID_KEY =
   'BKeDin_xnLD8OmBUskj2lOxYfTDVTDvVOvQCQg3nwJvlaRKzadOOq0LcvG1hW8hPDxLSqdluei-Fl17AGN-cRGk'
@@ -20,12 +20,3 @@ const app = initializeApp(firebaseConfig)
 // Initialize Firebase Cloud Messaging and get a reference to the service
 // https://firebase.google.com/docs/cloud-messaging/js/client
 export const messaging = getMessaging(app)
-
-onMessage(messaging, (payload) => {
-  console.log('[firebase.ts] Received foreground message ', payload)
-
-  const notificationTitle = payload.notification.title
-  const body = payload.notification.body
-
-  alert(`titulo: ${notificationTitle}, body: ${body}`)
-})
