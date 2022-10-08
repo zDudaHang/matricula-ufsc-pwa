@@ -17,6 +17,7 @@ class PushNotificationService(
     private val registrarSubscribeCommand: RegistrarSubscribeCommand
 ) {
     fun sendNotification(title: String, body: String, subscriptionToken: String) {
+        logger.debug("Sending notification to $subscriptionToken")
         val notification = Notification.builder()
             .setTitle(title)
             .setBody(body)
@@ -30,7 +31,7 @@ class PushNotificationService(
 
         val firebaseMessaging = FirebaseMessaging.getInstance()
         val response = firebaseMessaging.send(message)
-        logger.info("Successfully sent message: $response")
+        logger.debug("Successfully sent message: $response")
     }
 
     fun subscribe(subscriptionRequest: SubscriptionRequest) {

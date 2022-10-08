@@ -2,6 +2,7 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByUsernameCommand
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoPerderamVaga
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarAlunoCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
@@ -23,7 +24,9 @@ class AlunoService(
     private val buscarPedidoMatriculaByMatriculaCommand: BuscarPedidoMatriculaByMatriculaCommand,
     private val registrarAlunoCommand: RegistrarAlunoCommand,
     private val registrarPedidoMatriculaCommand: RegistrarPedidoMatriculaCommand,
-    private val passwordEncoder: BCryptPasswordEncoder
+    private val buscarAlunoPerderamVaga: BuscarAlunoPerderamVaga,
+    private val passwordEncoder: BCryptPasswordEncoder,
+    private val pushNotificationService: PushNotificationService
 ) : UserDetailsService {
     /**
      * TODO:
@@ -55,7 +58,13 @@ class AlunoService(
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
             val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.codigo }
-            registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
+            val result = registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
+            val alunosPrecisamSerNotificados = buscarAlunoPerderamVaga.execute(result.turmasNovas)
+            alunosPrecisamSerNotificados.forEach {
+                pushNotificationService.sendNotification("Vaga perdida na turma ${it.turma.codigo}", "Edite o seu pedido de matrícula caso queira trocar de turma.", it.aluno.token)
+            }
+            return result.getTurmasMatriculadas()
+
         } else mutableListOf()
     }
 
