@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text, useTheme, VFlow } from 'bold-ui'
 import { useField } from 'react-final-form'
 import { useBuscarGradeHorariosQuery } from '../../../generated/graphql'
+import { HORARIOS_FIELD_NAME } from '../../model'
 
 export type HorariosSelecionados = Map<number, Map<number, TurmaGradeHorarioModel[]>>
 
@@ -10,19 +11,17 @@ export interface TurmaGradeHorarioModel {
   sala: string
 }
 
-const FIELD_NAME = 'horarios'
-
 // TODO: Deixar esse componente visivel sem internet -> Cenarios: o usuario jah ter logado e nao ter logado
 export function GradeHorarios() {
   const { data } = useBuscarGradeHorariosQuery()
   const theme = useTheme()
 
-  const { input: horariosSelecionados } = useField<HorariosSelecionados>(FIELD_NAME, {
+  const { input: horariosSelecionados } = useField<HorariosSelecionados>(HORARIOS_FIELD_NAME, {
     subscription: { value: true },
   })
 
   return (
-    <Table hovered>
+    <Table>
       <TableHead>
         <TableRow>
           <TableHeader key='vazia' />
@@ -44,11 +43,12 @@ export function GradeHorarios() {
             {data?.diasSemana.map(({ id: diaSemanaId }) => {
               const turmas = horariosSelecionados.value.get(horarioId)?.get(diaSemanaId)
               if (turmas) {
+                const color = turmas.length > 1 ? theme.pallete.status.danger.c40 : theme.pallete.text.main
                 return (
                   <TableCell key={`td-${horarioId}-${diaSemanaId}`}>
                     <VFlow vSpacing={0}>
                       {turmas.map((turma) => (
-                        <Text key={`turma-${turma.codigoTurma}-${horarioId}-${diaSemanaId}`}>
+                        <Text key={`turma-${turma.codigoTurma}-${horarioId}-${diaSemanaId}`} style={{ color }}>
                           {turma.codigoTurma} - {turma.sala}
                         </Text>
                       ))}

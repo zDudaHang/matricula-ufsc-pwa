@@ -1,18 +1,22 @@
-import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
+import { Button, Cell, Grid, Heading, HFlow, VFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
 import { useEffect, useMemo } from 'react'
 import { Form, FormRenderProps } from 'react-final-form'
+import { ErrorField } from '../components/fields/ErrorField'
 import { Turma, useRegistrarPedidoMatriculaMutation } from '../generated/graphql'
 import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { calculator } from './calculator'
-import { GradeHorarios, HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
+import { GradeHorarios, HorariosSelecionados } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
-import { buscarPedidoMatricula } from './util'
+import { HORARIOS_FIELD_NAME, TURMAS_FIELD_NAME } from './model'
+import { buscarPedidoMatricula, convertTurmasMatriculadasToHorariosSelecionados } from './util'
+import { validateRegistroMatricula } from './validator'
 
 export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
   horarios: HorariosSelecionados
+  hasConflito: boolean
 }
 
 interface RegistrarPedidoMatriculaFormProps {
@@ -51,7 +55,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         </Cell>
         <OnlyOnlineFeature>
           <Cell size={12}>
-            <SelectTurmaField name='turmas' />
+            <SelectTurmaField name={TURMAS_FIELD_NAME} />
           </Cell>
           <Cell size={12}>
             <HFlow justifyContent='flex-end'>
@@ -62,7 +66,10 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
           </Cell>
         </OnlyOnlineFeature>
         <Cell size={12}>
-          <GradeHorarios />
+          <VFlow>
+            <ErrorField name={HORARIOS_FIELD_NAME} />
+            <GradeHorarios />
+          </VFlow>
         </Cell>
       </Grid>
     )
@@ -83,9 +90,10 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
       onSubmit={handleSubmit}
       initialValues={{
         turmas: turmasMatriculadas,
-        horarios: new Map<number, Map<number, TurmaGradeHorarioModel[]>>(),
+        horarios: convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas),
       }}
       decorators={[decorator]}
+      validate={validateRegistroMatricula}
     />
   )
 }
