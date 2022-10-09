@@ -1,20 +1,18 @@
 import { Alert } from 'bold-ui'
 import { onMessage } from 'firebase/messaging'
 import { useState } from 'react'
-import { messaging } from '../firebase'
+import { messaging } from '../notifications/firebase'
 
 export function PushNotificationsAlert() {
   const [showAlert, setShowAlert] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
 
   onMessage(messaging, (payload) => {
-    console.log('[firebase.ts] Received foreground message ', payload)
-    setShowAlert(true)
-
+    console.log('[PushNotificationsAlert] Received foreground message ', payload)
     const notificationTitle = payload.notification.title
-    const body = payload.notification.body
 
-    setMessage(`${notificationTitle} : ${body}`)
+    setMessage(`${notificationTitle}`)
+    setShowAlert(true)
   })
 
   return (

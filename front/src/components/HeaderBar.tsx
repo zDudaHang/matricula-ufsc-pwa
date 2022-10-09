@@ -1,14 +1,15 @@
 import { Button, Heading, HFlow, Icon, useTheme } from 'bold-ui'
-import { requestPermission } from './subscribe'
+import { requestPermission, unsubscribeUser } from '../notifications/subscribe'
+import { useNotificationStatus } from '../notifications/useNotificationStatus'
 
 export function HeaderBar() {
   const theme = useTheme()
+  const { isNotificationAllowed, setIsNotificationAllowed } = useNotificationStatus()
 
   const handleNotificationsClick = () => {
-    requestPermission()
+    if (isNotificationAllowed) unsubscribeUser(setIsNotificationAllowed)
+    else requestPermission(setIsNotificationAllowed)
   }
-
-  const permission = Notification.permission
 
   return (
     <HFlow
@@ -20,10 +21,7 @@ export function HeaderBar() {
         Matrícula UFSC
       </Heading>{' '}
       <Button onClick={handleNotificationsClick} skin='ghost'>
-        <Icon
-          icon={permission === 'granted' ? 'bellFilled' : 'bellOutline'}
-          style={{ color: theme.pallete.gray.c100 }}
-        />
+        <Icon icon={isNotificationAllowed ? 'bellFilled' : 'bellOutline'} style={{ color: theme.pallete.gray.c100 }} />
       </Button>
     </HFlow>
   )

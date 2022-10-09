@@ -56,7 +56,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
           <Cell size={12}>
             <HFlow justifyContent='flex-end'>
               <Button type='submit' kind='primary' onClick={formProps.handleSubmit}>
-                Registrar pedido
+                Registrar
               </Button>
             </HFlow>
           </Cell>

@@ -2,10 +2,10 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByUsernameCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoPerderamVaga
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarAlunoCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunoPerderamVagaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
@@ -24,7 +24,7 @@ class AlunoService(
     private val buscarPedidoMatriculaByMatriculaCommand: BuscarPedidoMatriculaByMatriculaCommand,
     private val registrarAlunoCommand: RegistrarAlunoCommand,
     private val registrarPedidoMatriculaCommand: RegistrarPedidoMatriculaCommand,
-    private val buscarAlunoPerderamVaga: BuscarAlunoPerderamVaga,
+    private val buscarAlunoPerderamVagaQuery: BuscarAlunoPerderamVagaQuery,
     private val passwordEncoder: BCryptPasswordEncoder,
     private val pushNotificationService: PushNotificationService
 ) : UserDetailsService {
@@ -59,7 +59,7 @@ class AlunoService(
         return if (aluno != null) {
             val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.codigo }
             val result = registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
-            val alunosPrecisamSerNotificados = buscarAlunoPerderamVaga.execute(result.turmasNovas)
+            val alunosPrecisamSerNotificados = buscarAlunoPerderamVagaQuery.execute(result.turmasNovas)
             alunosPrecisamSerNotificados.forEach {
                 pushNotificationService.sendNotification("Vaga perdida na turma ${it.turma.codigo}", "Edite o seu pedido de matrícula caso queira trocar de turma.", it.aluno.token)
             }

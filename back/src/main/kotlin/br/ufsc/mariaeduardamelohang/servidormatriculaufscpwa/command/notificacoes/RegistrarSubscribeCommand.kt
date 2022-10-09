@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import org.springframework.stereotype.Repository

@@ -6,18 +6,21 @@ import { VFlow } from 'bold-ui'
 import { HeaderBar } from './components/HeaderBar'
 import { OnlineStatusAlert } from './components/OnlineStatusAlert'
 import { PushNotificationsAlert } from './components/PushNotificationsAlert'
+import { NotificationStatusProvider } from './notifications/NotificationStatusProvider'
 
 function App() {
   return (
     <OnlineStatusProvider>
-      <ApolloProvider client={client}>
-        <VFlow vSpacing={0}>
-          <OnlineStatusAlert />
-          <PushNotificationsAlert />
-          <HeaderBar />
-          <ApplicationRoutes />
-        </VFlow>
-      </ApolloProvider>
+      <NotificationStatusProvider>
+        <ApolloProvider client={client}>
+          <VFlow vSpacing={0}>
+            <OnlineStatusAlert />
+            <PushNotificationsAlert />
+            <HeaderBar />
+            <ApplicationRoutes />
+          </VFlow>
+        </ApolloProvider>
+      </NotificationStatusProvider>
     </OnlineStatusProvider>
   )
 }

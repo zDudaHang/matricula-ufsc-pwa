@@ -4,6 +4,7 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.SubscriptionR
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.PushNotificationService
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
@@ -14,5 +15,10 @@ class PushNotificationController(
     @PostMapping("/subscribe", consumes = [APPLICATION_JSON_VALUE])
     fun subscribe(@RequestBody subscription: SubscriptionRequest) {
         pushNotificationService.subscribe(subscription)
+    }
+
+    @PutMapping("/unsubscribe")
+    fun unsubscribe() {
+        pushNotificationService.unsubscribe()
     }
 }
