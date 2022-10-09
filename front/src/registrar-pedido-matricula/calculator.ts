@@ -1,10 +1,10 @@
 import { Calculation } from 'final-form-calculate'
-import { TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
+import { HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
-import { TURMAS_FIELD_NAME } from './model'
+import { HORARIOS_FIELD_NAME, TURMAS_FIELD_NAME } from './model'
 import { RegistrarPedidoMatriculaFormModel } from './RegistrarPedidoMatriculaForm'
 
-export const calculator = (): Calculation => ({
+export const calculator = (): Calculation[] => [{
   field: TURMAS_FIELD_NAME,
   updates: {
     horarios: (
@@ -51,4 +51,14 @@ export const calculator = (): Calculation => ({
       return gradeHorarios
     },
   },
-})
+  {
+    field: HORARIOS_FIELD_NAME,
+    updates: { 
+      hasConflito: (
+        horariosSelecionados: HorariosSelecionados,
+      { horarios }: RegistrarPedidoMatriculaFormModel,
+      { turmas: prevTurmas }: RegistrarPedidoMatriculaFormModel
+      )
+    }
+  }
+}]
