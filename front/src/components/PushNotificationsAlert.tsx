@@ -8,7 +8,7 @@ export function PushNotificationsAlert() {
   const [message, setMessage] = useState<string>('')
 
   onMessage(messaging, (payload) => {
-    console.log('[PushNotificationsAlert] Received foreground message ', payload)
+    console.debug('[PushNotificationsAlert] Received foreground message ', payload)
     const notificationTitle = payload.notification.title
 
     setMessage(`${notificationTitle}`)

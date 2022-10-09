@@ -21,6 +21,7 @@ export type Aluno = {
   matricula: Scalars['String'];
   nome: Scalars['String'];
   nomeUsuario: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
 };
 
 export type DiaSemana = {
@@ -57,7 +58,7 @@ export type LoginInput = {
 export type LoginPayload = {
   __typename?: 'LoginPayload';
   accessToken?: Maybe<Scalars['String']>;
-  matriculaAluno?: Maybe<Scalars['String']>;
+  aluno?: Maybe<Aluno>;
   sucesso: Scalars['Boolean'];
 };
 
@@ -121,7 +122,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', accessToken?: string | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', accessToken?: string | null, sucesso: boolean, aluno?: { __typename?: 'Aluno', token?: string | null } | null } };
 
 export type RegistrarAlunoMutationVariables = Exact<{
   input: RegistrarAlunoInput;
@@ -185,6 +186,10 @@ export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
     accessToken
+    sucesso
+    aluno {
+      token
+    }
   }
 }
     `;

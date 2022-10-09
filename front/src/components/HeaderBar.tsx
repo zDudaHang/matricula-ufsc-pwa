@@ -1,6 +1,6 @@
 import { Button, Heading, HFlow, Icon, useTheme } from 'bold-ui'
 import { requestPermission, unsubscribeUser } from '../notifications/subscribe'
-import { useNotificationStatus } from '../notifications/useNotificationStatus'
+import { useNotificationStatus } from '../notifications/context/useNotificationStatus'
 
 export function HeaderBar() {
   const theme = useTheme()

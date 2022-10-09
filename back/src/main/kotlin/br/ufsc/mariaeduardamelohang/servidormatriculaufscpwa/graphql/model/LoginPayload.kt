@@ -1,9 +1,9 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model
 
-import java.util.UUID
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 
 data class LoginPayload(
-    val matriculaAluno: UUID? = null,
+    val aluno : Aluno? = null,
     val sucesso: Boolean,
     val accessToken: String? = null
 )

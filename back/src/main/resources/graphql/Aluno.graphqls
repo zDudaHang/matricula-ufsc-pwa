@@ -3,10 +3,12 @@ type Aluno {
     nome: String!
     nomeUsuario: String!
     iaa: Float!
+    # Token relacionado as notificacoes do firebase
+    token: String
 }
 
 type LoginPayload {
-    matriculaAluno: String
+    aluno: Aluno
     sucesso: Boolean!
     accessToken: String
 }

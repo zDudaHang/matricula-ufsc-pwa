@@ -8,7 +8,7 @@ interface NotificationStatusProviderProps {
 }
 
 export function NotificationStatusProvider(props: NotificationStatusProviderProps) {
-  const [isNotificationAllowed, setIsNotificationAllowed] = useState<boolean>(Notification.permission === 'granted')
+  const [isNotificationAllowed, setIsNotificationAllowed] = useState<boolean>(false)
 
   return (
     <NotificationStatusContext.Provider

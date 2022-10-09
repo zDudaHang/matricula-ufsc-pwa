@@ -6,7 +6,7 @@ import { VFlow } from 'bold-ui'
 import { HeaderBar } from './components/HeaderBar'
 import { OnlineStatusAlert } from './components/OnlineStatusAlert'
 import { PushNotificationsAlert } from './components/PushNotificationsAlert'
-import { NotificationStatusProvider } from './notifications/NotificationStatusProvider'
+import { NotificationStatusProvider } from './notifications/context/NotificationStatusProvider'
 
 function App() {
   return (

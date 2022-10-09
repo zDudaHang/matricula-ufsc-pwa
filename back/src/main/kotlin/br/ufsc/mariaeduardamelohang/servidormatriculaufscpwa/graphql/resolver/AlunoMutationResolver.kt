@@ -35,7 +35,7 @@ class AlunoMutationResolver(
         val authentication = authenticationService.authenticate(input)
         val aluno: Aluno = authentication.principal as Aluno
         return LoginPayload(
-            aluno.matricula,
+            aluno,
             authentication.isAuthenticated,
             jwtService.generateToken(aluno.matricula)
         )
