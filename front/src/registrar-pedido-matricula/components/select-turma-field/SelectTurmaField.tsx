@@ -37,7 +37,7 @@ export function SelectTurmaField(props: SelectTurmaFieldProps) {
       label='Turmas'
       placeholder='Selecione as turmas que queira se matricular'
       value={input.value}
-      error={meta.error}
+      error={meta.error || meta.submitError}
       onChange={input.onChange}
       items={data?.turmas ?? []}
       loading={loading}

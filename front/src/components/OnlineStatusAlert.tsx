@@ -6,7 +6,7 @@ export function OnlineStatusAlert() {
 
   return (
     !isOnline && (
-      <Alert type='warning' onCloseClick={console.log}>
+      <Alert type='warning'>
         Você está offline, algumas funcionalidades foram desativadas e informações desatualizadas
       </Alert>
     )

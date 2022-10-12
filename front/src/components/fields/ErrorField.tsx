@@ -9,15 +9,15 @@ export function ErrorField(props: ErrorFieldProps) {
   const { name } = props
 
   const {
-    meta: { error },
+    meta: { error, submitError },
   } = useField(name, {
-    subscription: { error: true },
+    subscription: { error: true, submitError: true },
   })
 
   return (
-    error && (
+    (error || submitError) && (
       <Alert inline type='danger'>
-        {error}
+        {error || submitError}
       </Alert>
     )
   )

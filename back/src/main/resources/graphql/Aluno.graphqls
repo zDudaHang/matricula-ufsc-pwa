@@ -13,10 +13,6 @@ type LoginPayload {
     accessToken: String
 }
 
-input PedidoMatriculaInput {
-    codigosTurmas: [String!]!
-}
-
 input RegistrarAlunoInput {
     nome: String!
     nomeUsuario: String!
@@ -31,6 +27,5 @@ input LoginInput {
 
 type Mutation {
     registrarAluno(input: RegistrarAlunoInput!): Aluno
-    registrarPedidoMatricula(input: PedidoMatriculaInput!): [Turma!]!
     login(input: LoginInput): LoginPayload!
 }
