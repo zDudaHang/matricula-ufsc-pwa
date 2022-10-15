@@ -1,8 +1,8 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByMatriculaCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByUsernameCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarUserDetailsByAlunoUsernameQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarAlunoCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunoPerderamVagaQuery
@@ -19,7 +19,7 @@ import javax.transaction.Transactional
 
 @Service
 class AlunoService(
-    private val buscarAlunoByUsernameCommand: BuscarAlunoByUsernameCommand,
+    private val buscarUserDetailsByAlunoUsernameQuery: BuscarUserDetailsByAlunoUsernameQuery,
     private val buscarAlunoByMatriculaCommand: BuscarAlunoByMatriculaCommand,
     private val buscarPedidoMatriculaByMatriculaCommand: BuscarPedidoMatriculaByMatriculaCommand,
     private val registrarAlunoCommand: RegistrarAlunoCommand,
@@ -42,7 +42,7 @@ class AlunoService(
         return registrarAlunoCommand.execute(inputWithEncodedPassword)
     }
 
-    fun buscarPedidoMatricula(): List<Turma>{
+    fun buscarPedidoMatricula(): List<Turma> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null)
             buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula)
@@ -64,11 +64,10 @@ class AlunoService(
                 pushNotificationService.sendNotification("Vaga perdida na turma ${it.turma.codigo}", "Edite o seu pedido de matrícula caso queira trocar de turma.", it.aluno.token)
             }
             return result.getTurmasMatriculadas()
-
         } else mutableListOf()
     }
 
     override fun loadUserByUsername(username: String): UserDetails? {
-        return buscarAlunoByUsernameCommand.execute(username)
+        return buscarUserDetailsByAlunoUsernameQuery.execute(username)
     }
 }

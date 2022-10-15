@@ -20,3 +20,13 @@ export function fetchWithAuthorization(fetchUrl: string, options?: RequestInit):
     headers: { Authorization: `Bearer ${accessToken}`, ...options?.headers },
   })
 }
+
+export function fetchPostWithJsonBodyAndWithoutAuthorization(fetchUrl: string, body: any): Promise<Response> {
+  return fetch(`${SERVER_URL}/${fetchUrl}`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}

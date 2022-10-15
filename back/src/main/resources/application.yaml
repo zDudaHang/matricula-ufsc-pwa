@@ -25,6 +25,14 @@ server:
   port: 8080
 
 # ===============================
+# = APLICAÇÃO
+# ===============================
+jwt:
+  secret: 80796d2a-b445-4c6d-b213-8afae94d88c5
+app:
+  firebase-configuration-file: firebase.json
+
+# ===============================
 # = GraphQL
 # - Ref: https://github.com/graphql-java-kickstart/graphql-spring-boot#enable-graphql-servlet
 # ===============================

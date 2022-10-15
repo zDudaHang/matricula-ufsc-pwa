@@ -11,7 +11,7 @@ export function NumberField(props: NumberFieldProps) {
   return (
     <BoldTextField
       {...props}
-      error={meta.error}
+      error={meta.error || meta.submitError}
       type='number'
       value={input.value}
       onChange={input.onChange}

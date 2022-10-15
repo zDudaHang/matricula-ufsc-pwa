@@ -12,7 +12,7 @@ export function PasswordField(props: PasswordFieldProps) {
   return (
     <TextField
       {...props}
-      error={meta.error}
+      error={meta.error || meta.submitError}
       // type={mustHideText ? 'password' : 'text'}
       value={input.value}
       onChange={input.onChange}

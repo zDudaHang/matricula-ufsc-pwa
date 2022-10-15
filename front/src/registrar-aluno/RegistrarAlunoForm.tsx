@@ -1,24 +1,20 @@
 import { Grid, Cell, Heading, Button } from 'bold-ui'
-import { Form, FormRenderProps } from 'react-final-form'
+import { FormRenderProps } from 'react-final-form'
 import { useNavigate } from 'react-router-dom'
 import { NumberField } from '../components/fields/NumberField'
 import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
-import { RegistrarAlunoInput, useRegistrarAlunoMutation } from '../generated/graphql'
-import { LOGIN_ROUTE } from '../routes/routes'
+import { Form } from '../components/Form'
+import { fetchPostWithJsonBodyAndWithoutAuthorization } from '../fetch'
+import { RegistrarAlunoInput } from '../generated/graphql'
 
 type RegistrarAlunoFormModel = RegistrarAlunoInput
 
 export function RegistrarAlunoForm() {
   const navigate = useNavigate()
 
-  const [registrarAluno] = useRegistrarAlunoMutation({
-    onCompleted: (data) => {
-      if (data.registrarAluno?.nomeUsuario) navigate(`${LOGIN_ROUTE}${data.registrarAluno.nomeUsuario}`)
-    },
-  })
-
-  const handleSubmit = (values: RegistrarAlunoFormModel) => registrarAluno({ variables: { input: values } })
+  const handleSubmit = (values: RegistrarAlunoFormModel) =>
+    fetchPostWithJsonBodyAndWithoutAuthorization('registrarAluno', values)
 
   const renderForm = (formProps: FormRenderProps<RegistrarAlunoFormModel>) => {
     return (
@@ -47,5 +43,5 @@ export function RegistrarAlunoForm() {
     )
   }
 
-  return <Form<RegistrarAlunoFormModel> render={renderForm} onSubmit={handleSubmit} />
+  return <Form<RegistrarAlunoFormModel> render={renderForm} onSubmit={handleSubmit} onSubmitSucceeded={console.log} />
 }

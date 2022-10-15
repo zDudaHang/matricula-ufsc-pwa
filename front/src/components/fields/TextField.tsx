@@ -11,7 +11,7 @@ export function TextField(props: TextFieldProps) {
   return (
     <BoldTextField
       {...props}
-      error={meta.error}
+      error={meta.error || meta.submitError}
       type='text'
       value={input.value}
       onChange={input.onChange}

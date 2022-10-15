@@ -20,7 +20,7 @@ import org.springframework.web.filter.CorsFilter
 class WebSecurityConfiguration(
     private val alunoService: AlunoService,
     private val jwtFilter: JWTFilter
-)  {
+) {
 
     @Bean
     @Throws(Exception::class)
@@ -37,8 +37,9 @@ class WebSecurityConfiguration(
             .userDetailsService(alunoService)
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers( "/graphql").permitAll()
+            .antMatchers("/graphql").permitAll()
             .antMatchers("/graphiql", "/vendor/**").permitAll()
+            .antMatchers(*PUBLIC_ENDPOINTS).permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement()

@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.controller
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.SubscriptionRequest
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.SubscriptionRequest
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.PushNotificationService
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.PostMapping

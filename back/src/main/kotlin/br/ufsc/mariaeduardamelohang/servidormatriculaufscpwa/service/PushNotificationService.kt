@@ -2,7 +2,7 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.RegistrarSubscribeCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.RemoverSubscribeTokenCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.SubscriptionRequest
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.SubscriptionRequest
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PushNotificationService(
-    private val logger : Logger = LoggerFactory.getLogger(PushNotificationService::class.java),
+    private val logger: Logger = LoggerFactory.getLogger(PushNotificationService::class.java),
     private val registrarSubscribeCommand: RegistrarSubscribeCommand,
     private val removerSubscribeTokenCommand: RemoverSubscribeTokenCommand
 ) {

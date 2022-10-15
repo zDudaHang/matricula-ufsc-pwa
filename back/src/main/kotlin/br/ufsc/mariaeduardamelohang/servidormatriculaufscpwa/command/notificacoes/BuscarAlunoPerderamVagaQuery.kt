@@ -1,17 +1,17 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.PerdaVagaDto
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QAluno.aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QPedidoMatricula.pedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QTurma.turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PerdaVagaDto
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 
 @Repository
-class BuscarAlunoPerderamVagaQuery (
+class BuscarAlunoPerderamVagaQuery(
     private val em: EntityManager
 ) {
     fun execute(turmasComAlunosNovos: List<Turma>): List<PerdaVagaDto> {

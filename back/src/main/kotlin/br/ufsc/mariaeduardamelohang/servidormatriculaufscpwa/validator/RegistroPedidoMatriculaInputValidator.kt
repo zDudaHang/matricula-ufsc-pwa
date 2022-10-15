@@ -3,8 +3,9 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.validator
 import br.ufsc.bridge.platform.validation.form.errors.FormError
 import br.ufsc.bridge.platform.validation.form.errors.FormErrorImpl
 import br.ufsc.bridge.platform.validation.rules.Rules.required
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.PedidoMatriculaInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.PedidoMatriculaInput
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.validator.model.ConflitoKey
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -15,7 +16,7 @@ class RegistroPedidoMatriculaInputValidator(
 ) {
 
     @Transactional
-    fun validate(input: PedidoMatriculaInput) : FormError<PedidoMatriculaInput> {
+    fun validate(input: PedidoMatriculaInput): FormError<PedidoMatriculaInput> {
         val error = FormErrorImpl(input)
 
         error.check(PedidoMatriculaInput::turmas, required)

@@ -8,7 +8,7 @@ import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Repository
-class BuscarAlunoByUsernameCommand(
+class BuscarUserDetailsByAlunoUsernameQuery(
     private val em: EntityManager,
 ) {
     @Transactional
