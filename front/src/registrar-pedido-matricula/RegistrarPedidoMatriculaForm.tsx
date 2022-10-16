@@ -2,7 +2,7 @@ import { Button, Cell, Grid, Heading, HFlow, VFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
 import { useCallback, useEffect, useMemo } from 'react'
-import { Form, FormRenderProps } from 'react-final-form'
+import { Form, FormRenderProps, useField } from 'react-final-form'
 import { ErrorField } from '../components/fields/ErrorField'
 import {
   fetchWithAuthorization,
@@ -65,6 +65,10 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     }
   }
 
+  const { input: horariosSelecionados } = useField<HorariosSelecionados>(HORARIOS_FIELD_NAME, {
+    subscription: { value: true },
+  })
+
   const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {
     const { handleSubmit } = formProps
     return (
@@ -87,7 +91,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         </OnlyOnlineFeature>
         <Cell size={12}>
           <VFlow>
-            <GradeHorarios />
+            <GradeHorarios horariosSelecionados={horariosSelecionados.value} />
           </VFlow>
         </Cell>
       </Grid>

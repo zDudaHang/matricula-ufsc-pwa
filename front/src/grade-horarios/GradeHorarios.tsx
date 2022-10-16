@@ -1,13 +1,17 @@
 import { Table, TableBody, TableHead, TableHeader, TableRow } from 'bold-ui'
 import { useEffect, useState } from 'react'
-import { useField } from 'react-final-form'
 import { fetchWithAuthorization } from '../fetch'
-import { HORARIOS_FIELD_NAME } from '../registrar-pedido-matricula/model'
 import { HorarioRow } from './HorarioRow'
 import { DiaSemana, Horario, HorariosSelecionados } from './model'
 
+export interface GradeHorariosProps {
+  horariosSelecionados: HorariosSelecionados
+}
+
 // TODO: Deixar esse componente visivel sem internet -> Cenarios: o usuario jah ter logado e nao ter logado
-export function GradeHorarios() {
+export function GradeHorarios(props: GradeHorariosProps) {
+  const { horariosSelecionados } = props
+
   const [horarios, setHorarios] = useState<Horario[]>([])
   const [diasSemana, setDiasSemana] = useState<DiaSemana[]>([])
 
@@ -19,10 +23,6 @@ export function GradeHorarios() {
       response.json().then((diasSemana: DiaSemana[]) => setDiasSemana(diasSemana))
     )
   }, [])
-
-  const { input: horariosSelecionados } = useField<HorariosSelecionados>(HORARIOS_FIELD_NAME, {
-    subscription: { value: true },
-  })
 
   return (
     <Table>
@@ -40,7 +40,7 @@ export function GradeHorarios() {
             key={`tr-horario-${horario.id}`}
             horario={horario}
             diasSemana={diasSemana}
-            horariosSelecionados={horariosSelecionados.value}
+            horariosSelecionados={horariosSelecionados}
           />
         ))}
       </TableBody>

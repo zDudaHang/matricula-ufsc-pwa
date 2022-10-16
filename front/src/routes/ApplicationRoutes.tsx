@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RegistrarAlunoForm } from '../registrar-aluno/RegistrarAlunoForm'
 import { LoginForm } from '../login/LoginForm'
-import { LOGIN_ROUTE, PEDIDO_MATRICULA_ROUTE, REGISTAR_ALUNO_ROUTE } from './routes'
+import { EDITAR_PEDIDO_MATRICULA_ROUTE, LOGIN_ROUTE, PEDIDO_MATRICULA_ROUTE, REGISTAR_ALUNO_ROUTE } from './routes'
 import { PrivateRoute } from './PrivateRoute'
 import { RegistrarPedidoMatriculaForm } from '../registrar-pedido-matricula/RegistrarPedidoMatriculaForm'
 import { useState } from 'react'
 import { TurmaMatriculada } from '../grade-horarios/model'
+import { convertTurmasMatriculadasToHorariosSelecionados } from '../registrar-pedido-matricula/util'
+import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
+import { PedidoMatriculaView } from '../pedido-matricula/PedidoMatriculaView'
 
 export function ApplicationRoutes() {
   const [turmasMatriculadas, setTurmasMatriculadas] = useState<TurmaMatriculada[]>([])
@@ -21,10 +24,22 @@ export function ApplicationRoutes() {
           path={PEDIDO_MATRICULA_ROUTE}
           element={
             <PrivateRoute>
-              <RegistrarPedidoMatriculaForm
-                turmasMatriculadas={turmasMatriculadas}
-                setTurmasMatriculadas={setTurmasMatriculadas}
+              <PedidoMatriculaView
+                horariosSelecionados={convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas)}
               />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={EDITAR_PEDIDO_MATRICULA_ROUTE}
+          element={
+            <PrivateRoute>
+              <OnlyOnlineFeature>
+                <RegistrarPedidoMatriculaForm
+                  turmasMatriculadas={turmasMatriculadas}
+                  setTurmasMatriculadas={setTurmasMatriculadas}
+                />
+              </OnlyOnlineFeature>
             </PrivateRoute>
           }
         />
