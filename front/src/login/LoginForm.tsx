@@ -1,13 +1,15 @@
 import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
-import { Form, FormRenderProps } from 'react-final-form'
+import { FormRenderProps } from 'react-final-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ButtonLink } from '../components/ButtonLink'
 import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
-import { LoginInput, useLoginMutation } from '../generated/graphql'
+import { Form } from '../components/Form'
+import { fetchPostWithJsonBodyAndWithoutAuthorization } from '../fetch'
 import { JWT_LOCAL_STORAGE } from '../local-storage/model'
 import { useNotificationStatus } from '../notifications/context/useNotificationStatus'
 import { REGISTAR_ALUNO_ROUTE, PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
+import { LoginInput, LoginResult } from './model'
 
 type LoginFormModel = LoginInput
 
@@ -19,26 +21,15 @@ export function LoginForm() {
   const navigate = useNavigate()
   const { setIsNotificationAllowed } = useNotificationStatus()
 
-  const [efetuarLogin] = useLoginMutation({
-    // TODO: Utilizar os cookies depois para deixar mais robusto
-    onCompleted: (data) => {
-      if (data.login) {
-        const { aluno, accessToken } = data.login
-        if (aluno) {
-          setIsNotificationAllowed(aluno.token && Notification.permission === 'granted')
-        }
-        if (accessToken) {
-          localStorage.setItem(JWT_LOCAL_STORAGE, data.login.accessToken)
-          navigate(PEDIDO_MATRICULA_ROUTE)
-        }
-      }
-    },
-    onError: (error) => console.error(error),
-  })
-
   const { nomeUsuario } = useParams<keyof LoginURLParams>()
 
-  const handleSubmit = (values: LoginFormModel) => efetuarLogin({ variables: { input: values } })
+  const handleSubmit = (values: LoginFormModel) => fetchPostWithJsonBodyAndWithoutAuthorization('login', values)
+
+  const handleSubmiSuccess = (result: LoginResult) => {
+    setIsNotificationAllowed(result.subscriptionToken && Notification.permission === 'granted')
+    localStorage.setItem(JWT_LOCAL_STORAGE, result.accessToken)
+    navigate(PEDIDO_MATRICULA_ROUTE)
+  }
 
   const renderForm = (formProps: FormRenderProps<LoginFormModel>) => {
     return (
@@ -66,5 +57,12 @@ export function LoginForm() {
     )
   }
 
-  return <Form<LoginFormModel> initialValues={{ nomeUsuario }} render={renderForm} onSubmit={handleSubmit} />
+  return (
+    <Form<LoginFormModel>
+      initialValues={{ nomeUsuario }}
+      render={renderForm}
+      onSubmit={handleSubmit}
+      onSubmitSucceeded={handleSubmiSuccess}
+    />
+  )
 }

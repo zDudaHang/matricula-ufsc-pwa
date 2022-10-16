@@ -1,33 +1,22 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByMatriculaCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarUserDetailsByAlunoUsernameQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarAlunoCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunoPerderamVagaQuery
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.RegistrarAlunoInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PedidoMatriculaDTO
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.UUID
-import javax.transaction.Transactional
 
 @Service
 class AlunoService(
     private val buscarUserDetailsByAlunoUsernameQuery: BuscarUserDetailsByAlunoUsernameQuery,
     private val buscarAlunoByMatriculaCommand: BuscarAlunoByMatriculaCommand,
-    private val buscarPedidoMatriculaByMatriculaCommand: BuscarPedidoMatriculaByMatriculaCommand,
     private val registrarAlunoCommand: RegistrarAlunoCommand,
-    private val registrarPedidoMatriculaCommand: RegistrarPedidoMatriculaCommand,
-    private val buscarAlunoPerderamVagaQuery: BuscarAlunoPerderamVagaQuery,
     private val passwordEncoder: BCryptPasswordEncoder,
-    private val pushNotificationService: PushNotificationService
 ) : UserDetailsService {
 
     fun registrarAluno(input: RegistrarAlunoInput): Aluno? {
@@ -40,31 +29,8 @@ class AlunoService(
         return registrarAlunoCommand.execute(inputWithEncodedPassword)
     }
 
-    fun buscarPedidoMatricula(): List<PedidoMatriculaDTO> {
-        val aluno = AuthUtils.getAlunoAutenticado()
-        return if (aluno != null) {
-            buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula)
-        } else {
-            mutableListOf()
-        }
-    }
-
     fun buscarAlunoPelaMatricula(matricula: UUID): Aluno? {
         return buscarAlunoByMatriculaCommand.execute(matricula)
-    }
-
-    @Transactional
-    fun registrarPedidoMatricula(codigosTurmas: List<String>): MutableList<Turma> {
-        val aluno = AuthUtils.getAlunoAutenticado()
-        return if (aluno != null) {
-            val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.turma.codigo }
-            val result = registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
-            val alunosPrecisamSerNotificados = buscarAlunoPerderamVagaQuery.execute(result.turmasNovas)
-            alunosPrecisamSerNotificados.forEach {
-                pushNotificationService.sendNotification("Vaga perdida na turma ${it.turma.codigo}", "Edite o seu pedido de matrícula caso queira trocar de turma.", it.aluno.token)
-            }
-            return result.getTurmasMatriculadas()
-        } else mutableListOf()
     }
 
     override fun loadUserByUsername(username: String): UserDetails? {

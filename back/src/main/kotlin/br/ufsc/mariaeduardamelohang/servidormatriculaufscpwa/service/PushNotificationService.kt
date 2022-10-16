@@ -2,7 +2,7 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.RegistrarSubscribeCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.RemoverSubscribeTokenCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.SubscriptionRequest
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.SubscriptionInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
@@ -34,11 +34,11 @@ class PushNotificationService(
         logger.debug("Successfully sent message: $response")
     }
 
-    fun subscribe(subscriptionRequest: SubscriptionRequest) {
+    fun subscribe(subscriptionInput: SubscriptionInput) {
         val aluno = AuthUtils.getAlunoAutenticado()
         if (aluno !== null) {
-            registrarSubscribeCommand.execute(aluno.matricula, subscriptionRequest.token)
-            sendNotification("Notificações habilitadas com sucesso", subscriptionToken = subscriptionRequest.token)
+            registrarSubscribeCommand.execute(aluno.matricula, subscriptionInput.token)
+            sendNotification("Notificações habilitadas com sucesso", subscriptionToken = subscriptionInput.token)
         }
     }
 

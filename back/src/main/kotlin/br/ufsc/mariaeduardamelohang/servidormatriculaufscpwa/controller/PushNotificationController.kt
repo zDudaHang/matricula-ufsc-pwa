@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.controller
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.SubscriptionRequest
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.SubscriptionInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.PushNotificationService
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,7 +13,7 @@ class PushNotificationController(
     private val pushNotificationService: PushNotificationService
 ) {
     @PostMapping("/subscribe", consumes = [APPLICATION_JSON_VALUE])
-    fun subscribe(@RequestBody subscription: SubscriptionRequest) {
+    fun subscribe(@RequestBody subscription: SubscriptionInput) {
         pushNotificationService.subscribe(subscription)
     }
 

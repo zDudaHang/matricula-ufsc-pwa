@@ -31,28 +31,3 @@ jwt:
   secret: 80796d2a-b445-4c6d-b213-8afae94d88c5
 app:
   firebase-configuration-file: firebase.json
-
-# ===============================
-# = GraphQL
-# - Ref: https://github.com/graphql-java-kickstart/graphql-spring-boot#enable-graphql-servlet
-# ===============================
-graphql:
-  servlet:
-    enabled: true
-    mapping: /graphql
-    cors-enabled: true
-    cors:
-      allowed-origins: "*"
-      allowed-methods: "*"
-      allowed-headers: "*"
-graphiql:
-  servlet:
-    mapping: /graphql
-    enabled: true
-    corsEnabled: true
-    endpoint:
-      graphql: /graphql
-    pageTitle: GraphiQL
-    props:
-      variables:
-        editorTheme: "solarized light"

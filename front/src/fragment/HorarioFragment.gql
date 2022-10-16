@@ -1,4 +1,0 @@
-fragment Horario on HorarioAula {
-  id
-  horario
-}

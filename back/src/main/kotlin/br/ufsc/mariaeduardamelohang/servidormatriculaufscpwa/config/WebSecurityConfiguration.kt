@@ -37,8 +37,6 @@ class WebSecurityConfiguration(
             .userDetailsService(alunoService)
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/graphql").permitAll()
-            .antMatchers("/graphiql", "/vendor/**").permitAll()
             .antMatchers(*PUBLIC_ENDPOINTS).permitAll()
             .anyRequest().authenticated()
             .and()

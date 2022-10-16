@@ -4,6 +4,7 @@ export interface TurmaGradeHorarioModel {
   codigoTurma: string
   codigoDisciplina: string
   sala: string
+  posicao?: number
 }
 
 export interface TurmaMatriculada {

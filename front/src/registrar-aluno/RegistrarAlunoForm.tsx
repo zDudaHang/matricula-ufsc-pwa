@@ -6,9 +6,8 @@ import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
 import { Form } from '../components/Form'
 import { fetchPostWithJsonBodyAndWithoutAuthorization } from '../fetch'
-import { RegistrarAlunoInput } from '../generated/graphql'
 import { LOGIN_ROUTE } from '../routes/routes'
-import { RegistrarAlunoResult } from './model'
+import { RegistrarAlunoInput, RegistrarAlunoResult } from './model'
 
 type RegistrarAlunoFormModel = RegistrarAlunoInput
 

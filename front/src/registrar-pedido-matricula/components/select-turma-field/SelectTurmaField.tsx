@@ -1,6 +1,7 @@
 import { HFlow, isEqual, Select, Text, VFlow } from 'bold-ui'
+import { useEffect, useState } from 'react'
 import { useField } from 'react-final-form'
-import { useBuscarTurmasQuery } from '../../../generated/graphql'
+import { fetchWithAuthorization } from '../../../fetch'
 import { Turma } from '../../../grade-horarios/model'
 
 export type SelectTurmaFieldModel = Turma
@@ -35,9 +36,13 @@ interface SelectTurmaFieldProps {
 }
 
 export function SelectTurmaField(props: SelectTurmaFieldProps) {
-  const { loading, data } = useBuscarTurmasQuery()
-
   const { input, meta } = useField(props.name)
+
+  const [turmas, setTurmas] = useState<Turma[]>([])
+
+  useEffect(() => {
+    fetchWithAuthorization('turmas').then((response) => response.json().then((turmas: Turma[]) => setTurmas(turmas)))
+  }, [])
 
   return (
     <Select<SelectTurmaFieldModel>
@@ -46,8 +51,7 @@ export function SelectTurmaField(props: SelectTurmaFieldProps) {
       value={input.value}
       error={meta.error || meta.submitError}
       onChange={input.onChange}
-      items={[]}
-      loading={loading}
+      items={turmas}
       renderItem={renderItem}
       itemToString={itemToString}
       itemIsEqual={itemIsEqual}

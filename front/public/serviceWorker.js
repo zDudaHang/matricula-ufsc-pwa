@@ -12,7 +12,7 @@ const IMAGES = [
 
 const PEDIDO_MATRICULA_URL = '/pedidoMatricula'
 
-const OFFLINE_URLS = [PEDIDO_MATRICULA_URL]
+const OFFLINE_URLS = ['/pedidoMatricula', '/horarios', '/diasSemana']
 
 const FILES_TO_CACHE = ['/', 'index.html', 'manifest.json', 'favicon.ico', '/static/js/bundle.js', ...IMAGES]
 

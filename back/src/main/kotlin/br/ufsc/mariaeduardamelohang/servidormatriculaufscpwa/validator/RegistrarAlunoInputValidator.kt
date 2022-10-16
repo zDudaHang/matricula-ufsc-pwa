@@ -5,7 +5,7 @@ import br.ufsc.bridge.platform.validation.form.errors.FormErrorImpl
 import br.ufsc.bridge.platform.validation.rules.Rules.range
 import br.ufsc.bridge.platform.validation.rules.Rules.required
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByUsernameQuery
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.RegistrarAlunoInput
 import org.springframework.stereotype.Component
 
 @Component

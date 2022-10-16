@@ -1,13 +1,24 @@
 import { Table, TableBody, TableHead, TableHeader, TableRow } from 'bold-ui'
+import { useEffect, useState } from 'react'
 import { useField } from 'react-final-form'
-import { useBuscarGradeHorariosQuery } from '../generated/graphql'
+import { fetchWithAuthorization } from '../fetch'
 import { HORARIOS_FIELD_NAME } from '../registrar-pedido-matricula/model'
 import { HorarioRow } from './HorarioRow'
-import { HorariosSelecionados } from './model'
+import { DiaSemana, Horario, HorariosSelecionados } from './model'
 
 // TODO: Deixar esse componente visivel sem internet -> Cenarios: o usuario jah ter logado e nao ter logado
 export function GradeHorarios() {
-  const { data } = useBuscarGradeHorariosQuery()
+  const [horarios, setHorarios] = useState<Horario[]>([])
+  const [diasSemana, setDiasSemana] = useState<DiaSemana[]>([])
+
+  useEffect(() => {
+    fetchWithAuthorization('horarios').then((response) =>
+      response.json().then((horarios: Horario[]) => setHorarios(horarios))
+    )
+    fetchWithAuthorization('diasSemana').then((response) =>
+      response.json().then((diasSemana: DiaSemana[]) => setDiasSemana(diasSemana))
+    )
+  }, [])
 
   const { input: horariosSelecionados } = useField<HorariosSelecionados>(HORARIOS_FIELD_NAME, {
     subscription: { value: true },
@@ -18,17 +29,17 @@ export function GradeHorarios() {
       <TableHead>
         <TableRow>
           <TableHeader key='vazia' />
-          {data?.diasSemana.map((diasSemana) => (
+          {diasSemana.map((diasSemana) => (
             <TableHeader key={`th-${diasSemana.id}`}>{diasSemana.nome}</TableHeader>
           ))}
         </TableRow>
       </TableHead>
       <TableBody>
-        {data?.horarios.map((horario) => (
+        {horarios.map((horario) => (
           <HorarioRow
             key={`tr-horario-${horario.id}`}
             horario={horario}
-            diasSemana={data?.diasSemana}
+            diasSemana={diasSemana}
             horariosSelecionados={horariosSelecionados.value}
           />
         ))}

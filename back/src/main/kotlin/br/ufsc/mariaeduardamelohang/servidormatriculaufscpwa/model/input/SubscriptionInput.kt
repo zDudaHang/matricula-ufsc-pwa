@@ -1,5 +1,5 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input
 
-data class SubscriptionRequest(
+data class SubscriptionInput(
     val token: String
 )

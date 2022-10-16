@@ -1,9 +1,0 @@
-query BuscarGradeHorarios {
-  horarios {
-    ...Horario
-  }
-
-  diasSemana {
-    ...DiaSemana
-  }
-}

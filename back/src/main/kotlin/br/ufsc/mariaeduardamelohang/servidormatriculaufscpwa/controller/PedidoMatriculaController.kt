@@ -1,9 +1,11 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.controller
 
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.DiaSemana
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Horario
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PedidoMatriculaDTO
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.PedidoMatriculaInput
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AlunoService
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.PedidoMatriculaService
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.validator.RegistroPedidoMatriculaInputValidator
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.validator.throwIfInvalid
 import org.springframework.http.MediaType
@@ -14,18 +16,34 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class PedidoMatriculaController(
-    private val alunoService: AlunoService,
+    private val service: PedidoMatriculaService,
     private val registroPedidoMatriculaInputValidator: RegistroPedidoMatriculaInputValidator
 ) {
 
     @GetMapping("/pedidoMatricula")
     fun pedidoMatricula(): List<PedidoMatriculaDTO> {
-        return alunoService.buscarPedidoMatricula()
+        return service.buscarPedidoMatricula()
     }
 
     @PostMapping("/registrarPedidoMatricula", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun registrarPedidoMatricula(@RequestBody input: PedidoMatriculaInput): MutableList<Turma> {
         registroPedidoMatriculaInputValidator.validate(input).throwIfInvalid()
-        return alunoService.registrarPedidoMatricula(input.turmas)
+        return service.registrarPedidoMatricula(input.turmas)
+    }
+
+    // TODO: Fazer um DTO para não trazer tudo, só o que realmente precisa
+    @GetMapping("/turmas")
+    fun turmas() : List<Turma> {
+        return service.buscarTurmas()
+    }
+
+    @GetMapping("/horarios")
+    fun horarios(): List<Horario> {
+        return service.buscarHorarios()
+    }
+
+    @GetMapping("/diasSemana")
+    fun diasSemana(): List<DiaSemana> {
+        return service.buscarDiasSemana()
     }
 }

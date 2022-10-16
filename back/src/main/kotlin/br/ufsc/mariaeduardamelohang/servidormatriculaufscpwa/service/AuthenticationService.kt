@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.LoginInput
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.LoginInput
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication

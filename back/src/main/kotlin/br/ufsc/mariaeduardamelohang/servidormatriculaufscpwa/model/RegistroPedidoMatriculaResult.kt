@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 

@@ -1,5 +1,0 @@
-type Disciplina {
-    codigo: String!
-    nome: String!
-    cargaHoraria: Int!
-}

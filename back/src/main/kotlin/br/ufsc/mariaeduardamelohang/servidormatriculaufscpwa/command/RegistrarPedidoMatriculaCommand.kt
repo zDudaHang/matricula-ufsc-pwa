@@ -4,7 +4,7 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Alun
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatriculaPrimaryKey
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.RegistroPedidoMatriculaResult
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.RegistroPedidoMatriculaResult
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
