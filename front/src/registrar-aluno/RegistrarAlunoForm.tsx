@@ -7,6 +7,8 @@ import { TextField } from '../components/fields/TextField'
 import { Form } from '../components/Form'
 import { fetchPostWithJsonBodyAndWithoutAuthorization } from '../fetch'
 import { RegistrarAlunoInput } from '../generated/graphql'
+import { LOGIN_ROUTE } from '../routes/routes'
+import { RegistrarAlunoResult } from './model'
 
 type RegistrarAlunoFormModel = RegistrarAlunoInput
 
@@ -15,6 +17,8 @@ export function RegistrarAlunoForm() {
 
   const handleSubmit = (values: RegistrarAlunoFormModel) =>
     fetchPostWithJsonBodyAndWithoutAuthorization('registrarAluno', values)
+
+  const handleSubmiSuccess = (result: RegistrarAlunoResult) => navigate(`${LOGIN_ROUTE}${result.nomeUsuario}`)
 
   const renderForm = (formProps: FormRenderProps<RegistrarAlunoFormModel>) => {
     return (
@@ -43,5 +47,7 @@ export function RegistrarAlunoForm() {
     )
   }
 
-  return <Form<RegistrarAlunoFormModel> render={renderForm} onSubmit={handleSubmit} onSubmitSucceeded={console.log} />
+  return (
+    <Form<RegistrarAlunoFormModel> render={renderForm} onSubmit={handleSubmit} onSubmitSucceeded={handleSubmiSuccess} />
+  )
 }

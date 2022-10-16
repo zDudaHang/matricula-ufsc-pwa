@@ -9,6 +9,7 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoe
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.graphql.model.input.RegistrarAlunoInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PedidoMatriculaDTO
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -28,10 +29,7 @@ class AlunoService(
     private val passwordEncoder: BCryptPasswordEncoder,
     private val pushNotificationService: PushNotificationService
 ) : UserDetailsService {
-    /**
-     * TODO:
-     * - Tratar o cenário de ter um aluno com o mesmo username
-     */
+
     fun registrarAluno(input: RegistrarAlunoInput): Aluno? {
         val inputWithEncodedPassword = RegistrarAlunoInput(
             input.nome,
@@ -42,11 +40,13 @@ class AlunoService(
         return registrarAlunoCommand.execute(inputWithEncodedPassword)
     }
 
-    fun buscarPedidoMatricula(): List<Turma> {
+    fun buscarPedidoMatricula(): List<PedidoMatriculaDTO> {
         val aluno = AuthUtils.getAlunoAutenticado()
-        return if (aluno != null)
+        return if (aluno != null) {
             buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula)
-        else mutableListOf()
+        } else {
+            mutableListOf()
+        }
     }
 
     fun buscarAlunoPelaMatricula(matricula: UUID): Aluno? {
@@ -57,7 +57,7 @@ class AlunoService(
     fun registrarPedidoMatricula(codigosTurmas: List<String>): MutableList<Turma> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
-            val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.codigo }
+            val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.turma.codigo }
             val result = registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
             val alunosPrecisamSerNotificados = buscarAlunoPerderamVagaQuery.execute(result.turmasNovas)
             alunosPrecisamSerNotificados.forEach {

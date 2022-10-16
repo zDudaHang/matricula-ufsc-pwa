@@ -1,5 +1,5 @@
 import { Calculation } from 'final-form-calculate'
-import { TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
+import { TurmaGradeHorarioModel } from '../grade-horarios/model'
 import { SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
 import { TURMAS_FIELD_NAME } from './model'
 import { RegistrarPedidoMatriculaFormModel } from './RegistrarPedidoMatriculaForm'
@@ -14,38 +14,54 @@ export const calculator = (): Calculation => ({
     ) => {
       let gradeHorarios = horarios
       turmasSelecionadas?.forEach((turma) => {
-        turma.horarios?.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId }, sala }) => {
-          if (!horarios.has(horarioId)) gradeHorarios.set(horarioId, new Map<number, TurmaGradeHorarioModel[]>())
-          if (!horarios.get(horarioId).has(diaSemanaId)) gradeHorarios.get(horarioId).set(diaSemanaId, [])
-
-          if (
-            !horarios
-              .get(horarioId)
-              .get(diaSemanaId)
-              .find((t) => t.codigoTurma === turma.codigo)
-          ) {
-            gradeHorarios.get(horarioId).get(diaSemanaId).push({
-              codigoDisciplina: turma.disciplina.codigo,
-              codigoTurma: turma.codigo,
+        turma.horarios?.forEach(
+          ({
+            id: {
+              diaSemana: { id: diaSemanaId },
+              horario: { id: horarioId },
               sala,
-            })
+            },
+          }) => {
+            if (!horarios.has(horarioId)) gradeHorarios.set(horarioId, new Map<number, TurmaGradeHorarioModel[]>())
+            if (!horarios.get(horarioId).has(diaSemanaId)) gradeHorarios.get(horarioId).set(diaSemanaId, [])
+
+            if (
+              !horarios
+                .get(horarioId)
+                .get(diaSemanaId)
+                .find((t) => t.codigoTurma === turma.codigo)
+            ) {
+              gradeHorarios.get(horarioId).get(diaSemanaId).push({
+                codigoDisciplina: turma.disciplina.codigo,
+                codigoTurma: turma.codigo,
+                sala,
+              })
+            }
           }
-        })
+        )
       })
 
       const turmasRemovidas = prevTurmas?.filter(
         (prev) => !turmasSelecionadas.find((turma) => prev.codigo === turma.codigo)
       )
       turmasRemovidas?.forEach((turma) => {
-        turma.horarios?.forEach(({ horario: { id: horarioId }, diaSemana: { id: diaSemanaId } }) => {
-          gradeHorarios.get(horarioId)?.set(
-            diaSemanaId,
-            gradeHorarios
-              .get(horarioId)
-              .get(diaSemanaId)
-              .filter((t) => t.codigoTurma !== turma.codigo)
-          )
-        })
+        turma.horarios?.forEach(
+          ({
+            id: {
+              diaSemana: { id: diaSemanaId },
+              horario: { id: horarioId },
+              sala,
+            },
+          }) => {
+            gradeHorarios.get(horarioId)?.set(
+              diaSemanaId,
+              gradeHorarios
+                .get(horarioId)
+                .get(diaSemanaId)
+                .filter((t) => t.codigoTurma !== turma.codigo)
+            )
+          }
+        )
       })
 
       return gradeHorarios

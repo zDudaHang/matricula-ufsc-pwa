@@ -6,6 +6,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Embeddable
 public class PedidoMatriculaPrimaryKey implements Serializable {
 
@@ -13,10 +15,12 @@ public class PedidoMatriculaPrimaryKey implements Serializable {
 
 	@ManyToOne
 	@MapsId
+	@JsonIgnore
 	Turma turma;
 
 	@ManyToOne
 	@MapsId
+	@JsonIgnore
 	Aluno aluno;
 
 	public PedidoMatriculaPrimaryKey(Turma turma, Aluno aluno) {

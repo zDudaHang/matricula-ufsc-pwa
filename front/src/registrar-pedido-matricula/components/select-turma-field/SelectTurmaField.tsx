@@ -1,11 +1,18 @@
 import { HFlow, isEqual, Select, Text, VFlow } from 'bold-ui'
 import { useField } from 'react-final-form'
-import { BuscarTurmasQuery, useBuscarTurmasQuery } from '../../../generated/graphql'
+import { useBuscarTurmasQuery } from '../../../generated/graphql'
+import { Turma } from '../../../grade-horarios/model'
 
-export type SelectTurmaFieldModel = BuscarTurmasQuery['turmas'][0]
+export type SelectTurmaFieldModel = Turma
 
 const renderItem = (turma: SelectTurmaFieldModel) => {
-  const { disciplina, nomeProfessor, codigo, vagasOfertadas } = turma
+  const {
+    disciplina,
+    professor: { nome: nomeProfessor },
+    codigo,
+    vagasOfertadas,
+  } = turma
+
   return (
     <VFlow vSpacing={0} style={{ marginLeft: '1rem' }}>
       <Text fontWeight='bold'>
@@ -39,7 +46,7 @@ export function SelectTurmaField(props: SelectTurmaFieldProps) {
       value={input.value}
       error={meta.error || meta.submitError}
       onChange={input.onChange}
-      items={data?.turmas ?? []}
+      items={[]}
       loading={loading}
       renderItem={renderItem}
       itemToString={itemToString}

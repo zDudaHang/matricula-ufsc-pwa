@@ -10,13 +10,13 @@ import {
   HTTP_STATUS_VALIDATION_EXCEPTION,
   ServerValidationError,
 } from '../fetch'
-import { Turma } from '../generated/graphql'
 import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { calculator } from './calculator'
-import { GradeHorarios, HorariosSelecionados } from './components/grade-horarios/GradeHorarios'
+import { GradeHorarios } from '../grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
 import { HORARIOS_FIELD_NAME, POLLING_TIME_IN_MS, TURMAS_FIELD_NAME } from './model'
 import { convertTurmasMatriculadasToHorariosSelecionados } from './util'
+import { HorariosSelecionados, TurmaMatriculada } from '../grade-horarios/model'
 
 export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
@@ -25,8 +25,8 @@ export interface RegistrarPedidoMatriculaFormModel {
 }
 
 interface RegistrarPedidoMatriculaFormProps {
-  turmasMatriculadas: Turma[]
-  setTurmasMatriculadas(turmas: Turma[]): void
+  turmasMatriculadas: TurmaMatriculada[]
+  setTurmasMatriculadas(turmas: TurmaMatriculada[]): void
 }
 
 export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaFormProps) {
@@ -35,7 +35,8 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
   const getPedidoMatricula = useCallback(async () => {
     console.debug('[RegistrarPedidoMatriculaForm.tsx] getPedidoMatricula...')
     const response = await fetchWithAuthorization('pedidoMatricula')
-    const pedidoMatricula = await response.json()
+    const pedidoMatricula: TurmaMatriculada[] = await response.json()
+    console.log(pedidoMatricula)
     setTurmasMatriculadas(pedidoMatricula)
   }, [setTurmasMatriculadas])
 
@@ -44,6 +45,11 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     const timer = setInterval(getPedidoMatricula, POLLING_TIME_IN_MS)
     return () => clearInterval(timer)
   }, [getPedidoMatricula])
+
+  useEffect(() => {
+    getPedidoMatricula()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleSubmit = async (values: RegistrarPedidoMatriculaFormModel) => {
     const response = await fetchWithAuthorization('registrarPedidoMatricula', {
@@ -103,7 +109,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
       render={renderForm}
       onSubmit={handleSubmit}
       initialValues={{
-        turmas: turmasMatriculadas,
+        turmas: turmasMatriculadas.map((turmaMatriculada) => turmaMatriculada.turma),
         horarios: convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas),
       }}
       decorators={[decorator]}

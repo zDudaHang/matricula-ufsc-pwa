@@ -5,10 +5,10 @@ import { LOGIN_ROUTE, PEDIDO_MATRICULA_ROUTE, REGISTAR_ALUNO_ROUTE } from './rou
 import { PrivateRoute } from './PrivateRoute'
 import { RegistrarPedidoMatriculaForm } from '../registrar-pedido-matricula/RegistrarPedidoMatriculaForm'
 import { useState } from 'react'
-import { Turma } from '../generated/graphql'
+import { TurmaMatriculada } from '../grade-horarios/model'
 
 export function ApplicationRoutes() {
-  const [turmasMatriculadas, setTurmasMatriculadas] = useState<Turma[]>([])
+  const [turmasMatriculadas, setTurmasMatriculadas] = useState<TurmaMatriculada[]>([])
 
   return (
     <BrowserRouter>

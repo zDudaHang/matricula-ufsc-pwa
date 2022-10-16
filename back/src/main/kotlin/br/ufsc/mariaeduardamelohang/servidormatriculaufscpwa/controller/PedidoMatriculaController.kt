@@ -1,6 +1,7 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.controller
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PedidoMatriculaDTO
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.PedidoMatriculaInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AlunoService
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.validator.RegistroPedidoMatriculaInputValidator
@@ -18,7 +19,7 @@ class PedidoMatriculaController(
 ) {
 
     @GetMapping("/pedidoMatricula")
-    fun pedidoMatricula(): List<Turma> {
+    fun pedidoMatricula(): List<PedidoMatriculaDTO> {
         return alunoService.buscarPedidoMatricula()
     }
 

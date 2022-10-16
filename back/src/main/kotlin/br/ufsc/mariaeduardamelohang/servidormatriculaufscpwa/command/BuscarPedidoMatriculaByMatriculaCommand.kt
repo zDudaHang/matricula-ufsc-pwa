@@ -3,6 +3,8 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QPedidoMatricula.pedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QTurma.turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PedidoMatriculaDTO
+import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import java.util.UUID
@@ -13,10 +15,11 @@ import javax.transaction.Transactional
 class BuscarPedidoMatriculaByMatriculaCommand(
     private val em: EntityManager,
 ) {
+
     @Transactional
-    fun execute(matricula: UUID): List<Turma> {
+    fun execute(matricula: UUID): List<PedidoMatriculaDTO> {
         return JPAQueryFactory(em)
-            .select(turma)
+            .select(Projections.constructor(PedidoMatriculaDTO::class.java, turma, pedidoMatricula.posicao))
             .from(pedidoMatricula)
             .innerJoin(turma).on(pedidoMatricula.id.turma.codigo.eq(turma.codigo))
             .where(pedidoMatricula.id.aluno.matricula.eq(matricula))
