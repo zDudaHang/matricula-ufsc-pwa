@@ -1,16 +1,5 @@
-import { fetchWithAuthorization } from '../fetch'
 import { Turma } from '../generated/graphql'
 import { HorariosSelecionados, TurmaGradeHorarioModel } from './components/grade-horarios/GradeHorarios'
-import { convertTurmaControllerModelToTurma } from './converter'
-import { TurmaControllerModel } from './model'
-
-export function buscarPedidoMatricula(setTurmasMatriculadas: (turmas: Turma[]) => void) {
-  fetchWithAuthorization('pedidoMatricula').then((response) =>
-    response
-      .json()
-      .then((turmas: TurmaControllerModel[]) => setTurmasMatriculadas(turmas.map(convertTurmaControllerModelToTurma)))
-  )
-}
 
 export function convertTurmasMatriculadasToHorariosSelecionados(turmas: Turma[]): HorariosSelecionados {
   let horariosSelecionados = new Map<number, Map<number, TurmaGradeHorarioModel[]>>()

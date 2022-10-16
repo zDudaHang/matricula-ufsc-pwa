@@ -1,7 +1,7 @@
 import { Button, Cell, Grid, Heading, HFlow, VFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { Form, FormRenderProps } from 'react-final-form'
 import { ErrorField } from '../components/fields/ErrorField'
 import {
@@ -15,8 +15,8 @@ import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { calculator } from './calculator'
 import { GradeHorarios, HorariosSelecionados } from './components/grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
-import { HORARIOS_FIELD_NAME, TURMAS_FIELD_NAME } from './model'
-import { buscarPedidoMatricula, convertTurmasMatriculadasToHorariosSelecionados } from './util'
+import { HORARIOS_FIELD_NAME, POLLING_TIME_IN_MS, TURMAS_FIELD_NAME } from './model'
+import { convertTurmasMatriculadasToHorariosSelecionados } from './util'
 
 export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
@@ -32,9 +32,17 @@ interface RegistrarPedidoMatriculaFormProps {
 export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaFormProps) {
   const { turmasMatriculadas, setTurmasMatriculadas } = props
 
-  useEffect(() => {
-    buscarPedidoMatricula(setTurmasMatriculadas)
+  const getPedidoMatricula = useCallback(async () => {
+    console.debug('[RegistrarPedidoMatriculaForm.tsx] getPedidoMatricula...')
+    const response = await fetchWithAuthorization('pedidoMatricula')
+    const pedidoMatricula = await response.json()
+    setTurmasMatriculadas(pedidoMatricula)
   }, [setTurmasMatriculadas])
+
+  useEffect(() => {
+    const timer = setInterval(getPedidoMatricula, POLLING_TIME_IN_MS)
+    return () => clearInterval(timer)
+  }, [getPedidoMatricula])
 
   const handleSubmit = async (values: RegistrarPedidoMatriculaFormModel) => {
     const response = await fetchWithAuthorization('registrarPedidoMatricula', {
@@ -44,7 +52,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         'Content-Type': 'application/json',
       },
     })
-    if (response.status === HTTP_STATUS_OK) buscarPedidoMatricula(setTurmasMatriculadas)
+    if (response.status === HTTP_STATUS_OK) getPedidoMatricula()
     if (response.status === HTTP_STATUS_VALIDATION_EXCEPTION) {
       const errors: ServerValidationError<RegistrarPedidoMatriculaFormModel> = await response.json()
       return { ...errors.errors }
