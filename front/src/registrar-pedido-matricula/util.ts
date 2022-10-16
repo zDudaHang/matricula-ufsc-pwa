@@ -4,7 +4,6 @@ export function convertTurmasMatriculadasToHorariosSelecionados(turmas: TurmaMat
   let horariosSelecionados = new Map<number, Map<number, TurmaGradeHorarioModel[]>>()
 
   turmas?.forEach(({ turma }) => {
-    debugger
     turma.horarios?.forEach(
       ({
         id: {

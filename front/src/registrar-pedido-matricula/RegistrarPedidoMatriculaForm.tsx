@@ -33,10 +33,9 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
   const { turmasMatriculadas, setTurmasMatriculadas } = props
 
   const getPedidoMatricula = useCallback(async () => {
-    console.debug('[RegistrarPedidoMatriculaForm.tsx] getPedidoMatricula...')
+    console.debug('[RegistrarPedidoMatriculaForm - Polling] getPedidoMatricula...')
     const response = await fetchWithAuthorization('pedidoMatricula')
     const pedidoMatricula: TurmaMatriculada[] = await response.json()
-    console.log(pedidoMatricula)
     setTurmasMatriculadas(pedidoMatricula)
   }, [setTurmasMatriculadas])
 
