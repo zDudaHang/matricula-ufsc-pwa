@@ -13,7 +13,7 @@ import {
 import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { calculator } from './calculator'
 import { GradeHorarios } from '../grade-horarios/GradeHorarios'
-import { SelectTurmaField, SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
+import { SelectTurmaField, SelectTurmaFieldModel } from './components/SelectTurmaField'
 import { HORARIOS_FIELD_NAME, POLLING_TIME_IN_MS, TURMAS_FIELD_NAME } from './model'
 import { convertTurmasMatriculadasToHorariosSelecionados } from './util'
 import { HorariosSelecionados, TurmaMatriculada } from '../grade-horarios/model'

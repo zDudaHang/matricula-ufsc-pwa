@@ -1,8 +1,8 @@
 import { HFlow, isEqual, Select, Text, VFlow } from 'bold-ui'
 import { useEffect, useState } from 'react'
 import { useField } from 'react-final-form'
-import { fetchWithAuthorization } from '../../../fetch'
-import { Turma } from '../../../grade-horarios/model'
+import { fetchWithAuthorization } from '../../fetch'
+import { Turma } from '../../grade-horarios/model'
 
 export type SelectTurmaFieldModel = Turma
 

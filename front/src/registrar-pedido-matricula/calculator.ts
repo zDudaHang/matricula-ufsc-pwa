@@ -1,6 +1,6 @@
 import { Calculation } from 'final-form-calculate'
 import { TurmaGradeHorarioModel } from '../grade-horarios/model'
-import { SelectTurmaFieldModel } from './components/select-turma-field/SelectTurmaField'
+import { SelectTurmaFieldModel } from './components/SelectTurmaField'
 import { TURMAS_FIELD_NAME } from './model'
 import { RegistrarPedidoMatriculaFormModel } from './RegistrarPedidoMatriculaForm'
 
