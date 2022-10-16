@@ -39,6 +39,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     setTurmasMatriculadas(pedidoMatricula)
   }, [setTurmasMatriculadas])
 
+  // Ref: https://thewebdev.info/2021/05/29/how-to-poll-an-api-periodically-with-react/
   useEffect(() => {
     const timer = setInterval(getPedidoMatricula, POLLING_TIME_IN_MS)
     return () => clearInterval(timer)
