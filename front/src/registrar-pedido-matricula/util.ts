@@ -3,7 +3,7 @@ import { HorariosSelecionados, TurmaGradeHorarioModel, TurmaMatriculada } from '
 export function convertTurmasMatriculadasToHorariosSelecionados(turmas: TurmaMatriculada[]): HorariosSelecionados {
   let horariosSelecionados = new Map<number, Map<number, TurmaGradeHorarioModel[]>>()
 
-  turmas?.forEach(({ turma }) => {
+  turmas?.forEach(({ turma, posicao }) => {
     turma.horarios?.forEach(
       ({
         id: {
@@ -27,6 +27,7 @@ export function convertTurmasMatriculadasToHorariosSelecionados(turmas: TurmaMat
             codigoDisciplina: turma.disciplina.codigo,
             codigoTurma: turma.codigo,
             sala,
+            posicao,
           })
         }
       }

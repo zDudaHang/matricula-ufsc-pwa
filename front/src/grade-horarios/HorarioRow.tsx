@@ -30,7 +30,7 @@ export function HorarioRow(props: HorarioRowProps) {
       {diasSemana.map(({ id: diaSemanaId }) => (
         <TurmasRow
           key={`td-${horarioId}-${diaSemanaId}`}
-          turmas={horariosSelecionados.get(horarioId)?.get(diaSemanaId)}
+          turmas={horariosSelecionados?.get(horarioId)?.get(diaSemanaId)}
           horarioId={horarioId}
           diaSemanaId={diaSemanaId}
         />
