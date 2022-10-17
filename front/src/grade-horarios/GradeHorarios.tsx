@@ -1,28 +1,16 @@
 import { Table, TableBody, TableHead, TableHeader, TableRow } from 'bold-ui'
-import { useEffect, useState } from 'react'
-import { fetchWithAuthorization } from '../fetch'
 import { HorarioRow } from './HorarioRow'
 import { DiaSemana, Horario, HorariosSelecionados } from './model'
 
 export interface GradeHorariosProps {
   horariosSelecionados: HorariosSelecionados
+  horarios: Horario[]
+  diasSemana: DiaSemana[]
 }
 
 // TODO: Deixar esse componente visivel sem internet -> Cenarios: o usuario jah ter logado e nao ter logado
 export function GradeHorarios(props: GradeHorariosProps) {
-  const { horariosSelecionados } = props
-
-  const [horarios, setHorarios] = useState<Horario[]>([])
-  const [diasSemana, setDiasSemana] = useState<DiaSemana[]>([])
-
-  useEffect(() => {
-    fetchWithAuthorization('horarios').then((response) =>
-      response.json().then((horarios: Horario[]) => setHorarios(horarios))
-    )
-    fetchWithAuthorization('diasSemana').then((response) =>
-      response.json().then((diasSemana: DiaSemana[]) => setDiasSemana(diasSemana))
-    )
-  }, [])
+  const { horariosSelecionados, horarios, diasSemana } = props
 
   return (
     <Table>

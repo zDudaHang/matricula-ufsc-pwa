@@ -3,15 +3,25 @@ import { RegistrarAlunoForm } from '../registrar-aluno/RegistrarAlunoForm'
 import { LoginForm } from '../login/LoginForm'
 import { EDITAR_PEDIDO_MATRICULA_ROUTE, LOGIN_ROUTE, PEDIDO_MATRICULA_ROUTE, REGISTAR_ALUNO_ROUTE } from './routes'
 import { PrivateRoute } from './PrivateRoute'
-import { RegistrarPedidoMatriculaForm } from '../registrar-pedido-matricula/RegistrarPedidoMatriculaForm'
-import { useState } from 'react'
-import { TurmaMatriculada } from '../grade-horarios/model'
-import { convertTurmasMatriculadasToHorariosSelecionados } from '../registrar-pedido-matricula/util'
+import { useEffect, useState } from 'react'
+import { DiaSemana, Horario } from '../grade-horarios/model'
 import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { PedidoMatriculaView } from '../pedido-matricula/PedidoMatriculaView'
+import { fetchWithAuthorization } from '../fetch'
+import { RegistrarPedidoMatriculaView } from '../registrar-pedido-matricula/RegistrarPedidoMatriculaView'
 
 export function ApplicationRoutes() {
-  const [turmasMatriculadas, setTurmasMatriculadas] = useState<TurmaMatriculada[]>([])
+  const [horarios, setHorarios] = useState<Horario[]>([])
+  const [diasSemana, setDiasSemana] = useState<DiaSemana[]>([])
+
+  useEffect(() => {
+    fetchWithAuthorization('horarios').then((response) =>
+      response.json().then((horarios: Horario[]) => setHorarios(horarios))
+    )
+    fetchWithAuthorization('diasSemana').then((response) =>
+      response.json().then((diasSemana: DiaSemana[]) => setDiasSemana(diasSemana))
+    )
+  }, [])
 
   return (
     <BrowserRouter>
@@ -24,9 +34,7 @@ export function ApplicationRoutes() {
           path={PEDIDO_MATRICULA_ROUTE}
           element={
             <PrivateRoute>
-              <PedidoMatriculaView
-                horariosSelecionados={convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas)}
-              />
+              <PedidoMatriculaView horarios={horarios} diasSemana={diasSemana} />
             </PrivateRoute>
           }
         />
@@ -35,10 +43,7 @@ export function ApplicationRoutes() {
           element={
             <PrivateRoute>
               <OnlyOnlineFeature>
-                <RegistrarPedidoMatriculaForm
-                  turmasMatriculadas={turmasMatriculadas}
-                  setTurmasMatriculadas={setTurmasMatriculadas}
-                />
+                <RegistrarPedidoMatriculaView horarios={horarios} diasSemana={diasSemana} />
               </OnlyOnlineFeature>
             </PrivateRoute>
           }

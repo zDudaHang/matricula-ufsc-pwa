@@ -1,49 +1,32 @@
 import { Button, Cell, Grid, Heading, HFlow, VFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { FormRenderProps } from 'react-final-form'
 import { ErrorField } from '../components/fields/ErrorField'
 import { fetchWithAuthorization } from '../fetch'
 import { calculator } from './calculator'
-import { GradeHorarios } from '../grade-horarios/GradeHorarios'
+import { GradeHorarios, GradeHorariosProps } from '../grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/SelectTurmaField'
-import { HORARIOS_FIELD_NAME, POLLING_TIME_IN_MS, TURMAS_FIELD_NAME } from './model'
-import { convertTurmasMatriculadasToHorariosSelecionados } from './util'
+import { HORARIOS_FIELD_NAME, TURMAS_FIELD_NAME } from './model'
 import { HorariosSelecionados, TurmaMatriculada } from '../grade-horarios/model'
 import { Form } from '../components/Form'
+import { useNavigate } from 'react-router'
+import { PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
 
 export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
   horarios: HorariosSelecionados
-  hasConflito: boolean
 }
 
-interface RegistrarPedidoMatriculaFormProps {
+interface RegistrarPedidoMatriculaFormProps extends GradeHorariosProps {
   turmasMatriculadas: TurmaMatriculada[]
-  setTurmasMatriculadas(turmas: TurmaMatriculada[]): void
 }
 
 export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaFormProps) {
-  const { turmasMatriculadas, setTurmasMatriculadas } = props
+  const { turmasMatriculadas, horariosSelecionados, ...gradeHorariosProps } = props
 
-  const getPedidoMatricula = useCallback(async () => {
-    console.debug('[RegistrarPedidoMatriculaForm - Polling] getPedidoMatricula...')
-    const response = await fetchWithAuthorization('pedidoMatricula')
-    const pedidoMatricula: TurmaMatriculada[] = await response.json()
-    setTurmasMatriculadas(pedidoMatricula)
-  }, [setTurmasMatriculadas])
-
-  // Ref: https://thewebdev.info/2021/05/29/how-to-poll-an-api-periodically-with-react/
-  useEffect(() => {
-    const timer = setInterval(getPedidoMatricula, POLLING_TIME_IN_MS)
-    return () => clearInterval(timer)
-  }, [getPedidoMatricula])
-
-  useEffect(() => {
-    getPedidoMatricula()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const navigate = useNavigate()
 
   const handleSubmit = async (values: RegistrarPedidoMatriculaFormModel) =>
     fetchWithAuthorization('registrarPedidoMatricula', {
@@ -53,6 +36,8 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         'Content-Type': 'application/json',
       },
     })
+
+  const handleSubmitSuccess = () => navigate(`/${PEDIDO_MATRICULA_ROUTE}`)
 
   const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {
     const {
@@ -80,32 +65,38 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         </Cell>
         <Cell size={12}>
           <VFlow>
-            <GradeHorarios horariosSelecionados={horariosSelecionados} />
+            <GradeHorarios horariosSelecionados={horariosSelecionados} {...gradeHorariosProps} />
           </VFlow>
         </Cell>
       </Grid>
     )
   }
 
-  const decorator = useMemo(
-    () =>
+  const decorators = useMemo(
+    () => [
       createDecorator(calculator()) as Decorator<
         RegistrarPedidoMatriculaFormModel,
         Partial<RegistrarPedidoMatriculaFormModel>
       >,
+    ],
     []
+  )
+
+  const initialValues: RegistrarPedidoMatriculaFormModel = useMemo(
+    () => ({
+      turmas: turmasMatriculadas.map((turmaMatriculada) => turmaMatriculada.turma),
+      horarios: horariosSelecionados,
+    }),
+    [horariosSelecionados, turmasMatriculadas]
   )
 
   return (
     <Form<RegistrarPedidoMatriculaFormModel>
       render={renderForm}
       onSubmit={handleSubmit}
-      initialValues={{
-        turmas: turmasMatriculadas.map((turmaMatriculada) => turmaMatriculada.turma),
-        horarios: convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas),
-      }}
-      decorators={[decorator]}
-      onSubmitSucceeded={getPedidoMatricula}
+      initialValues={initialValues}
+      decorators={decorators}
+      onSubmitSucceeded={handleSubmitSuccess}
     />
   )
 }
