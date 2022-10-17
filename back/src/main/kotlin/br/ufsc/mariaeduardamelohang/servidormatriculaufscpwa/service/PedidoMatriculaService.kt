@@ -45,6 +45,7 @@ class PedidoMatriculaService(
             val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.turma.codigo }
             val result = registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
             val alunosPrecisamSerNotificados = buscarAlunoPerderamVagaQuery.execute(result.turmasNovas)
+            // TODO: Ver uma forma melhor de verificar quais alunos devem ser notificados -> Tá notificando o próprio aluno (?)
             alunosPrecisamSerNotificados.forEach {
                 pushNotificationService.sendNotification("Vaga perdida na turma ${it.turma.codigo}", "Edite o seu pedido de matrícula caso queira trocar de turma.", it.aluno.token)
             }
