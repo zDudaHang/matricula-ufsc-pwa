@@ -1,5 +1,6 @@
-import { TableCell, VFlow, Text, useTheme } from 'bold-ui'
+import { TableCell, VFlow, useTheme } from 'bold-ui'
 import { TurmaGradeHorarioModel } from './model'
+import { TurmaView } from './TurmaView'
 
 interface TurmasRowProps {
   turmas: TurmaGradeHorarioModel[]
@@ -13,20 +14,22 @@ export function TurmasRow(props: TurmasRowProps) {
   const theme = useTheme()
 
   if (turmas) {
-    const color = turmas.length > 1 ? theme.pallete.status.danger.c40 : theme.pallete.text.main
+    const hasConflito = turmas.length > 1
+
     return (
-      <TableCell>
-        <VFlow vSpacing={0}>
+      <TableCell style={{ textAlign: 'center' }}>
+        <VFlow vSpacing={0.25}>
           {turmas.map((turma) => (
-            <Text key={`turma-${turma.codigoTurma}-${horarioId}-${diaSemanaId}`} style={{ color }}>
-              {turma.codigoTurma} - {turma.sala}{' '}
-              {turma.posicao && `(posição: ${turma.posicao} de ${turma.vagasOfertadas})`}
-            </Text>
+            <TurmaView
+              key={`turma-${turma.codigoTurma}-${horarioId}-${diaSemanaId}`}
+              color={hasConflito ? 'danger' : 'normal'}
+              turma={turma}
+            />
           ))}
         </VFlow>
       </TableCell>
     )
   } else {
-    return <TableCell />
+    return <TableCell style={{ border: `1px solid ${theme.pallete.gray.c80}` }} />
   }
 }

@@ -22,7 +22,7 @@ export function HorarioRow(props: HorarioRowProps) {
       <TableCell
         key={horarioId}
         colSpan={1}
-        style={{ borderRight: `1px solid ${theme.pallete.gray.c80}`, textAlign: 'center' }}
+        style={{ border: `1px solid ${theme.pallete.gray.c80}`, textAlign: 'center' }}
       >
         {horario}
       </TableCell>

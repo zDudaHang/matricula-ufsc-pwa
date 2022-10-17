@@ -1,6 +1,9 @@
 import { HorariosSelecionados, TurmaGradeHorarioModel, TurmaMatriculada } from '../grade-horarios/model'
 
-export function convertTurmasMatriculadasToHorariosSelecionados(turmas: TurmaMatriculada[]): HorariosSelecionados {
+export function convertTurmasMatriculadasToHorariosSelecionados(
+  turmas: TurmaMatriculada[],
+  showPosicao: boolean
+): HorariosSelecionados {
   let horariosSelecionados = new Map<number, Map<number, TurmaGradeHorarioModel[]>>()
 
   turmas?.forEach(({ turma, posicao }) => {
@@ -23,13 +26,16 @@ export function convertTurmasMatriculadasToHorariosSelecionados(turmas: TurmaMat
             .get(diaSemanaId)
             .find((t) => t.codigoTurma === turma.codigo)
         ) {
-          horariosSelecionados.get(horarioId).get(diaSemanaId).push({
-            codigoDisciplina: turma.disciplina.codigo,
-            codigoTurma: turma.codigo,
-            vagasOfertadas: turma.vagasOfertadas,
-            sala,
-            posicao,
-          })
+          horariosSelecionados
+            .get(horarioId)
+            .get(diaSemanaId)
+            .push({
+              codigoDisciplina: turma.disciplina.codigo,
+              codigoTurma: turma.codigo,
+              vagasOfertadas: turma.vagasOfertadas,
+              sala,
+              posicao: showPosicao ? posicao : null,
+            })
         }
       }
     )

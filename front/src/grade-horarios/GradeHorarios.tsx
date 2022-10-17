@@ -18,7 +18,9 @@ export function GradeHorarios(props: GradeHorariosProps) {
         <TableRow>
           <TableHeader key='vazia' />
           {diasSemana.map((diasSemana) => (
-            <TableHeader key={`th-${diasSemana.id}`}>{diasSemana.nome}</TableHeader>
+            <TableHeader key={`th-${diasSemana.id}`} style={{ textAlign: 'center' }}>
+              {diasSemana.nome}
+            </TableHeader>
           ))}
         </TableRow>
       </TableHead>

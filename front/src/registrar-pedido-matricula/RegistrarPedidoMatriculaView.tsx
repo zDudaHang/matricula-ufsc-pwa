@@ -17,7 +17,7 @@ export function RegistrarPedidoMatriculaView(props: RegistrarPedidoMatriculaView
   }, [])
 
   const horariosSelecionados = useMemo(
-    () => convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas),
+    () => convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas, false),
     [turmasMatriculadas]
   )
 
