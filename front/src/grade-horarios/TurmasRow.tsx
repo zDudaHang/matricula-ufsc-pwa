@@ -19,7 +19,8 @@ export function TurmasRow(props: TurmasRowProps) {
         <VFlow vSpacing={0}>
           {turmas.map((turma) => (
             <Text key={`turma-${turma.codigoTurma}-${horarioId}-${diaSemanaId}`} style={{ color }}>
-              {turma.codigoTurma} - {turma.sala} {turma.posicao && `(posição: ${turma.posicao})`}
+              {turma.codigoTurma} - {turma.sala}{' '}
+              {turma.posicao && `(posição: ${turma.posicao} de ${turma.vagasOfertadas})`}
             </Text>
           ))}
         </VFlow>

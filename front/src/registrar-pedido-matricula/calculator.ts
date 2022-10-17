@@ -34,6 +34,7 @@ export const calculator = (): Calculation => ({
               gradeHorarios.get(horarioId).get(diaSemanaId).push({
                 codigoDisciplina: turma.disciplina.codigo,
                 codigoTurma: turma.codigo,
+                vagasOfertadas: turma.vagasOfertadas,
                 sala,
               })
             }

@@ -26,6 +26,7 @@ export function convertTurmasMatriculadasToHorariosSelecionados(turmas: TurmaMat
           horariosSelecionados.get(horarioId).get(diaSemanaId).push({
             codigoDisciplina: turma.disciplina.codigo,
             codigoTurma: turma.codigo,
+            vagasOfertadas: turma.vagasOfertadas,
             sala,
             posicao,
           })
