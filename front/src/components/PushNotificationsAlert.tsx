@@ -13,6 +13,9 @@ export function PushNotificationsAlert() {
 
     setMessage(`${notificationTitle}`)
     setShowAlert(true)
+
+    const event = new Event('atualizar')
+    window.dispatchEvent(event)
   })
 
   return (

@@ -4,6 +4,7 @@ import { ButtonLink } from '../components/ButtonLink'
 import { fetchWithAuthorization } from '../fetch'
 import { GradeHorarios, GradeHorariosProps } from '../grade-horarios/GradeHorarios'
 import { TurmaMatriculada } from '../grade-horarios/model'
+import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { POLLING_TIME_IN_MS } from '../registrar-pedido-matricula/model'
 import { convertTurmasMatriculadasToHorariosSelecionados } from '../registrar-pedido-matricula/util'
 import { EDITAR_PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
@@ -34,6 +35,17 @@ export function PedidoMatriculaView(props: PedidoMatriculaViewProps) {
 
   useEffect(() => {
     getPedidoMatricula()
+
+    window.addEventListener('atualizar', () => {
+      console.debug('[PedidoMatriculaView] atualizar event - getPedidoMatricula... ')
+      getPedidoMatricula()
+    })
+
+    return () => {
+      window.removeEventListener('atualizar', () => {
+        console.debug('[PedidoMatriculaView] removing listener of atualizar event ')
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -48,13 +60,15 @@ export function PedidoMatriculaView(props: PedidoMatriculaViewProps) {
       <Cell size={12}>
         <StatusPedidoMatricula turmasMatriculadas={turmasMatriculadas} />
       </Cell>
-      <Cell size={12}>
-        <HFlow justifyContent='flex-end'>
-          <ButtonLink path={`/${EDITAR_PEDIDO_MATRICULA_ROUTE}`} kind='primary'>
-            Editar
-          </ButtonLink>
-        </HFlow>
-      </Cell>
+      <OnlyOnlineFeature>
+        <Cell size={12}>
+          <HFlow justifyContent='flex-end'>
+            <ButtonLink path={`/${EDITAR_PEDIDO_MATRICULA_ROUTE}`} kind='primary'>
+              Editar
+            </ButtonLink>
+          </HFlow>
+        </Cell>
+      </OnlyOnlineFeature>
       <Cell size={12}>
         <Heading level={2}>Grade de horários</Heading>
       </Cell>

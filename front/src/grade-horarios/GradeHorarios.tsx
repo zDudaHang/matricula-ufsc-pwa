@@ -1,4 +1,5 @@
-import { Table, TableBody, TableHead, TableHeader, TableRow } from 'bold-ui'
+import { ExternalStyles, Table, TableBody, TableHead, TableHeader, TableRow, useTheme } from 'bold-ui'
+import { CSSProperties } from 'react'
 import { HorarioRow } from './HorarioRow'
 import { DiaSemana, Horario, HorariosSelecionados } from './model'
 
@@ -12,13 +13,20 @@ export interface GradeHorariosProps {
 export function GradeHorarios(props: GradeHorariosProps) {
   const { horariosSelecionados, horarios, diasSemana } = props
 
+  const theme = useTheme()
+
+  const style: ExternalStyles = {
+    background: theme.pallete.primary.c40,
+    color: theme.pallete.gray.c100,
+  }
+
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeader key='vazia' />
+          <TableHeader key='vazia' style={style} />
           {diasSemana.map((diasSemana) => (
-            <TableHeader key={`th-${diasSemana.id}`} style={{ textAlign: 'center' }}>
+            <TableHeader key={`th-${diasSemana.id}`} style={{ textAlign: 'center', ...style }}>
               {diasSemana.nome}
             </TableHeader>
           ))}

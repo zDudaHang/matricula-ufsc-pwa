@@ -18,7 +18,7 @@ export function TurmasRow(props: TurmasRowProps) {
 
     return (
       <TableCell style={{ textAlign: 'center' }}>
-        <VFlow vSpacing={0.25}>
+        <VFlow vSpacing={0.5}>
           {turmas.map((turma) => (
             <TurmaView
               key={`turma-${turma.codigoTurma}-${horarioId}-${diaSemanaId}`}

@@ -11,6 +11,10 @@ export function HeaderBar() {
     else requestPermission(setIsNotificationAllowed)
   }
 
+  const handleDownloadClick = () => {
+    console.debug('handleDownloadClick')
+  }
+
   return (
     <HFlow
       style={{ background: theme.pallete.primary.c40, height: '3rem', paddingBottom: '1rem' }}
@@ -22,6 +26,9 @@ export function HeaderBar() {
       </Heading>{' '}
       <Button onClick={handleNotificationsClick} skin='ghost'>
         <Icon icon={isNotificationAllowed ? 'bellFilled' : 'bellOutline'} style={{ color: theme.pallete.gray.c100 }} />
+      </Button>
+      <Button onClick={handleDownloadClick} skin='ghost'>
+        <Icon icon='download' style={{ color: theme.pallete.gray.c100 }} />
       </Button>
     </HFlow>
   )
