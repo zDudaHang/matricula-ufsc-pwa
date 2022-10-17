@@ -26,14 +26,14 @@ class PedidoMatriculaController(
     }
 
     @PostMapping("/registrarPedidoMatricula", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun registrarPedidoMatricula(@RequestBody input: PedidoMatriculaInput): MutableList<Turma> {
+    fun registrarPedidoMatricula(@RequestBody input: PedidoMatriculaInput): List<Turma> {
         registroPedidoMatriculaInputValidator.validate(input).throwIfInvalid()
         return service.registrarPedidoMatricula(input.turmas)
     }
 
     // TODO: Fazer um DTO para não trazer tudo, só o que realmente precisa
     @GetMapping("/turmas")
-    fun turmas() : List<Turma> {
+    fun turmas(): List<Turma> {
         return service.buscarTurmas()
     }
 

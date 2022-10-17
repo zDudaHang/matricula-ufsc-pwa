@@ -2,21 +2,16 @@ import { Button, Cell, Grid, Heading, HFlow, VFlow } from 'bold-ui'
 import { Decorator } from 'final-form'
 import createDecorator from 'final-form-calculate'
 import { useCallback, useEffect, useMemo } from 'react'
-import { Form, FormRenderProps, useField } from 'react-final-form'
+import { FormRenderProps } from 'react-final-form'
 import { ErrorField } from '../components/fields/ErrorField'
-import {
-  fetchWithAuthorization,
-  HTTP_STATUS_OK,
-  HTTP_STATUS_VALIDATION_EXCEPTION,
-  ServerValidationError,
-} from '../fetch'
-import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
+import { fetchWithAuthorization } from '../fetch'
 import { calculator } from './calculator'
 import { GradeHorarios } from '../grade-horarios/GradeHorarios'
 import { SelectTurmaField, SelectTurmaFieldModel } from './components/SelectTurmaField'
 import { HORARIOS_FIELD_NAME, POLLING_TIME_IN_MS, TURMAS_FIELD_NAME } from './model'
 import { convertTurmasMatriculadasToHorariosSelecionados } from './util'
 import { HorariosSelecionados, TurmaMatriculada } from '../grade-horarios/model'
+import { Form } from '../components/Form'
 
 export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
@@ -50,48 +45,42 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSubmit = async (values: RegistrarPedidoMatriculaFormModel) => {
-    const response = await fetchWithAuthorization('registrarPedidoMatricula', {
+  const handleSubmit = async (values: RegistrarPedidoMatriculaFormModel) =>
+    fetchWithAuthorization('registrarPedidoMatricula', {
       method: 'POST',
       body: JSON.stringify({ turmas: values.turmas.map((turma) => turma.codigo) }),
       headers: {
         'Content-Type': 'application/json',
       },
     })
-    if (response.status === HTTP_STATUS_OK) getPedidoMatricula()
-    if (response.status === HTTP_STATUS_VALIDATION_EXCEPTION) {
-      const errors: ServerValidationError<RegistrarPedidoMatriculaFormModel> = await response.json()
-      return { ...errors.errors }
-    }
-  }
-
-  const { input: horariosSelecionados } = useField<HorariosSelecionados>(HORARIOS_FIELD_NAME, {
-    subscription: { value: true },
-  })
 
   const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {
-    const { handleSubmit } = formProps
+    const {
+      form: { getFieldState },
+      handleSubmit,
+    } = formProps
+
+    const horariosSelecionados = getFieldState(HORARIOS_FIELD_NAME)?.value
+
     return (
       <Grid justifyContent='center' alignItems='center' style={{ margin: '1rem' }}>
         <Cell size={12}>
-          <Heading level={1}>Pedido de matrícula</Heading>
+          <Heading level={1}>Registrando pedido de matrícula</Heading>
           <ErrorField name={HORARIOS_FIELD_NAME} />
         </Cell>
-        <OnlyOnlineFeature>
-          <Cell size={12}>
-            <SelectTurmaField name={TURMAS_FIELD_NAME} />
-          </Cell>
-          <Cell size={12}>
-            <HFlow justifyContent='flex-end'>
-              <Button type='submit' kind='primary' onClick={handleSubmit}>
-                Registrar
-              </Button>
-            </HFlow>
-          </Cell>
-        </OnlyOnlineFeature>
+        <Cell size={12}>
+          <SelectTurmaField name={TURMAS_FIELD_NAME} />
+        </Cell>
+        <Cell size={12}>
+          <HFlow justifyContent='flex-end'>
+            <Button type='submit' kind='primary' onClick={handleSubmit}>
+              Registrar
+            </Button>
+          </HFlow>
+        </Cell>
         <Cell size={12}>
           <VFlow>
-            <GradeHorarios horariosSelecionados={horariosSelecionados.value} />
+            <GradeHorarios horariosSelecionados={horariosSelecionados} />
           </VFlow>
         </Cell>
       </Grid>
@@ -116,6 +105,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         horarios: convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas),
       }}
       decorators={[decorator]}
+      onSubmitSucceeded={getPedidoMatricula}
     />
   )
 }

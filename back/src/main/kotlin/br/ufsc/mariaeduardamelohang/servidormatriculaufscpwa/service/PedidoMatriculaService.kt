@@ -25,7 +25,7 @@ class PedidoMatriculaService(
     private val pushNotificationService: PushNotificationService
 ) {
 
-    fun buscarTurmas() : List<Turma> {
+    fun buscarTurmas(): List<Turma> {
         return buscarTurmasQuery.execute()
     }
 
@@ -39,7 +39,7 @@ class PedidoMatriculaService(
     }
 
     @Transactional
-    fun registrarPedidoMatricula(codigosTurmas: List<String>): MutableList<Turma> {
+    fun registrarPedidoMatricula(codigosTurmas: List<String>): List<Turma> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
             val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.turma.codigo }
@@ -49,14 +49,14 @@ class PedidoMatriculaService(
                 pushNotificationService.sendNotification("Vaga perdida na turma ${it.turma.codigo}", "Edite o seu pedido de matrícula caso queira trocar de turma.", it.aluno.token)
             }
             return result.getTurmasMatriculadas()
-        } else mutableListOf()
+        } else listOf()
     }
 
-    fun buscarHorarios() : List<Horario> {
+    fun buscarHorarios(): List<Horario> {
         return buscarHorariosQuery.execute()
     }
 
-    fun buscarDiasSemana() : List<DiaSemana> {
+    fun buscarDiasSemana(): List<DiaSemana> {
         return buscarDiasSemanaQuery.execute()
     }
 }

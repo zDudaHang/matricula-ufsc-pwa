@@ -7,10 +7,10 @@ data class RegistroPedidoMatriculaResult(
     val turmasMantidas: MutableList<Turma> = mutableListOf(),
     val turmasRemovidas: MutableList<Turma> = mutableListOf()
 ) {
-    fun getTurmasMatriculadas(): MutableList<Turma> {
+    fun getTurmasMatriculadas(): List<Turma> {
         val turmasMatriculadas = mutableListOf<Turma>()
         turmasMatriculadas.addAll(turmasNovas)
         turmasMatriculadas.addAll(turmasMantidas)
-        return turmasMatriculadas
+        return turmasMatriculadas.toList()
     }
 }

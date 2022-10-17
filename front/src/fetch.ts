@@ -21,6 +21,7 @@ export function fetchWithAuthorization(fetchUrl: string, options?: RequestInit):
   })
 }
 
+// TODO : Adicionar mais uma função com post + authorization
 export function fetchPostWithJsonBodyAndWithoutAuthorization(fetchUrl: string, body: any): Promise<Response> {
   return fetch(`${SERVER_URL}/${fetchUrl}`, {
     method: 'POST',
