@@ -17,7 +17,7 @@ public class PedidoMatricula implements Serializable {
 	PedidoMatriculaPrimaryKey id;
 
 	@Column(nullable = false)
-	private Float iaaAluno;
+	private int iaaAluno;
 
 	@Column
 	private int posicao;
@@ -42,7 +42,7 @@ public class PedidoMatricula implements Serializable {
 		return id;
 	}
 
-	public Float getIaaAluno() {
+	public int getIaaAluno() {
 		return iaaAluno;
 	}
 }

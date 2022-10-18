@@ -25,9 +25,6 @@ public class Aluno implements Serializable, UserDetails {
 	@Id @GeneratedValue(strategy = AUTO)
 	private UUID matricula;
 
-	@Column(nullable = false)
-	private String nome;
-
 	@Column(unique = true, nullable = false)
 	private String nomeUsuario;
 
@@ -35,7 +32,7 @@ public class Aluno implements Serializable, UserDetails {
 	private String senha;
 
 	@Column(nullable = false)
-	private Float iaa;
+	private int iaa;
 
 	@Column
 	private String token;
@@ -46,14 +43,6 @@ public class Aluno implements Serializable, UserDetails {
 
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getNomeUsuario() {
@@ -72,11 +61,11 @@ public class Aluno implements Serializable, UserDetails {
 		this.senha = senha;
 	}
 
-	public Float getIaa() {
+	public int getIaa() {
 		return iaa;
 	}
 
-	public void setIaa(Float iaa) {
+	public void setIaa(int iaa) {
 		this.iaa = iaa;
 	}
 
@@ -89,11 +78,11 @@ public class Aluno implements Serializable, UserDetails {
 	}
 
 	@Override public String getPassword() {
-		return this.senha;
+		return senha;
 	}
 
 	@Override public String getUsername() {
-		return this.nomeUsuario;
+		return nomeUsuario;
 	}
 
 	@Override public boolean isAccountNonExpired() {

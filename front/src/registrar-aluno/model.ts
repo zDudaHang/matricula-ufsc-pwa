@@ -3,8 +3,6 @@ export interface RegistrarAlunoResult {
 }
 
 export interface RegistrarAlunoInput {
-  nome: string
-  nomeUsuario: string
-  senha: string
-  iaa: number
+  nomeUsuario?: string
+  senha?: string
 }

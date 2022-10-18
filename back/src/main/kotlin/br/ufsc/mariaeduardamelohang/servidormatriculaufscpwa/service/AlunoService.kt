@@ -3,8 +3,8 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarAlunoByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarUserDetailsByAlunoUsernameQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarAlunoCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.RegistrarAlunoInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.RegistrarAlunoInput
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -21,10 +21,8 @@ class AlunoService(
 
     fun registrarAluno(input: RegistrarAlunoInput): Aluno? {
         val inputWithEncodedPassword = RegistrarAlunoInput(
-            input.nome,
             input.nomeUsuario,
-            passwordEncoder.encode(input.senha),
-            input.iaa
+            passwordEncoder.encode(input.senha)
         )
         return registrarAlunoCommand.execute(inputWithEncodedPassword)
     }
