@@ -1,4 +1,4 @@
-import { FormApi } from 'final-form'
+import { FormApi, FORM_ERROR } from 'final-form'
 import { FormProps as FinalFormProps, Form as FinalForm } from 'react-final-form'
 import { HTTP_STATUS_OK, HTTP_STATUS_VALIDATION_EXCEPTION, ServerValidationError } from '../fetch'
 
@@ -16,7 +16,9 @@ export function Form<T>(props: FormProps<T>) {
     if (response.status === HTTP_STATUS_VALIDATION_EXCEPTION) {
       console.debug('[Form] Validation exception')
       const errors = responseJSON as ServerValidationError<T>
-      return { ...errors.errors }
+      const validationError = errors.errors
+      if (typeof validationError === 'string') return { [FORM_ERROR]: validationError }
+      else return { ...validationError }
     } else if (response.status === HTTP_STATUS_OK) {
       console.debug('[Form] Calling onSubmitSucceeded')
       onSubmitSucceeded(responseJSON)

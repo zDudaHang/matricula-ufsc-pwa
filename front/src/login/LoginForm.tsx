@@ -1,7 +1,9 @@
-import { Button, Cell, Grid, Heading, HFlow } from 'bold-ui'
+import { Button, Cell, Grid, Heading, HFlow, VFlow } from 'bold-ui'
+import { FORM_ERROR } from 'final-form'
 import { FormRenderProps } from 'react-final-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ButtonLink } from '../components/ButtonLink'
+import { ErrorField } from '../components/fields/ErrorField'
 import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
 import { Form } from '../components/Form'
@@ -35,7 +37,10 @@ export function LoginForm() {
     return (
       <Grid justifyContent='center' alignItems='center'>
         <Cell size={6}>
-          <Heading level={1}>Login</Heading>
+          <VFlow vSpacing={0}>
+            <Heading level={1}>Login</Heading>
+            <ErrorField name={FORM_ERROR} />
+          </VFlow>
         </Cell>
         <Cell size={6}>
           <TextField name='nomeUsuario' label='Usuário' placeholder='Digite o seu usuário' required />
