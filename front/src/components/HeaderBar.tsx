@@ -24,7 +24,7 @@ export function HeaderBar() {
 
   return (
     <HFlow
-      style={{ background: theme.pallete.primary.c40, height: '3rem', paddingBottom: '1rem' }}
+      style={{ background: theme.pallete.primary.c40, height: '4rem', padding: '1rem 0 1rem 0' }}
       justifyContent='center'
       alignItems='center'
     >
@@ -32,14 +32,14 @@ export function HeaderBar() {
         Matrícula UFSC
       </Heading>{' '}
       <OnlyOnlineFeature>
-        <Button onClick={handleNotificationsClick} skin='ghost'>
+        <Button onClick={handleNotificationsClick} skin='ghost' size='large'>
           <Icon
             icon={isNotificationAllowed ? 'bellFilled' : 'bellOutline'}
             style={{ color: theme.pallete.gray.c100 }}
           />
         </Button>
         {deferredPrompt && (
-          <Button onClick={handleDownloadClick} skin='ghost'>
+          <Button onClick={handleDownloadClick} skin='ghost' size='large'>
             <HFlow hSpacing={0.25} alignItems='center'>
               <Icon icon='download' style={{ color: theme.pallete.gray.c100 }} />
               <Text style={{ color: theme.pallete.gray.c100 }}>Instalar</Text>

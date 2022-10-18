@@ -31,7 +31,7 @@ export function RegistrarAlunoForm() {
           <PasswordField label='Senha' name='senha' placeholder='Digite sua senha' required />
         </Cell>
         <Cell size={6} alignSelf='flex-end'>
-          <Button type='submit' kind='primary' onClick={formProps.handleSubmit}>
+          <Button type='submit' kind='primary' size='large' onClick={formProps.handleSubmit}>
             Registrar
           </Button>
         </Cell>
