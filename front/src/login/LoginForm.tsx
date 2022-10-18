@@ -11,6 +11,7 @@ import { fetchPostWithJsonBodyAndWithoutAuthorization } from '../fetch'
 import { JWT_LOCAL_STORAGE } from '../local-storage/model'
 import { useNotificationStatus } from '../notifications/context/useNotificationStatus'
 import { REGISTAR_ALUNO_ROUTE, PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
+import { useAuthContext } from './context/useAuthContext'
 import { LoginInput, LoginResult } from './model'
 
 type LoginFormModel = LoginInput
@@ -22,14 +23,17 @@ interface LoginURLParams {
 export function LoginForm() {
   const navigate = useNavigate()
   const { setIsNotificationAllowed } = useNotificationStatus()
+  const { setIaa } = useAuthContext()
 
   const { nomeUsuario } = useParams<keyof LoginURLParams>()
 
   const handleSubmit = (values: LoginFormModel) => fetchPostWithJsonBodyAndWithoutAuthorization('login', values)
 
   const handleSubmiSuccess = (result: LoginResult) => {
+    console.log(result)
     setIsNotificationAllowed(result.subscriptionToken && Notification.permission === 'granted')
     localStorage.setItem(JWT_LOCAL_STORAGE, result.accessToken)
+    setIaa(result.iaa)
     navigate(PEDIDO_MATRICULA_ROUTE)
   }
 

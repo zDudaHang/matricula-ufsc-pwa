@@ -42,7 +42,8 @@ class AlunoController(
             val aluno: Aluno = authentication.principal as Aluno
             return LoginDTO(
                 aluno.token,
-                jwtService.generateToken(aluno.matricula)
+                jwtService.generateToken(aluno.matricula),
+                aluno.iaa
             )
         } catch (e: AuthenticationException) {
             errors.error("Usuário e/ou senha inválido(s)")

@@ -6,4 +6,5 @@ export interface LoginInput {
 export interface LoginResult {
   subscriptionToken: string
   accessToken: string
+  iaa: number
 }

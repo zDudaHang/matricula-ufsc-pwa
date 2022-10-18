@@ -1,7 +1,8 @@
-import { Cell, Grid, Heading, HFlow } from 'bold-ui'
+import { Cell, Grid, Heading, HFlow, VFlow } from 'bold-ui'
 import { useEffect, useCallback, useState, useMemo } from 'react'
 import { ButtonLink } from '../components/ButtonLink'
 import { OnlineStatusAlert } from '../components/OnlineStatusAlert'
+import { PosicaoInfoAlert } from '../components/PosicaoInfoAlert'
 import { fetchWithAuthorization } from '../fetch'
 import { GradeHorarios } from '../grade-horarios/GradeHorarios'
 import { TurmaMatriculada } from '../grade-horarios/model'
@@ -56,7 +57,10 @@ export function PedidoMatriculaView() {
         <OnlineStatusAlert />
       </Cell>
       <Cell size={12}>
-        <Heading level={1}>Pedido de matrícula</Heading>
+        <VFlow vSpacing={0}>
+          <Heading level={1}>Pedido de matrícula</Heading>
+          <PosicaoInfoAlert />
+        </VFlow>
       </Cell>
       <Cell size={12}>
         <Heading level={2}>Acompanhamento</Heading>
