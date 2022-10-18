@@ -2,7 +2,7 @@ import { Cell, Grid, Heading, HFlow } from 'bold-ui'
 import { useEffect, useCallback, useState, useMemo } from 'react'
 import { ButtonLink } from '../components/ButtonLink'
 import { fetchWithAuthorization } from '../fetch'
-import { GradeHorarios, GradeHorariosProps } from '../grade-horarios/GradeHorarios'
+import { GradeHorarios } from '../grade-horarios/GradeHorarios'
 import { TurmaMatriculada } from '../grade-horarios/model'
 import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { POLLING_TIME_IN_MS } from '../registrar-pedido-matricula/model'
@@ -10,9 +10,7 @@ import { convertTurmasMatriculadasToHorariosSelecionados } from '../registrar-pe
 import { EDITAR_PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
 import { StatusPedidoMatricula } from './StatusPedidoMatricula'
 
-interface PedidoMatriculaViewProps extends Omit<GradeHorariosProps, 'horariosSelecionados'> {}
-
-export function PedidoMatriculaView(props: PedidoMatriculaViewProps) {
+export function PedidoMatriculaView() {
   const [turmasMatriculadas, setTurmasMatriculadas] = useState<TurmaMatriculada[]>([])
 
   const horariosSelecionados = useMemo(
@@ -73,7 +71,7 @@ export function PedidoMatriculaView(props: PedidoMatriculaViewProps) {
         <Heading level={2}>Grade de horários</Heading>
       </Cell>
       <Cell size={12}>
-        <GradeHorarios {...props} horariosSelecionados={horariosSelecionados} />
+        <GradeHorarios horariosSelecionados={horariosSelecionados} />
       </Cell>
     </Grid>
   )

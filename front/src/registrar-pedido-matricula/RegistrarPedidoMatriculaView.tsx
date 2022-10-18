@@ -1,13 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { fetchWithAuthorization } from '../fetch'
-import { GradeHorariosProps } from '../grade-horarios/GradeHorarios'
 import { TurmaMatriculada } from '../grade-horarios/model'
 import { RegistrarPedidoMatriculaForm } from './RegistrarPedidoMatriculaForm'
 import { convertTurmasMatriculadasToHorariosSelecionados } from './util'
 
-interface RegistrarPedidoMatriculaViewProps extends Omit<GradeHorariosProps, 'horariosSelecionados'> {}
-
-export function RegistrarPedidoMatriculaView(props: RegistrarPedidoMatriculaViewProps) {
+export function RegistrarPedidoMatriculaView() {
   const [turmasMatriculadas, setTurmasMatriculadas] = useState<TurmaMatriculada[]>([])
 
   useEffect(() => {
@@ -22,10 +19,6 @@ export function RegistrarPedidoMatriculaView(props: RegistrarPedidoMatriculaView
   )
 
   return (
-    <RegistrarPedidoMatriculaForm
-      {...props}
-      turmasMatriculadas={turmasMatriculadas}
-      horariosSelecionados={horariosSelecionados}
-    />
+    <RegistrarPedidoMatriculaForm turmasMatriculadas={turmasMatriculadas} horariosSelecionados={horariosSelecionados} />
   )
 }
