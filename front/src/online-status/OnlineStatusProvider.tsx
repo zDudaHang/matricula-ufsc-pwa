@@ -12,22 +12,22 @@ export function OnlineStatusProvider(props: OnlineStatusProviderProps) {
 
   useEffect(() => {
     window.addEventListener('offline', () => {
-      console.log('[MATRICULA-UFSC-PWA] offline')
+      console.debug('[OnlineStatusProvider] offline')
       setIsOnline(false)
     })
     window.addEventListener('online', () => {
-      console.log('[MATRICULA-UFSC-PWA] online')
+      console.debug('[OnlineStatusProvider] online')
       setIsOnline(true)
     })
 
     // cleanup this component
     return () => {
       window.removeEventListener('offline', () => {
-        console.log('[MATRICULA-UFSC-PWA] offline')
+        console.debug('[OnlineStatusProvider] offline')
         setIsOnline(false)
       })
       window.removeEventListener('online', () => {
-        console.log('[MATRICULA-UFSC-PWA] online')
+        console.debug('[OnlineStatusProvider] online')
         setIsOnline(true)
       })
     }

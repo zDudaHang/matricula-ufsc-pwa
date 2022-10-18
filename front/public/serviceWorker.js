@@ -31,7 +31,7 @@ this.addEventListener('fetch', (event) => {
       return fetch(fetchRequest)
         .then((response) => {
           if (OFFLINE_URLS.some((url) => event.request.url.includes(url))) {
-            console.log(`[MATRICULA-UFSC-PWA:SW] Guardando na cache para fetchUrl=${event.request.url}`)
+            console.debug(`[serviceWorker] Guardando na cache para fetchUrl=${event.request.url}`)
             cache.put(event.request, response.clone())
           }
           return response

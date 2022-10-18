@@ -8,14 +8,14 @@ export function requestPermission(setIsNotificationAllowed: (status: boolean) =>
   } else {
     const permission = Notification.permission
     if (permission === 'default') {
-      console.log('[subscribe.ts] Permissao default')
+      console.debug('[subscribe] Permissao default')
       Notification.requestPermission().then((status) => {
         if (status === 'denied') {
           alert(
             'You have denied permission for notifications. Please go to your browser or mobile settings and enable notifications'
           )
         } else if (status === 'granted') {
-          console.log('[subscribe.ts] Permissao garantida')
+          console.debug('[subscribe] Permissao garantida')
           subscribeUser(setIsNotificationAllowed)
         }
       })
@@ -24,14 +24,14 @@ export function requestPermission(setIsNotificationAllowed: (status: boolean) =>
         'You have denied permission for notifications. Please go to your browser or mobile settings and enable notifications'
       )
     } else {
-      console.log('[subscribe.ts] Permissao garantida')
+      console.debug('[subscribe] Permissao garantida')
       subscribeUser(setIsNotificationAllowed)
     }
   }
 }
 
 function subscribeUser(setIsNotificationAllowed: (status: boolean) => void) {
-  console.log('[subscribe] subscribeUser')
+  console.debug('[subscribe] subscribeUser')
   navigator.serviceWorker.ready.then(() => {
     getToken(messaging, {
       vapidKey: PUBLIC_VAPID_KEY,
