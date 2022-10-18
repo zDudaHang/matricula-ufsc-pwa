@@ -8,7 +8,7 @@ export function PrivateRoute({ children }: PrivateRouteProps) {
   const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
 
   if (!accessToken) {
-    return <Navigate to={LOGIN_ROUTE} />
+    return <Navigate to={`/${LOGIN_ROUTE}`} />
   }
 
   return <>{children}</>
