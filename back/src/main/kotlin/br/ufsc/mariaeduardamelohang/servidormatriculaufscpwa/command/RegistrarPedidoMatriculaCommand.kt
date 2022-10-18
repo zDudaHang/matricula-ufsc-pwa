@@ -1,10 +1,10 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.RegistroPedidoMatriculaResult
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatriculaPrimaryKey
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.RegistroPedidoMatriculaResult
 import org.springframework.stereotype.Repository
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
@@ -13,7 +13,7 @@ import javax.transaction.Transactional
 class RegistrarPedidoMatriculaCommand(
     private val em: EntityManager
 ) {
-    @Transactional(Transactional.TxType.SUPPORTS)
+    @Transactional
     fun execute(codigosTurmas: List<String>, aluno: Aluno, codigosTurmasJahMatriculadas: Set<String>): RegistroPedidoMatriculaResult {
         val result = RegistroPedidoMatriculaResult()
 

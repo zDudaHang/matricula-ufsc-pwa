@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class PushNotificationService(
-    private val logger: Logger = LoggerFactory.getLogger(PushNotificationService::class.java),
     private val registrarSubscribeCommand: RegistrarSubscribeCommand,
     private val removerSubscribeTokenCommand: RemoverSubscribeTokenCommand
 ) {
+
+    private val logger: Logger = LoggerFactory.getLogger(PushNotificationService::class.java)
+
     fun sendNotification(title: String, body: String? = null, subscriptionToken: String) {
         logger.debug("Sending notification to $subscriptionToken")
         val notification = Notification.builder()
