@@ -18,12 +18,7 @@ export function HeaderBar() {
     deferredPrompt.prompt()
     const { outcome } = await deferredPrompt.userChoice
     console.debug(`[HeaderBar.tsx] userChoice: ${outcome}`)
-    switch (outcome) {
-      case 'accepted': {
-        reset()
-        break
-      }
-    }
+    if (outcome === 'accepted') reset()
   }
 
   return (
