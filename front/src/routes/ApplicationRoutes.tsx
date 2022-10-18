@@ -9,6 +9,7 @@ import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
 import { PedidoMatriculaView } from '../pedido-matricula/PedidoMatriculaView'
 import { fetchWithAuthorization } from '../fetch'
 import { RegistrarPedidoMatriculaView } from '../registrar-pedido-matricula/RegistrarPedidoMatriculaView'
+import { NotFound } from './NotFound'
 
 export function ApplicationRoutes() {
   const [horarios, setHorarios] = useState<Horario[]>([])
@@ -48,6 +49,7 @@ export function ApplicationRoutes() {
             </PrivateRoute>
           }
         />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
