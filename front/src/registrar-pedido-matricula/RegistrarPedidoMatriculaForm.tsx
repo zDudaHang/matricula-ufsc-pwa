@@ -37,7 +37,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
       },
     })
 
-  const handleSubmitSuccess = () => navigate(`/${PEDIDO_MATRICULA_ROUTE}`)
+  const handleSubmitSuccess = () => navigate(PEDIDO_MATRICULA_ROUTE)
 
   const renderForm = (formProps: FormRenderProps<RegistrarPedidoMatriculaFormModel>) => {
     const {
