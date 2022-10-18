@@ -47,4 +47,5 @@ export interface DiaSemana {
 export interface Horario {
   id: number
   horario: string
+  ultimoHorarioPeriodo: boolean
 }

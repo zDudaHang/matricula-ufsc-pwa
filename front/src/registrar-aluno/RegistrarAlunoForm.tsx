@@ -17,7 +17,7 @@ export function RegistrarAlunoForm() {
   const handleSubmit = (values: RegistrarAlunoFormModel) =>
     fetchPostWithJsonBodyAndWithoutAuthorization('registrarAluno', values)
 
-  const handleSubmiSuccess = (result: RegistrarAlunoResult) => navigate(`/${LOGIN_ROUTE}${result.nomeUsuario}`)
+  const handleSubmiSuccess = (result: RegistrarAlunoResult) => navigate(`/${LOGIN_ROUTE}/${result.nomeUsuario}`)
 
   const renderForm = (formProps: FormRenderProps<RegistrarAlunoFormModel>) => {
     return (
