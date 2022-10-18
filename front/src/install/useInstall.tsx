@@ -23,12 +23,9 @@ export function useInstall(): UseInstallResult {
 
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault()
-      // Stash the event so it can be triggered later.
       setDeferredPrompt(e as BeforeInstallPromptEvent)
-      // Optionally, send analytics event that PWA install promo was shown.
-      console.debug(`'beforeinstallprompt' event was fired.`)
+      console.debug(`[useInstall] beforeinstallprompt event was fired`)
       return () => {
         window.removeEventListener('beforeinstallprompt', () => {})
       }

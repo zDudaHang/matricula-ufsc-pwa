@@ -14,11 +14,11 @@ export function Form<T>(props: FormProps<T>) {
     const response = await onSubmit(values, formApi)
     const responseJSON = await response.json()
     if (response.status === HTTP_STATUS_VALIDATION_EXCEPTION) {
-      console.debug('[Form.tsx] Validation exception')
+      console.debug('[Form] Validation exception')
       const errors = responseJSON as ServerValidationError<T>
       return { ...errors.errors }
     } else if (response.status === HTTP_STATUS_OK) {
-      console.debug('[Form.tsx] Calling onSubmitSucceeded')
+      console.debug('[Form] Calling onSubmitSucceeded')
       onSubmitSucceeded(responseJSON)
     }
   }

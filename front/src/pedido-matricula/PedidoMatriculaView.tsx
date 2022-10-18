@@ -6,6 +6,7 @@ import { fetchWithAuthorization } from '../fetch'
 import { GradeHorarios } from '../grade-horarios/GradeHorarios'
 import { TurmaMatriculada } from '../grade-horarios/model'
 import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
+import { useOnlineStatus } from '../online-status/useOnlineStatus'
 import { POLLING_TIME_IN_MS } from '../registrar-pedido-matricula/model'
 import { convertTurmasMatriculadasToHorariosSelecionados } from '../registrar-pedido-matricula/util'
 import { EDITAR_PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
@@ -13,6 +14,7 @@ import { StatusPedidoMatricula } from './StatusPedidoMatricula'
 
 export function PedidoMatriculaView() {
   const [turmasMatriculadas, setTurmasMatriculadas] = useState<TurmaMatriculada[]>([])
+  const isOnline = useOnlineStatus()
 
   const horariosSelecionados = useMemo(
     () => convertTurmasMatriculadasToHorariosSelecionados(turmasMatriculadas, true),
@@ -28,15 +30,16 @@ export function PedidoMatriculaView() {
 
   // Ref: https://thewebdev.info/2021/05/29/how-to-poll-an-api-periodically-with-react/
   useEffect(() => {
-    const timer = setInterval(getPedidoMatricula, POLLING_TIME_IN_MS)
+    let timer
+    if (isOnline) timer = setInterval(getPedidoMatricula, POLLING_TIME_IN_MS)
     return () => clearInterval(timer)
-  }, [getPedidoMatricula])
+  }, [getPedidoMatricula, isOnline])
 
   useEffect(() => {
     getPedidoMatricula()
 
     window.addEventListener('atualizar', () => {
-      console.debug('[PedidoMatriculaView] atualizar event - getPedidoMatricula... ')
+      console.debug('[PedidoMatriculaView] atualizar event arised ')
       getPedidoMatricula()
     })
 
@@ -45,8 +48,7 @@ export function PedidoMatriculaView() {
         console.debug('[PedidoMatriculaView] removing listener of atualizar event ')
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getPedidoMatricula])
 
   return (
     <Grid style={{ margin: '1rem' }} gapVertical={1}>

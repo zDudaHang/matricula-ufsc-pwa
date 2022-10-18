@@ -31,12 +31,12 @@ export function requestPermission(setIsNotificationAllowed: (status: boolean) =>
 }
 
 function subscribeUser(setIsNotificationAllowed: (status: boolean) => void) {
-  console.log('[subscribe.ts] subscribeUser')
+  console.log('[subscribe] subscribeUser')
   navigator.serviceWorker.ready.then(() => {
     getToken(messaging, {
       vapidKey: PUBLIC_VAPID_KEY,
     }).then((token) => {
-      console.debug(`[subscribe.ts] Enviando token do firebase para o servidor...`)
+      console.debug(`[subscribe] Enviando token do firebase para o servidor...`)
       fetchWithAuthorization('subscribe', {
         method: 'POST',
         body: JSON.stringify({ token }),
@@ -46,7 +46,7 @@ function subscribeUser(setIsNotificationAllowed: (status: boolean) => void) {
       })
         .then((response) => {
           if (response.status === 200) {
-            console.debug('[subscribe.ts] Setting setIsNotificationAllowed to true')
+            console.debug('[subscribe] Setting setIsNotificationAllowed to true')
             setIsNotificationAllowed(true)
           }
         })
@@ -56,13 +56,13 @@ function subscribeUser(setIsNotificationAllowed: (status: boolean) => void) {
 }
 
 export function unsubscribeUser(setIsNotificationAllowed: (status: boolean) => void) {
-  console.debug(`[subscribe.ts] unsubscribeUser`)
+  console.debug(`[subscribe] unsubscribeUser`)
   fetchWithAuthorization('unsubscribe', {
     method: 'PUT',
   })
     .then((response) => {
       if (response.status === 200) {
-        console.debug('[subscribe.ts] Setting setIsNotificationAllowed to false')
+        console.debug('[subscribe] Setting setIsNotificationAllowed to false')
         setIsNotificationAllowed(false)
       }
     })
