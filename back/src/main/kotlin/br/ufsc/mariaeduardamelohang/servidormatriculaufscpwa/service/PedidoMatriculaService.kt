@@ -60,6 +60,7 @@ class PedidoMatriculaService(
         return registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
     }
 
+    // TODO: Melhorar a query para não notificar um aluno que já foi notificado pela perda + notificar se alguém ganhou uma vaga também !
     private fun verificarAlunosPrecisamSerNotifications(result: RegistroPedidoMatriculaResult, matricula: UUID) {
         val alunosPerderamVaga = buscarAlunoPerderamVagaQuery.execute(result.turmasNovas.map { it.codigo }, matricula)
         alunosPerderamVaga.forEach {
