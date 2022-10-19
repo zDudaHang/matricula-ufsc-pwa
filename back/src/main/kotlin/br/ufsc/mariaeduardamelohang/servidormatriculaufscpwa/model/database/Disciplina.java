@@ -7,30 +7,21 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "TB_DISCIPLINA")
+@Getter
 public class Disciplina implements Serializable {
 
 	private static final long serialVersionUID = 7229281137744422191L;
 
 	@Id
-	String codigo;
+	private String codigo;
 
 	@Column(nullable = false)
-	String nome;
+	private String nome;
 
 	@Column(nullable = false)
-	int cargaHoraria;
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public int getCargaHoraria() {
-		return cargaHoraria;
-	}
+	private int cargaHoraria;
 }

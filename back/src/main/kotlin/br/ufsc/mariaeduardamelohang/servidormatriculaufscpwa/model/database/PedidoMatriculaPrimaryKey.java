@@ -6,9 +6,18 @@ import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Embeddable
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PedidoMatriculaPrimaryKey implements Serializable {
 
 	private static final long serialVersionUID = 2964997141275501320L;
@@ -16,34 +25,10 @@ public class PedidoMatriculaPrimaryKey implements Serializable {
 	@ManyToOne
 	@MapsId
 	@JsonIgnore
-	Turma turma;
+	private Turma turma;
 
 	@ManyToOne
 	@MapsId
 	@JsonIgnore
-	Aluno aluno;
-
-	public PedidoMatriculaPrimaryKey(Turma turma, Aluno aluno) {
-		this.turma = turma;
-		this.aluno = aluno;
-	}
-
-	public PedidoMatriculaPrimaryKey() {
-	}
-
-	public Turma getTurma() {
-		return turma;
-	}
-
-	public void setTurma(Turma turma) {
-		this.turma = turma;
-	}
-
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
+	private Aluno aluno;
 }

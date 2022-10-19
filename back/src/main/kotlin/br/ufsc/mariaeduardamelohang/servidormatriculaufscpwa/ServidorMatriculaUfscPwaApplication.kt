@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ServidorMatriculaUfscPwaApplication
 
 fun main(args: Array<String>) {
-	runApplication<ServidorMatriculaUfscPwaApplication>(*args)
+    runApplication<ServidorMatriculaUfscPwaApplication>(*args)
 }

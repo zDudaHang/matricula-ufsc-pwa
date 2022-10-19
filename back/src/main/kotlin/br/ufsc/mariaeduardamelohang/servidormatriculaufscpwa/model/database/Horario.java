@@ -10,31 +10,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "TB_HORARIO")
+@Getter
 public class Horario implements Serializable {
 
 	private static final long serialVersionUID = 5040258127046402484L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	Long id;
+	private Long id;
 
 	@Column(nullable = false)
-	String horario;
+	private String horario;
 
 	@Column(nullable = false)
-	boolean isUltimoHorarioPeriodo = false;
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getHorario() {
-		return horario;
-	}
-
-	public boolean isUltimoHorarioPeriodo() {
-		return isUltimoHorarioPeriodo;
-	}
+	private boolean isUltimoHorarioPeriodo = false;
 }

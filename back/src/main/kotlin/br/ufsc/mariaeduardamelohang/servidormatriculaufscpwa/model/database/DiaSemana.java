@@ -10,24 +10,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "TB_DIA_SEMANA")
+@Getter
 public class DiaSemana implements Serializable {
 
 	private static final long serialVersionUID = -3453802262703116799L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	Long id;
+	private Long id;
 
 	@Column(nullable = false)
-	String nome;
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
+	private String nome;
 }

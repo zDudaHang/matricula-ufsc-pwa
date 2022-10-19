@@ -54,7 +54,7 @@ export function LoginForm() {
         </Cell>
         <Cell size={6}>
           <HFlow>
-            <ButtonLink size='large' path={`/${REGISTAR_ALUNO_ROUTE}`}>
+            <ButtonLink size='large' path={`/${REGISTAR_ALUNO_ROUTE}`} >
               Registrar-se
             </ButtonLink>
             <Button type='submit' kind='primary' onClick={formProps.handleSubmit} size='large'>

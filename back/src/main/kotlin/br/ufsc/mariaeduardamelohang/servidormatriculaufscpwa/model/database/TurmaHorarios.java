@@ -6,16 +6,15 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "TB_TURMA_HORARIOS")
+@Getter
 public class TurmaHorarios implements Serializable {
 
 	private static final long serialVersionUID = -701029892833226734L;
 
 	@EmbeddedId
-	TurmaHorariosPrimaryKey id;
-
-	public TurmaHorariosPrimaryKey getId() {
-		return id;
-	}
+	private TurmaHorariosPrimaryKey id;
 }

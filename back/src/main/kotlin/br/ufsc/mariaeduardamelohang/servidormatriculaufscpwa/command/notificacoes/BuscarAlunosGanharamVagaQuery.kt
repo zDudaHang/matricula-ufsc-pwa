@@ -11,23 +11,20 @@ import java.util.UUID
 import javax.persistence.EntityManager
 
 @Repository
-class BuscarAlunoPerderamVagaQuery(
+class BuscarAlunosGanharamVagaQuery(
     private val em: EntityManager
 ) {
-    fun execute(codigoTurmas: List<String>, matriculaAluno: UUID): List<PerdaVagaDto> {
+    fun execute(codigoTurmas: List<String>, matriculaDeveSerIgnorada: UUID): List<PerdaVagaDto> {
         return JPAQueryFactory(em)
-            .select(Projections.constructor(PerdaVagaDto::class.java, aluno, turma))
+            .select(Projections.constructor(PerdaVagaDto::class.java, aluno.token, aluno.nomeUsuario, turma.codigo))
             .from(pedidoMatricula)
             .innerJoin(aluno).on(pedidoMatricula.id.aluno.matricula.eq(aluno.matricula))
             .innerJoin(turma).on(turma.codigo.eq(pedidoMatricula.id.turma.codigo))
             .where(
-                pedidoMatricula.posicao.gt(turma.vagasOfertadas).and(aluno.token.isNotNull)
-                    .and(
-                        turma.codigo.`in`(codigoTurmas)
-                            .and(
-                                aluno.matricula.ne(matriculaAluno)
-                            )
-                    )
+                pedidoMatricula.deveNotificarAlunoGanhouVaga.isTrue
+                    .and(aluno.token.isNotNull)
+                    .and(aluno.matricula.ne(matriculaDeveSerIgnorada))
+                    .and(turma.codigo.`in`(codigoTurmas))
             )
             .fetch()
     }

@@ -19,6 +19,18 @@ class PushNotificationService(
 
     private val logger: Logger = LoggerFactory.getLogger(PushNotificationService::class.java)
 
+    private val BODY_PERDA_VAGA = "Edite o seu pedido de matrícula caso queira trocar de turma."
+
+    fun notifyPerdaVaga(subscriptionToken: String, codigoTurma: String) {
+        val title = "Vaga perdida na turma $codigoTurma"
+        sendNotification(title, BODY_PERDA_VAGA, subscriptionToken)
+    }
+
+    fun notifyGanhoVaga(subscriptionToken: String, codigoTurma: String) {
+        val title = "Saída na fila de espera da turma $codigoTurma"
+        sendNotification(title, subscriptionToken = subscriptionToken)
+    }
+
     fun sendNotification(title: String, body: String? = null, subscriptionToken: String) {
         logger.debug("Sending notification to $subscriptionToken")
         val notification = Notification.builder()

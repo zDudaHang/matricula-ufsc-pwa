@@ -5,7 +5,7 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorar
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarTurmasQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunoPerderamVagaQuery
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunosPerderamVagaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.RegistroPedidoMatriculaResult
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.DiaSemana
@@ -24,7 +24,7 @@ class PedidoMatriculaService(
     private val buscarPedidoMatriculaByMatriculaCommand: BuscarPedidoMatriculaByMatriculaCommand,
     private val buscarTurmasQuery: BuscarTurmasQuery,
     private val registrarPedidoMatriculaCommand: RegistrarPedidoMatriculaCommand,
-    private val buscarAlunoPerderamVagaQuery: BuscarAlunoPerderamVagaQuery,
+    private val buscarAlunosPerderamVagaQuery: BuscarAlunosPerderamVagaQuery,
     private val buscarHorariosQuery: BuscarHorariosQuery,
     private val buscarDiasSemanaQuery: BuscarDiasSemanaQuery,
     private val pushNotificationService: PushNotificationService
@@ -39,7 +39,7 @@ class PedidoMatriculaService(
     fun buscarPedidoMatricula(): List<PedidoMatriculaDTO> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
-            buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula)
+            buscarPedidoMatriculaByMatriculaCommand.execute(aluno.getMatricula())
         } else {
             mutableListOf()
         }
@@ -49,7 +49,7 @@ class PedidoMatriculaService(
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
             val result = salvarPedidoMatricula(codigosTurmas, aluno)
-            verificarAlunosPrecisamSerNotifications(result, aluno.matricula)
+            notificarAlunos(result, aluno.matricula)
             return result.getTurmasMatriculadas()
         } else listOf()
     }
@@ -61,11 +61,24 @@ class PedidoMatriculaService(
     }
 
     // TODO: Melhorar a query para não notificar um aluno que já foi notificado pela perda + notificar se alguém ganhou uma vaga também !
-    private fun verificarAlunosPrecisamSerNotifications(result: RegistroPedidoMatriculaResult, matricula: UUID) {
-        val alunosPerderamVaga = buscarAlunoPerderamVagaQuery.execute(result.turmasNovas.map { it.codigo }, matricula)
+    private fun notificarAlunos(result: RegistroPedidoMatriculaResult, matriculaDeveSerIgnorada: UUID) {
+        notificarPerdaVaga(result.turmasNovas.map { it.codigo }, matriculaDeveSerIgnorada)
+        notificarGanhoVaga(result.turmasRemovidas.map { it.codigo }, matriculaDeveSerIgnorada)
+    }
+
+    private fun notificarPerdaVaga(codigoTurmasNovas: List<String>, matriculaDeveSerIgnorada: UUID) {
+        val alunosPerderamVaga = buscarAlunosPerderamVagaQuery.execute(codigoTurmasNovas, matriculaDeveSerIgnorada)
         alunosPerderamVaga.forEach {
-            logger.debug("Notificando o aluno ${it.aluno.nomeUsuario} porque perdeu a vaga na turma ${it.turma.codigo}")
-            pushNotificationService.sendNotification("Vaga perdida na turma ${it.turma.codigo}", "Edite o seu pedido de matrícula caso queira trocar de turma.", it.aluno.token)
+            logger.debug("Notificando o aluno ${it.alunoNomeUsuario} porque perdeu a vaga na turma ${it.codigoTurma}")
+            pushNotificationService.notifyPerdaVaga(it.alunoSubscriptionToken, it.codigoTurma)
+        }
+    }
+
+    private fun notificarGanhoVaga(codigoTurmasRemovidas: List<String>, matriculaDeveSerIgnorada: UUID) {
+        val alunosGanharamVaga = buscarAlunosPerderamVagaQuery.execute(codigoTurmasRemovidas, matriculaDeveSerIgnorada)
+        alunosGanharamVaga.forEach {
+            logger.debug("Notificando o aluno ${it.alunoNomeUsuario} porque saiu da fila de espera da turma ${it.codigoTurma}")
+            pushNotificationService.notifyGanhoVaga(it.alunoSubscriptionToken, it.codigoTurma)
         }
     }
 
