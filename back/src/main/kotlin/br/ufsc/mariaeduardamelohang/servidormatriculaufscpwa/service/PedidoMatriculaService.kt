@@ -5,6 +5,7 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorar
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarTurmasQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunosGanharamVagaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunosPerderamVagaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.RegistroPedidoMatriculaResult
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
@@ -25,6 +26,7 @@ class PedidoMatriculaService(
     private val buscarTurmasQuery: BuscarTurmasQuery,
     private val registrarPedidoMatriculaCommand: RegistrarPedidoMatriculaCommand,
     private val buscarAlunosPerderamVagaQuery: BuscarAlunosPerderamVagaQuery,
+    private val buscarAlunosGanharamVagaQuery: BuscarAlunosGanharamVagaQuery,
     private val buscarHorariosQuery: BuscarHorariosQuery,
     private val buscarDiasSemanaQuery: BuscarDiasSemanaQuery,
     private val pushNotificationService: PushNotificationService
@@ -60,7 +62,6 @@ class PedidoMatriculaService(
         return registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
     }
 
-    // TODO: Melhorar a query para não notificar um aluno que já foi notificado pela perda + notificar se alguém ganhou uma vaga também !
     private fun notificarAlunos(result: RegistroPedidoMatriculaResult, matriculaDeveSerIgnorada: UUID) {
         notificarPerdaVaga(result.turmasNovas.map { it.codigo }, matriculaDeveSerIgnorada)
         notificarGanhoVaga(result.turmasRemovidas.map { it.codigo }, matriculaDeveSerIgnorada)
@@ -69,16 +70,16 @@ class PedidoMatriculaService(
     private fun notificarPerdaVaga(codigoTurmasNovas: List<String>, matriculaDeveSerIgnorada: UUID) {
         val alunosPerderamVaga = buscarAlunosPerderamVagaQuery.execute(codigoTurmasNovas, matriculaDeveSerIgnorada)
         alunosPerderamVaga.forEach {
-            logger.debug("Notificando o aluno ${it.alunoNomeUsuario} porque perdeu a vaga na turma ${it.codigoTurma}")
-            pushNotificationService.notifyPerdaVaga(it.alunoSubscriptionToken, it.codigoTurma)
+            logger.debug("Notificando o aluno ${it.nomeUsuario} porque perdeu a vaga na turma ${it.codigoTurma}")
+            pushNotificationService.notifyPerdaVaga(it.subscriptionToken, it.codigoTurma)
         }
     }
 
     private fun notificarGanhoVaga(codigoTurmasRemovidas: List<String>, matriculaDeveSerIgnorada: UUID) {
-        val alunosGanharamVaga = buscarAlunosPerderamVagaQuery.execute(codigoTurmasRemovidas, matriculaDeveSerIgnorada)
+        val alunosGanharamVaga = buscarAlunosGanharamVagaQuery.execute(codigoTurmasRemovidas, matriculaDeveSerIgnorada)
         alunosGanharamVaga.forEach {
-            logger.debug("Notificando o aluno ${it.alunoNomeUsuario} porque saiu da fila de espera da turma ${it.codigoTurma}")
-            pushNotificationService.notifyGanhoVaga(it.alunoSubscriptionToken, it.codigoTurma)
+            logger.debug("Notificando o aluno ${it.nomeUsuario} porque saiu da fila de espera da turma ${it.codigoTurma}")
+            pushNotificationService.notifyGanhoVaga(it.subscriptionToken, it.codigoTurma)
         }
     }
 

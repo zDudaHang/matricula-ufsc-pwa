@@ -3,7 +3,7 @@ package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificaco
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QAluno.aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QPedidoMatricula.pedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QTurma.turma
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PerdaVagaDto
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.AlunoNotificacaoDTO
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
@@ -14,9 +14,9 @@ import javax.persistence.EntityManager
 class BuscarAlunosPerderamVagaQuery(
     private val em: EntityManager
 ) {
-    fun execute(codigoTurmas: List<String>, matriculaDeveSerIgnorada: UUID): List<PerdaVagaDto> {
+    fun execute(codigoTurmas: List<String>, matriculaDeveSerIgnorada: UUID): List<AlunoNotificacaoDTO> {
         return JPAQueryFactory(em)
-            .select(Projections.constructor(PerdaVagaDto::class.java, aluno.token, aluno.nomeUsuario, turma.codigo))
+            .select(Projections.constructor(AlunoNotificacaoDTO::class.java, pedidoMatricula.id, aluno.token, aluno.nomeUsuario, turma.codigo))
             .from(pedidoMatricula)
             .innerJoin(aluno).on(pedidoMatricula.id.aluno.matricula.eq(aluno.matricula))
             .innerJoin(turma).on(turma.codigo.eq(pedidoMatricula.id.turma.codigo))
