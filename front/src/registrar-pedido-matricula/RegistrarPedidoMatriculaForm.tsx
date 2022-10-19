@@ -48,7 +48,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     const horariosSelecionados = getFieldState(HORARIOS_FIELD_NAME)?.value
 
     return (
-      <Grid justifyContent='center' alignItems='center' style={{ margin: '1rem' }}>
+      <Grid justifyContent='center' alignItems='center'>
         <Cell size={12}>
           <Heading level={1}>Registrando pedido de matrícula</Heading>
           <ErrorField name={HORARIOS_FIELD_NAME} />
