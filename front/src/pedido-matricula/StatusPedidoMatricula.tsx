@@ -31,7 +31,7 @@ export function StatusPedidoMatricula(props: StatusPedidoMatriculaProps) {
           sortable: false,
         },
         {
-          header: 'Posição',
+          header: 'Sua posição',
           name: 'posicao',
           render: renderPosicao,
           sortable: false,
