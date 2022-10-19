@@ -14,7 +14,7 @@ class RegistrarAlunoCommand(
 ) {
 
     @Transactional
-    fun execute(input: RegistrarAlunoInput): Aluno? {
+    fun execute(input: RegistrarAlunoInput): String {
         val aluno = Aluno()
         aluno.nomeUsuario = input.nomeUsuario
         aluno.senha = input.senha
@@ -22,6 +22,6 @@ class RegistrarAlunoCommand(
 
         em.persist(aluno)
 
-        return aluno
+        return aluno.nomeUsuario
     }
 }

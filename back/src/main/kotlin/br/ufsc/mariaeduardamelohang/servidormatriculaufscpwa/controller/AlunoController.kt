@@ -4,6 +4,7 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.config.LOGIN_ENDPOI
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.config.REGISTRAR_ALUNO_ENDPOINT
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.LoginDTO
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.RegistrarAlunoDTO
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.LoginInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.RegistrarAlunoInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service.AlunoService
@@ -27,9 +28,10 @@ class AlunoController(
     private val loginInputValidator: LoginInputValidator
 ) {
     @PostMapping(REGISTRAR_ALUNO_ENDPOINT, consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun registrarAluno(@RequestBody input: RegistrarAlunoInput): Aluno? {
+    fun registrarAluno(@RequestBody input: RegistrarAlunoInput): RegistrarAlunoDTO? {
         registrarAlunoInputValidator.validate(input).throwIfInvalid()
-        return alunoService.registrarAluno(input)
+        val nomeUsuario = alunoService.registrarAluno(input)
+        return RegistrarAlunoDTO(nomeUsuario)
     }
 
     @PostMapping(LOGIN_ENDPOINT, consumes = [MediaType.APPLICATION_JSON_VALUE])

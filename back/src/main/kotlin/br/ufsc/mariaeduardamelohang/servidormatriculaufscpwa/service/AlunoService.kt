@@ -19,7 +19,7 @@ class AlunoService(
     private val passwordEncoder: BCryptPasswordEncoder,
 ) : UserDetailsService {
 
-    fun registrarAluno(input: RegistrarAlunoInput): Aluno? {
+    fun registrarAluno(input: RegistrarAlunoInput): String {
         val inputWithEncodedPassword = RegistrarAlunoInput(
             input.nomeUsuario,
             passwordEncoder.encode(input.senha)
