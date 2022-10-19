@@ -25,7 +25,7 @@ class PushNotificationService(
     private val TITLE_SUBSCRIBE_SUCCESS = "Notificações habilitadas com sucesso"
 
     fun notifyPerdaVaga(subscriptionToken: String, codigoTurma: String) {
-        val title = "Vaga perdida na turma $codigoTurma"
+        val title = "Entrada na fila de espera da turma $codigoTurma"
         val body = AlunoNotificacaoBody(MESSAGE_PERDA_VAGA, NotificationTypeEnum.WARNING)
         sendNotification(title, body, subscriptionToken)
     }
@@ -37,7 +37,7 @@ class PushNotificationService(
     }
 
     private fun sendNotification(title: String, body: AlunoNotificacaoBody, subscriptionToken: String) {
-        logger.debug("Sending notification to $subscriptionToken")
+        logger.debug("Sending notification (${body.type.name}) to $subscriptionToken")
         val notification = Notification.builder()
             .setTitle(title)
             .build()
@@ -48,9 +48,7 @@ class PushNotificationService(
             .setNotification(notification)
             .build()
 
-        val firebaseMessaging = FirebaseMessaging.getInstance()
-        val response = firebaseMessaging.send(message)
-        logger.debug("Successfully sent message: $response")
+        FirebaseMessaging.getInstance().sendAsync(message)
     }
 
     fun subscribe(subscriptionInput: SubscriptionInput) {
