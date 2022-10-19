@@ -34,7 +34,7 @@ class RegistroPedidoMatriculaInputValidator(
                 .filter { it.value.size > 1 }
 
             if (horariosComConflito.isNotEmpty()) {
-                error.fieldError(PedidoMatriculaInput::horarios, "Conflito encontrado")
+                error.fieldError(PedidoMatriculaInput::horarios, "Conflito(s) de horários encontrado(s)")
             }
         }
 

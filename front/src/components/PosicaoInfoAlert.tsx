@@ -6,7 +6,7 @@ export function PosicaoInfoAlert() {
   return (
     <Alert type='info' inline>
       A posição em uma turma é determinada pelo Índice de Aproveitamento Semestral Acumulado (IAA) e o seu é{' '}
-      <strong>{iaa}</strong>. Esse valor foi gerado <strong> automaticamente </strong> pelo servidor
+      <strong>{iaa}</strong>. Esse valor foi gerado <strong> aleatoriamente </strong> pelo servidor
     </Alert>
   )
 }
