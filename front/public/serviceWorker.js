@@ -8,9 +8,6 @@ const IMAGES = [
   'images/book-stack-128.png',
   'images/book-stack-256.png',
   'images/book-stack-512.png',
-  'images/info.png',
-  'images/warning.png',
-  'images/success.png',
 ]
 
 const OFFLINE_URLS = ['/pedidoMatricula', '/horarios', '/diasSemana']

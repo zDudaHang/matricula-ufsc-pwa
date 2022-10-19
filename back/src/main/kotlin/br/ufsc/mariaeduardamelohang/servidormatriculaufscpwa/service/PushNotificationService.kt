@@ -26,37 +26,39 @@ class PushNotificationService(
 
     fun notifyPerdaVaga(subscriptionToken: String, codigoTurma: String) {
         val title = "Entrada na fila de espera da turma $codigoTurma"
-        val body = AlunoNotificacaoBody(MESSAGE_PERDA_VAGA, NotificationTypeEnum.WARNING)
-        sendNotification(title, body, subscriptionToken)
+        val notificacao = AlunoNotificacaoBody(title, NotificationTypeEnum.WARNING, MESSAGE_PERDA_VAGA)
+        sendNotification(notificacao, subscriptionToken)
     }
 
     fun notifyGanhoVaga(subscriptionToken: String, codigoTurma: String) {
         val title = "Saída na fila de espera da turma $codigoTurma"
-        val body = AlunoNotificacaoBody(type = NotificationTypeEnum.SUCCESS)
-        sendNotification(title, body, subscriptionToken)
+        val notificacao = AlunoNotificacaoBody(title, NotificationTypeEnum.SUCCESS)
+        sendNotification(notificacao, subscriptionToken)
     }
 
-    private fun sendNotification(title: String, body: AlunoNotificacaoBody, subscriptionToken: String) {
-        logger.debug("Sending notification (${body.type.name}) to $subscriptionToken")
+    private fun sendNotification(notificacao: AlunoNotificacaoBody, subscriptionToken: String) {
+        logger.debug("Sending notification (${notificacao.type.name}) to $subscriptionToken")
+
         val notification = Notification.builder()
-            .setTitle(title)
+            .setTitle(notificacao.title)
+            .setBody(notificacao.message)
             .build()
 
         val message = Message.builder()
-            .putAllData(body.convertToNotificationData())
+            .putAllData(notificacao.convertToNotificationData())
             .setToken(subscriptionToken)
             .setNotification(notification)
             .build()
 
-        FirebaseMessaging.getInstance().sendAsync(message)
+        FirebaseMessaging.getInstance().send(message)
     }
 
     fun subscribe(subscriptionInput: SubscriptionInput) {
         val aluno = AuthUtils.getAlunoAutenticado()
         if (aluno !== null) {
             registrarSubscribeCommand.execute(aluno.matricula, subscriptionInput.token)
-            val body = AlunoNotificacaoBody(type = NotificationTypeEnum.INFO)
-            sendNotification(TITLE_SUBSCRIBE_SUCCESS, body, subscriptionToken = subscriptionInput.token)
+            val notificacao = AlunoNotificacaoBody(TITLE_SUBSCRIBE_SUCCESS, NotificationTypeEnum.INFO)
+            sendNotification(notificacao, subscriptionInput.token)
         }
     }
 

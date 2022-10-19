@@ -10,7 +10,6 @@ import javax.transaction.Transactional
 class RemoverSubscribeTokenCommand(
     private val em: EntityManager
 ) {
-
     @Transactional
     fun execute(matricula: UUID) {
         val aluno = em.find(Aluno::class.java, matricula)

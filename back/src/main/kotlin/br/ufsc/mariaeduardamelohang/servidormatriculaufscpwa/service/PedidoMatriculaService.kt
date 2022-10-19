@@ -5,12 +5,14 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorar
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarTurmasQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.AtualizarAlunosNotificadosCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunosGanharamVagaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunosPerderamVagaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.RegistroPedidoMatriculaResult
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.DiaSemana
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Horario
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatriculaPrimaryKey
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PedidoMatriculaDTO
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
@@ -25,6 +27,7 @@ class PedidoMatriculaService(
     private val buscarPedidoMatriculaByMatriculaCommand: BuscarPedidoMatriculaByMatriculaCommand,
     private val buscarTurmasQuery: BuscarTurmasQuery,
     private val registrarPedidoMatriculaCommand: RegistrarPedidoMatriculaCommand,
+    private val atualizarAlunosNotificadosCommand: AtualizarAlunosNotificadosCommand,
     private val buscarAlunosPerderamVagaQuery: BuscarAlunosPerderamVagaQuery,
     private val buscarAlunosGanharamVagaQuery: BuscarAlunosGanharamVagaQuery,
     private val buscarHorariosQuery: BuscarHorariosQuery,
@@ -63,24 +66,27 @@ class PedidoMatriculaService(
     }
 
     private fun notificarAlunos(result: RegistroPedidoMatriculaResult, matriculaDeveSerIgnorada: UUID) {
-        notificarPerdaVaga(result.turmasNovas.map { it.codigo }, matriculaDeveSerIgnorada)
-        notificarGanhoVaga(result.turmasRemovidas.map { it.codigo }, matriculaDeveSerIgnorada)
+        val pkVagasPerdidas = notificarPerdaVaga(result.turmasNovas.map { it.codigo }, matriculaDeveSerIgnorada)
+        val pkVagasGanhas = notificarGanhoVaga(result.turmasRemovidas.map { it.codigo }, matriculaDeveSerIgnorada)
+        atualizarAlunosNotificadosCommand.execute(pkVagasGanhas, pkVagasPerdidas)
     }
 
-    private fun notificarPerdaVaga(codigoTurmasNovas: List<String>, matriculaDeveSerIgnorada: UUID) {
+    private fun notificarPerdaVaga(codigoTurmasNovas: List<String>, matriculaDeveSerIgnorada: UUID): List<PedidoMatriculaPrimaryKey> {
         val alunosPerderamVaga = buscarAlunosPerderamVagaQuery.execute(codigoTurmasNovas, matriculaDeveSerIgnorada)
         alunosPerderamVaga.forEach {
             logger.debug("Notificando o aluno ${it.nomeUsuario} porque perdeu a vaga na turma ${it.codigoTurma}")
             pushNotificationService.notifyPerdaVaga(it.subscriptionToken, it.codigoTurma)
         }
+        return alunosPerderamVaga.map { it.idPedidoMatricula }
     }
 
-    private fun notificarGanhoVaga(codigoTurmasRemovidas: List<String>, matriculaDeveSerIgnorada: UUID) {
+    private fun notificarGanhoVaga(codigoTurmasRemovidas: List<String>, matriculaDeveSerIgnorada: UUID): List<PedidoMatriculaPrimaryKey> {
         val alunosGanharamVaga = buscarAlunosGanharamVagaQuery.execute(codigoTurmasRemovidas, matriculaDeveSerIgnorada)
         alunosGanharamVaga.forEach {
             logger.debug("Notificando o aluno ${it.nomeUsuario} porque saiu da fila de espera da turma ${it.codigoTurma}")
             pushNotificationService.notifyGanhoVaga(it.subscriptionToken, it.codigoTurma)
         }
+        return alunosGanharamVaga.map { it.idPedidoMatricula }
     }
 
     fun buscarHorarios(): List<Horario> {
