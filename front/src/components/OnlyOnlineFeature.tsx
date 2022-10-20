@@ -1,4 +1,4 @@
-import { useOnlineStatus } from './useOnlineStatus'
+import { useOnlineStatus } from '../online-status/useOnlineStatus'
 
 interface OnlyOnlineFeatureProps {
   children: React.ReactNode

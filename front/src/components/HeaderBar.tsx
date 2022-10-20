@@ -1,16 +1,18 @@
 import { Button, Heading, HFlow, Icon, Text, useTheme } from 'bold-ui'
 import { requestPermission, unsubscribeUser } from '../notifications/subscribe'
 import { useInstall } from '../install/useInstall'
-import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
+import { OnlyOnlineFeature } from './OnlyOnlineFeature'
 import { useAuthContext } from '../login/context/useAuthContext'
+import { OnlyAuthenticatedFeature } from './OnlyAuthenticatedFeature'
 
 export function HeaderBar() {
   const theme = useTheme()
   const { auth, setIsNotificationAllowedAuthUser } = useAuthContext()
   const { deferredPrompt, reset } = useInstall()
+  const isNotificationAllowed = auth?.isNotificationAllowed ?? false
 
   const handleNotificationsClick = () => {
-    if (auth?.isNotificationAllowed) unsubscribeUser(setIsNotificationAllowedAuthUser)
+    if (isNotificationAllowed) unsubscribeUser(setIsNotificationAllowedAuthUser)
     else requestPermission(setIsNotificationAllowedAuthUser)
   }
 
@@ -31,22 +33,24 @@ export function HeaderBar() {
       <Heading level={1} style={{ color: theme.pallete.gray.c100 }}>
         Matrícula UFSC
       </Heading>{' '}
-      <OnlyOnlineFeature>
-        <Button onClick={handleNotificationsClick} skin='ghost' size='large'>
-          <Icon
-            icon={auth?.isNotificationAllowed ? 'bellFilled' : 'bellOutline'}
-            style={{ color: theme.pallete.gray.c100 }}
-          />
-        </Button>
-        {deferredPrompt && (
-          <Button onClick={handleDownloadClick} skin='ghost' size='large'>
-            <HFlow hSpacing={0.25} alignItems='center'>
-              <Icon icon='download' style={{ color: theme.pallete.gray.c100 }} />
-              <Text style={{ color: theme.pallete.gray.c100 }}>Instalar</Text>
-            </HFlow>
+      <OnlyAuthenticatedFeature>
+        <OnlyOnlineFeature>
+          <Button onClick={handleNotificationsClick} skin='ghost' size='large'>
+            <Icon
+              icon={isNotificationAllowed ? 'bellFilled' : 'bellOutline'}
+              style={{ color: theme.pallete.gray.c100 }}
+            />
           </Button>
-        )}
-      </OnlyOnlineFeature>
+          {deferredPrompt && (
+            <Button onClick={handleDownloadClick} skin='ghost' size='large'>
+              <HFlow hSpacing={0.25} alignItems='center'>
+                <Icon icon='download' style={{ color: theme.pallete.gray.c100 }} />
+                <Text style={{ color: theme.pallete.gray.c100 }}>Instalar</Text>
+              </HFlow>
+            </Button>
+          )}
+        </OnlyOnlineFeature>
+      </OnlyAuthenticatedFeature>
     </HFlow>
   )
 }
