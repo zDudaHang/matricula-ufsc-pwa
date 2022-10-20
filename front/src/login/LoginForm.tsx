@@ -8,8 +8,7 @@ import { PasswordField } from '../components/fields/PasswordField'
 import { TextField } from '../components/fields/TextField'
 import { Form } from '../components/Form'
 import { fetchPostWithJsonBodyAndWithoutAuthorization } from '../fetch'
-import { JWT_LOCAL_STORAGE } from '../local-storage/model'
-import { useNotificationStatus } from '../notifications/context/useNotificationStatus'
+import { setAccessToken } from '../local-storage'
 import { REGISTAR_ALUNO_ROUTE, PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
 import { useAuthContext } from './context/useAuthContext'
 import { LoginInput, LoginResult } from './model'
@@ -22,18 +21,15 @@ interface LoginURLParams {
 
 export function LoginForm() {
   const navigate = useNavigate()
-  const { setIsNotificationAllowed } = useNotificationStatus()
-  const { setIaa } = useAuthContext()
+  const { setAuth } = useAuthContext()
 
   const { nomeUsuario } = useParams<keyof LoginURLParams>()
 
   const handleSubmit = (values: LoginFormModel) => fetchPostWithJsonBodyAndWithoutAuthorization('login', values)
 
   const handleSubmiSuccess = (result: LoginResult) => {
-    console.log(result)
-    setIsNotificationAllowed(result.subscriptionToken && Notification.permission === 'granted')
-    localStorage.setItem(JWT_LOCAL_STORAGE, result.accessToken)
-    setIaa(result.iaa)
+    setAccessToken(result.accessToken)
+    setAuth(result.iaa, result.subscriptionToken && Notification.permission === 'granted')
     navigate(PEDIDO_MATRICULA_ROUTE)
   }
 
@@ -54,7 +50,7 @@ export function LoginForm() {
         </Cell>
         <Cell size={6}>
           <HFlow>
-            <ButtonLink size='large' path={`/${REGISTAR_ALUNO_ROUTE}`} >
+            <ButtonLink size='large' path={`/${REGISTAR_ALUNO_ROUTE}`}>
               Registrar-se
             </ButtonLink>
             <Button type='submit' kind='primary' onClick={formProps.handleSubmit} size='large'>

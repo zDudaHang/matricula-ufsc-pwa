@@ -1,17 +1,17 @@
 import { Button, Heading, HFlow, Icon, Text, useTheme } from 'bold-ui'
 import { requestPermission, unsubscribeUser } from '../notifications/subscribe'
-import { useNotificationStatus } from '../notifications/context/useNotificationStatus'
 import { useInstall } from '../install/useInstall'
 import { OnlyOnlineFeature } from '../online-status/OnlyOnlineFeature'
+import { useAuthContext } from '../login/context/useAuthContext'
 
 export function HeaderBar() {
   const theme = useTheme()
-  const { isNotificationAllowed, setIsNotificationAllowed } = useNotificationStatus()
+  const { auth, setIsNotificationAllowedAuthUser } = useAuthContext()
   const { deferredPrompt, reset } = useInstall()
 
   const handleNotificationsClick = () => {
-    if (isNotificationAllowed) unsubscribeUser(setIsNotificationAllowed)
-    else requestPermission(setIsNotificationAllowed)
+    if (auth?.isNotificationAllowed) unsubscribeUser(setIsNotificationAllowedAuthUser)
+    else requestPermission(setIsNotificationAllowedAuthUser)
   }
 
   // https://www.amitmerchant.com/adding-custom-install-button-in-progressive-web-apps/
@@ -34,7 +34,7 @@ export function HeaderBar() {
       <OnlyOnlineFeature>
         <Button onClick={handleNotificationsClick} skin='ghost' size='large'>
           <Icon
-            icon={isNotificationAllowed ? 'bellFilled' : 'bellOutline'}
+            icon={auth?.isNotificationAllowed ? 'bellFilled' : 'bellOutline'}
             style={{ color: theme.pallete.gray.c100 }}
           />
         </Button>

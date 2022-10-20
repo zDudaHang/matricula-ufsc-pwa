@@ -1,11 +1,12 @@
 import { createContext, useState } from 'react'
-import { AUTH_LOCAL_STORAGE } from '../../local-storage/model'
+import { AuthUser, getAuthUser, setAuthUser } from '../../local-storage'
 
 export const AuthContext = createContext<AuthContextModel>(null)
 
 export interface AuthContextModel {
-  iaa?: number
-  setIaa(iaa: number): void
+  auth: AuthUser
+  setAuth(iaa: number, isNotificationAllowed: boolean): void
+  setIsNotificationAllowedAuthUser(isNotificationAllowed: boolean): void
 }
 
 interface AuthProviderProps {
@@ -13,14 +14,22 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider(props: AuthProviderProps) {
-  const iaaLocalStorage = Number(localStorage.getItem(AUTH_LOCAL_STORAGE))
+  const [auth, setAuth] = useState<AuthUser>(getAuthUser())
 
-  const [iaa, setIaa] = useState<number>(iaaLocalStorage)
-
-  const handleUpdate = (iaa: number) => {
-    localStorage.setItem(AUTH_LOCAL_STORAGE, iaa.toString())
-    setIaa(iaa)
+  const handleUpdate = (iaa: number, isNotificationAllowed: boolean) => {
+    setAuthUser(iaa, isNotificationAllowed)
+    console.log('setAuth to', { iaa, isNotificationAllowed })
+    setAuth({ iaa, isNotificationAllowed })
   }
 
-  return <AuthContext.Provider value={{ iaa, setIaa: handleUpdate }}>{props.children}</AuthContext.Provider>
+  const handleUpdateIsNotificationAllowed = (isNotificationAllowed: boolean) =>
+    handleUpdate(auth?.iaa, isNotificationAllowed)
+
+  return (
+    <AuthContext.Provider
+      value={{ auth, setAuth: handleUpdate, setIsNotificationAllowedAuthUser: handleUpdateIsNotificationAllowed }}
+    >
+      {props.children}
+    </AuthContext.Provider>
+  )
 }

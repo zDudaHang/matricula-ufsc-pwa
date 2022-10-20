@@ -1,4 +1,4 @@
-import { JWT_LOCAL_STORAGE } from './local-storage/model'
+import { getAccessToken } from './local-storage'
 
 const SERVER_URL = 'http://localhost:8080'
 
@@ -14,7 +14,7 @@ export interface ServerValidationError<DataType> {
 }
 
 export function fetchWithAuthorization(fetchUrl: string, options?: RequestInit): Promise<Response> {
-  const accessToken = localStorage.getItem(JWT_LOCAL_STORAGE)
+  const accessToken = getAccessToken()
   return fetch(`${SERVER_URL}/${fetchUrl}`, {
     ...options,
     headers: { Authorization: `Bearer ${accessToken}`, ...options?.headers },
