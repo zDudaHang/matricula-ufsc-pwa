@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "TB_HORARIO")
 @Getter
@@ -27,5 +29,6 @@ public class Horario implements Serializable {
 	private String horario;
 
 	@Column(nullable = false)
+	@JsonProperty("isUltimoHorarioPeriodo")
 	private boolean isUltimoHorarioPeriodo = false;
 }

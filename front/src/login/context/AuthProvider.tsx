@@ -18,7 +18,6 @@ export function AuthProvider(props: AuthProviderProps) {
 
   const handleUpdate = (iaa: number, isNotificationAllowed: boolean) => {
     setAuthUser(iaa, isNotificationAllowed)
-    console.log('setAuth to', { iaa, isNotificationAllowed })
     setAuth({ iaa, isNotificationAllowed })
   }
 

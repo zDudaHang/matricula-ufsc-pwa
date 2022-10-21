@@ -10,7 +10,7 @@ interface HorarioRowProps {
 
 export function HorarioRow(props: HorarioRowProps) {
   const {
-    horario: { id: horarioId, horario, ultimoHorarioPeriodo },
+    horario: { id: horarioId, horario, isUltimoHorarioPeriodo },
     diasSemana,
     horariosSelecionados,
   } = props
@@ -18,7 +18,7 @@ export function HorarioRow(props: HorarioRowProps) {
   const theme = useTheme()
 
   return (
-    <TableRow style={{ borderBottom: ultimoHorarioPeriodo && `2px solid ${theme.pallete.gray.c70}` }}>
+    <TableRow style={{ borderBottom: isUltimoHorarioPeriodo && `2px solid ${theme.pallete.gray.c70}` }}>
       <TableCell
         key={horarioId}
         colSpan={1}
