@@ -1,13 +1,7 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarDiasSemanaQuery
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarHorariosQuery
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarPedidoMatriculaByMatriculaCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.BuscarTurmasQuery
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.AtualizarAlunosNotificadosCommand
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarPedidoMatriculaCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.AtualizarAlunosNotificadosCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunosGanharamVagaQuery
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.BuscarAlunosPerderamVagaQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.RegistroPedidoMatriculaResult
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.DiaSemana
@@ -15,6 +9,12 @@ import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Hora
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.PedidoMatriculaPrimaryKey
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Turma
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.dto.PedidoMatriculaDTO
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query.BuscarAlunosGanharamVagaQuery
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query.BuscarAlunosPerderamVagaQuery
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query.BuscarDiasSemanaQuery
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query.BuscarHorariosQuery
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query.BuscarPedidoMatriculaByMatriculaQuery
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query.BuscarTurmasQuery
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -24,7 +24,7 @@ import javax.transaction.Transactional
 
 @Service
 class PedidoMatriculaService(
-    private val buscarPedidoMatriculaByMatriculaCommand: BuscarPedidoMatriculaByMatriculaCommand,
+    private val buscarPedidoMatriculaByMatriculaQuery: BuscarPedidoMatriculaByMatriculaQuery,
     private val buscarTurmasQuery: BuscarTurmasQuery,
     private val registrarPedidoMatriculaCommand: RegistrarPedidoMatriculaCommand,
     private val atualizarAlunosNotificadosCommand: AtualizarAlunosNotificadosCommand,
@@ -44,7 +44,7 @@ class PedidoMatriculaService(
     fun buscarPedidoMatricula(): List<PedidoMatriculaDTO> {
         val aluno = AuthUtils.getAlunoAutenticado()
         return if (aluno != null) {
-            buscarPedidoMatriculaByMatriculaCommand.execute(aluno.getMatricula())
+            buscarPedidoMatriculaByMatriculaQuery.execute(aluno.matricula)
         } else {
             mutableListOf()
         }
@@ -61,7 +61,7 @@ class PedidoMatriculaService(
 
     @Transactional
     private fun salvarPedidoMatricula(codigosTurmas: List<String>, aluno: Aluno): RegistroPedidoMatriculaResult {
-        val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaCommand.execute(aluno.matricula).map { it.turma.codigo }
+        val codigosTurmasJahMatriculadas = buscarPedidoMatriculaByMatriculaQuery.execute(aluno.matricula).map { it.turma.codigo }
         return registrarPedidoMatriculaCommand.execute(codigosTurmas, aluno, codigosTurmasJahMatriculadas.toSet())
     }
 

@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QPedidoMatricula.pedidoMatricula
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QTurma.turma
@@ -11,7 +11,7 @@ import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Repository
-class BuscarPedidoMatriculaByMatriculaCommand(
+class BuscarPedidoMatriculaByMatriculaQuery(
     private val em: EntityManager,
 ) {
 

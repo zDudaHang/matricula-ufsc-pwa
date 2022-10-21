@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Horario
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QHorario.horario1

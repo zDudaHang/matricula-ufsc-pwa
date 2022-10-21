@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.controller.exceptionhandler
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.controller
 
 import br.ufsc.bridge.platform.validation.form.errors.FormError
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.exception.ValidationException

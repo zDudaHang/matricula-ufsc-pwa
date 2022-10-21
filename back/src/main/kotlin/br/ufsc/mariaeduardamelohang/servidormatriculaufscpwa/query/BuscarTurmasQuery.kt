@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.query
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QDisciplina.disciplina
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.QProfessor.professor

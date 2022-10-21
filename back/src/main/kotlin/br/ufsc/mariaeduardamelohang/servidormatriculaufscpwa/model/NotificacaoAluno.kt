@@ -1,6 +1,6 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model
 
-data class AlunoNotificacaoBody(
+data class NotificacaoAluno(
     val title: String,
     val type: NotificationTypeEnum,
     val message: String? = null

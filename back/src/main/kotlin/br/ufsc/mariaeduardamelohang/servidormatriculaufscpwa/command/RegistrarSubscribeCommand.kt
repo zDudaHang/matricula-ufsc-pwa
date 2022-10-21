@@ -1,4 +1,4 @@
-package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes
+package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command
 
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.database.Aluno
 import org.springframework.stereotype.Repository
@@ -7,13 +7,13 @@ import javax.persistence.EntityManager
 import javax.transaction.Transactional
 
 @Repository
-class RemoverSubscribeTokenCommand(
-    private val em: EntityManager
+class RegistrarSubscribeCommand(
+    private val em: EntityManager,
 ) {
     @Transactional
-    fun execute(matricula: UUID) {
+    fun execute(matricula: UUID, token: String) {
         val aluno = em.find(Aluno::class.java, matricula)
-        aluno.token = null
+        aluno.token = token
         em.persist(aluno)
     }
 }

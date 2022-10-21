@@ -1,3 +1,5 @@
+importScripts('firebase-messaging-sw.js')
+
 const CACHE_NAME = 'MATRICULA_UFSC_PWA'
 
 const IMAGES = [

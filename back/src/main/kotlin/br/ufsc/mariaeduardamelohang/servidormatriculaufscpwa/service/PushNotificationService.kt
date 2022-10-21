@@ -1,8 +1,8 @@
 package br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.service
 
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.RegistrarSubscribeCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.notificacoes.RemoverSubscribeTokenCommand
-import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.AlunoNotificacaoBody
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RegistrarSubscribeCommand
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.command.RemoverSubscribeTokenCommand
+import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.NotificacaoAluno
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.NotificationTypeEnum
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.model.input.SubscriptionInput
 import br.ufsc.mariaeduardamelohang.servidormatriculaufscpwa.util.AuthUtils
@@ -26,17 +26,17 @@ class PushNotificationService(
 
     fun notifyPerdaVaga(subscriptionToken: String, codigoTurma: String) {
         val title = "Entrada na fila de espera da turma $codigoTurma"
-        val notificacao = AlunoNotificacaoBody(title, NotificationTypeEnum.WARNING, MESSAGE_PERDA_VAGA)
+        val notificacao = NotificacaoAluno(title, NotificationTypeEnum.WARNING, MESSAGE_PERDA_VAGA)
         sendNotification(notificacao, subscriptionToken)
     }
 
     fun notifyGanhoVaga(subscriptionToken: String, codigoTurma: String) {
         val title = "Saída na fila de espera da turma $codigoTurma"
-        val notificacao = AlunoNotificacaoBody(title, NotificationTypeEnum.SUCCESS)
+        val notificacao = NotificacaoAluno(title, NotificationTypeEnum.SUCCESS)
         sendNotification(notificacao, subscriptionToken)
     }
 
-    private fun sendNotification(notificacao: AlunoNotificacaoBody, subscriptionToken: String) {
+    private fun sendNotification(notificacao: NotificacaoAluno, subscriptionToken: String) {
         logger.debug("Sending notification (${notificacao.type.name}) to $subscriptionToken")
 
         val notification = Notification.builder()
@@ -57,7 +57,7 @@ class PushNotificationService(
         val aluno = AuthUtils.getAlunoAutenticado()
         if (aluno !== null) {
             registrarSubscribeCommand.execute(aluno.matricula, subscriptionInput.token)
-            val notificacao = AlunoNotificacaoBody(TITLE_SUBSCRIBE_SUCCESS, NotificationTypeEnum.INFO)
+            val notificacao = NotificacaoAluno(TITLE_SUBSCRIBE_SUCCESS, NotificationTypeEnum.SUCCESS)
             sendNotification(notificacao, subscriptionInput.token)
         }
     }
