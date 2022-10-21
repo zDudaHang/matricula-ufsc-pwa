@@ -31,7 +31,6 @@ class PedidoMatriculaController(
         return service.registrarPedidoMatricula(input.turmas)
     }
 
-    // TODO: Fazer um DTO para não trazer tudo, só o que realmente precisa
     @GetMapping("/turmas")
     fun turmas(): List<Turma> {
         return service.buscarTurmas()
