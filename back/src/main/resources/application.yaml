@@ -4,14 +4,8 @@ spring:
   # ===============================
   # = BANCO DE DADOS
   # ===============================
-  datasource:
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/matricula-ufsc-database
-    initialization-mode: always
   jpa:
-    show-sql: false
+    show-sql: true
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
