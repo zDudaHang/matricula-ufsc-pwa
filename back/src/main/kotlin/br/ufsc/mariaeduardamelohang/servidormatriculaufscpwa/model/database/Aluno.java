@@ -13,18 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "TB_ALUNO")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Aluno implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 871628892533743316L;
@@ -70,5 +63,44 @@ public class Aluno implements Serializable, UserDetails {
 
 	@Override public boolean isEnabled() {
 		return true;
+	}
+
+	public Aluno() {
+	}
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
+
+	public int getIaa() {
+		return iaa;
+	}
+
+	public void setIaa(int iaa) {
+		this.iaa = iaa;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public UUID getMatricula() {
+		return matricula;
 	}
 }

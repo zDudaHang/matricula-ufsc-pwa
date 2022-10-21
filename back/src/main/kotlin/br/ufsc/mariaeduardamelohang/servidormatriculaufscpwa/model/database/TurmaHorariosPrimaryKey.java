@@ -7,12 +7,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
-import lombok.Getter;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Embeddable
-@Getter
 public class TurmaHorariosPrimaryKey implements Serializable {
 
 	private static final long serialVersionUID = -6677952938315394840L;
@@ -32,4 +29,20 @@ public class TurmaHorariosPrimaryKey implements Serializable {
 
 	@Column
 	private String sala;
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public DiaSemana getDiaSemana() {
+		return diaSemana;
+	}
+
+	public Horario getHorario() {
+		return horario;
+	}
+
+	public String getSala() {
+		return sala;
+	}
 }

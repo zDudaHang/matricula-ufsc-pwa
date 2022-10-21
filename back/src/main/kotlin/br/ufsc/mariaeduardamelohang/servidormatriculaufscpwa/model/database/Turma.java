@@ -11,17 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name = "TB_TURMA")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Turma implements Serializable {
 
 	private static final long serialVersionUID = 1848354516429296191L;
@@ -42,4 +33,35 @@ public class Turma implements Serializable {
 
 	@OneToMany(mappedBy = "id.turma")
 	private List<TurmaHorarios> horarios;
+
+	public Turma() {
+	}
+
+	public Turma(String codigo, int vagasOfertadas, Professor professor, Disciplina disciplina, List<TurmaHorarios> horarios) {
+		this.codigo = codigo;
+		this.vagasOfertadas = vagasOfertadas;
+		this.professor = professor;
+		this.disciplina = disciplina;
+		this.horarios = horarios;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public int getVagasOfertadas() {
+		return vagasOfertadas;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+
+	public List<TurmaHorarios> getHorarios() {
+		return horarios;
+	}
 }

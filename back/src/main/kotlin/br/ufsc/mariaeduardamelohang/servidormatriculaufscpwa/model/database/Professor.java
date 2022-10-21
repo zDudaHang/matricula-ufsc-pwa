@@ -10,12 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @Entity
 @Table(name = "TB_PROFESSOR")
-@Getter
 public class Professor implements Serializable {
 
 	private static final long serialVersionUID = -6877911942122147403L;
@@ -25,6 +21,9 @@ public class Professor implements Serializable {
 	private Long id;
 
 	@Column(nullable = false)
-	@Setter
 	private String nome;
+
+	public String getNome() {
+		return nome;
+	}
 }
