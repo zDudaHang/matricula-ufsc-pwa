@@ -35,22 +35,22 @@ export function LoginForm() {
 
   const renderForm = (formProps: FormRenderProps<LoginFormModel>) => {
     return (
-      <Grid justifyContent='center' alignItems='center'>
-        <Cell size={6}>
+      <Grid justifyContent='center' alignItems='center' style={{ margin: '1rem' }}>
+        <Cell size={12}>
           <VFlow vSpacing={0}>
             <Heading level={1}>Login</Heading>
             <ErrorField name={FORM_ERROR} />
           </VFlow>
         </Cell>
-        <Cell size={6}>
+        <Cell size={12}>
           <TextField name='nomeUsuario' label='Usuário' placeholder='Digite o seu usuário' required />
         </Cell>
-        <Cell size={6}>
+        <Cell size={12}>
           <PasswordField label='Senha' name='senha' placeholder='Digite sua senha' required />
         </Cell>
-        <Cell size={6}>
+        <Cell size={12}>
           <HFlow>
-            <ButtonLink size='large' path={`/${REGISTAR_ALUNO_ROUTE}`}>
+            <ButtonLink size='large' path={REGISTAR_ALUNO_ROUTE} isAbsolutePath>
               Registrar-se
             </ButtonLink>
             <Button type='submit' kind='primary' onClick={formProps.handleSubmit} size='large'>

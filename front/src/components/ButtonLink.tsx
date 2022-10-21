@@ -1,15 +1,17 @@
 import { Button, ButtonProps } from 'bold-ui'
 import { useNavigate } from 'react-router-dom'
 
-interface ButtonLinkProps extends ButtonProps {
+export interface ButtonLinkProps extends ButtonProps {
   path: string
+  isAbsolutePath?: boolean
 }
 
 export function ButtonLink(props: ButtonLinkProps) {
-  const { path, ...buttonProps } = props
+  const { path, isAbsolutePath = false, ...buttonProps } = props
+  const pathToRoute = isAbsolutePath ? `/${path}` : path
 
   const navigate = useNavigate()
-  const handleClick = () => navigate(path)
+  const handleClick = () => navigate(pathToRoute)
 
   return <Button {...buttonProps} onClick={handleClick}></Button>
 }

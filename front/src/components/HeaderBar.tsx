@@ -36,10 +36,15 @@ export function HeaderBar() {
       <OnlyAuthenticatedFeature>
         <OnlyOnlineFeature>
           <Button onClick={handleNotificationsClick} skin='ghost' size='large'>
-            <Icon
-              icon={isNotificationAllowed ? 'bellFilled' : 'bellOutline'}
-              style={{ color: theme.pallete.gray.c100 }}
-            />
+            <HFlow hSpacing={0.25} alignItems='center'>
+              <Icon
+                icon={isNotificationAllowed ? 'bellFilled' : 'bellOutline'}
+                style={{ color: theme.pallete.gray.c100 }}
+              />
+              <Text style={{ color: theme.pallete.gray.c100 }}>
+                {isNotificationAllowed ? 'Desativar' : 'Ativar'} notificações
+              </Text>
+            </HFlow>
           </Button>
           {deferredPrompt && (
             <Button onClick={handleDownloadClick} skin='ghost' size='large'>

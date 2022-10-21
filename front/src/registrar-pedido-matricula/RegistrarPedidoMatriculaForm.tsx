@@ -11,8 +11,9 @@ import { SelectTurmaField, SelectTurmaFieldModel } from './components/SelectTurm
 import { HORARIOS_FIELD_NAME, TURMAS_FIELD_NAME } from './model'
 import { HorariosSelecionados, TurmaMatriculada } from '../grade-horarios/model'
 import { Form } from '../components/Form'
-import { useNavigate } from 'react-router'
 import { PEDIDO_MATRICULA_ROUTE } from '../routes/routes'
+import { useNavigate } from 'react-router-dom'
+import { VoltarButton } from '../components/VoltarButton'
 
 export interface RegistrarPedidoMatriculaFormModel {
   turmas: SelectTurmaFieldModel[]
@@ -48,9 +49,10 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
     const horariosSelecionados = getFieldState(HORARIOS_FIELD_NAME)?.value
 
     return (
-      <Grid justifyContent='center' alignItems='center'>
+      <Grid justifyContent='center' alignItems='center' style={{ margin: '1rem' }}>
         <Cell size={12}>
-          <Heading level={1}>Registrando pedido de matrícula</Heading>
+          <VoltarButton path={PEDIDO_MATRICULA_ROUTE} />
+          <Heading level={1}>Editando pedido de matrícula</Heading>
           <ErrorField name={HORARIOS_FIELD_NAME} />
         </Cell>
         <Cell size={12}>
@@ -59,7 +61,7 @@ export function RegistrarPedidoMatriculaForm(props: RegistrarPedidoMatriculaForm
         <Cell size={12}>
           <HFlow justifyContent='flex-end'>
             <Button type='submit' kind='primary' onClick={handleSubmit} size='large'>
-              Registrar
+              Salvar
             </Button>
           </HFlow>
         </Cell>

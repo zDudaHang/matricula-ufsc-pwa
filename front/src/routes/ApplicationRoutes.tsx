@@ -1,7 +1,13 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { RegistrarAlunoForm } from '../registrar-aluno/RegistrarAlunoForm'
 import { LoginForm } from '../login/LoginForm'
-import { EDITAR_PEDIDO_MATRICULA_ROUTE, LOGIN_ROUTE, PEDIDO_MATRICULA_ROUTE, REGISTAR_ALUNO_ROUTE } from './routes'
+import {
+  EDITAR_PEDIDO_MATRICULA_ROUTE,
+  LOGIN_ROUTE,
+  NOT_FOUND_ROUTE,
+  PEDIDO_MATRICULA_ROUTE,
+  REGISTAR_ALUNO_ROUTE,
+} from './routes'
 import { PrivateRoute } from './PrivateRoute'
 import { PedidoMatriculaView } from '../pedido-matricula/PedidoMatriculaView'
 import { RegistrarPedidoMatriculaView } from '../registrar-pedido-matricula/RegistrarPedidoMatriculaView'
@@ -36,7 +42,8 @@ export function ApplicationRoutes() {
             }
           />
         )}
-        <Route path='*' element={<NotFound />} />
+        <Route path={NOT_FOUND_ROUTE} element={<NotFound />} />
+        <Route path='*' element={<Navigate to={NOT_FOUND_ROUTE} />} />
       </Routes>
     </BrowserRouter>
   )
